@@ -36,6 +36,19 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:61211",
       "sslPort": 44392
+    
+  
+  
+    "Logging": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      }
+    },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+      "CompanyConnection": "data Source=.; Database=momentoz; integrated security=true;"
     }
   }
 }
