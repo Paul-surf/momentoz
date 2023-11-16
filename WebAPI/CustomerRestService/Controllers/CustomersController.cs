@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CustomerRestService.BusinesslogicLayer;
-using CustomerRestService.DTOs;
+﻿using CustomerRestService.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
-namespace CustomerRestService.Controllers
+namespace PersonRestService.Controllers
 {
 
     [Route("api/[controller]")]
@@ -19,6 +18,7 @@ namespace CustomerRestService.Controllers
         }
 
         // URL: api/customers
+        
         [HttpGet]
         public ActionResult<List<CustomerDto>> Get()
         {
@@ -54,11 +54,32 @@ namespace CustomerRestService.Controllers
         }
 
         // URL: api/customers
+        
         [HttpPost]
-        public ActionResult PostNewCustomer(CustomerDto inCustomer)
+        public ActionResult<int> PostNewCustomer(CustomerDto inCustomer)
         {
-            return null;
+            ActionResult<int> foundReturn;
+            int insertedId = -1;
+           
+            {
+                insertedId = _businessLogicCtrl.Add(inCustomer);
+            }
+            // Evaluate
+            if (insertedId > 0)
+            {
+                foundReturn = Ok(insertedId);
+            }
+            else if (insertedId == 0)
+            {
+                foundReturn = BadRequest();     // missing input
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);    // Internal server error
+            }
+            return foundReturn;
         }
+
 
     }
 }
