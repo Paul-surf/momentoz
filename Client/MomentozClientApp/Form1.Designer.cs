@@ -39,8 +39,6 @@
             textBox2 = new TextBox();
             AgeLabel = new Label();
             panel1 = new Panel();
-            listView1 = new ListView();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -61,6 +59,7 @@
             GETbtn.TabIndex = 1;
             GETbtn.Text = "Search";
             GETbtn.UseVisualStyleBackColor = true;
+            GETbtn.Click += GETbtn_Click;
             // 
             // Navn
             // 
@@ -128,19 +127,11 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(listView1);
-            panel1.Location = new Point(54, 67);
+            panel1.Location = new Point(102, 62);
             panel1.Name = "panel1";
-            panel1.Size = new Size(198, 244);
+            panel1.Size = new Size(181, 197);
             panel1.TabIndex = 16;
-            // 
-            // listView1
-            // 
-            listView1.Location = new Point(4, 3);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(191, 236);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
+            panel1.Paint += panel1_Paint;
             // 
             // Form1
             // 
@@ -161,7 +152,6 @@
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -179,6 +169,5 @@
         private TextBox textBox2;
         private Label AgeLabel;
         private Panel panel1;
-        private ListView listView1;
     }
 }
