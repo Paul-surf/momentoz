@@ -28,146 +28,104 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            GETbtn = new Button();
-            Navn = new Label();
-            textBox1 = new TextBox();
-            label5 = new Label();
-            dateTimePicker1 = new DateTimePicker();
-            dateTimePicker2 = new DateTimePicker();
-            label3 = new Label();
-            textBox2 = new TextBox();
-            AgeLabel = new Label();
-            panel1 = new Panel();
-            SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.GETbtn = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.FirstName = new System.Windows.Forms.ColumnHeader();
+            this.LastName = new System.Windows.Forms.ColumnHeader();
+            this.MobilePhone = new System.Windows.Forms.ColumnHeader();
+            this.Email = new System.Windows.Forms.ColumnHeader();
+            this.FullName = new System.Windows.Forms.ColumnHeader();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Client";
-            label1.Click += label1_Click;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Client";
             // 
             // GETbtn
             // 
-            GETbtn.Location = new Point(355, 278);
-            GETbtn.Name = "GETbtn";
-            GETbtn.Size = new Size(58, 28);
-            GETbtn.TabIndex = 1;
-            GETbtn.Text = "Search";
-            GETbtn.UseVisualStyleBackColor = true;
-            GETbtn.Click += GETbtn_Click;
+            this.GETbtn.Location = new System.Drawing.Point(275, 273);
+            this.GETbtn.Name = "GETbtn";
+            this.GETbtn.Size = new System.Drawing.Size(100, 28);
+            this.GETbtn.TabIndex = 1;
+            this.GETbtn.Text = "Get Data";
+            this.GETbtn.UseVisualStyleBackColor = true;
             // 
-            // Navn
+            // listView1
             // 
-            Navn.AutoSize = true;
-            Navn.Location = new Point(355, 21);
-            Navn.Name = "Navn";
-            Navn.Size = new Size(38, 15);
-            Navn.TabIndex = 3;
-            Navn.Text = "Navn:";
+            listView1.FullRowSelect = true;
+            listView1.GridLines = true;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.FirstName,
+            this.LastName,
+            this.MobilePhone,
+            this.Email,
+            this.FullName});
+            this.listView1.Location = new System.Drawing.Point(112, 67);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(447, 171);
+            this.listView1.TabIndex = 16;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
-            // textBox1
+            // FirstName
             // 
-            textBox1.Location = new Point(355, 47);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 4;
+            this.FirstName.Text = "First Name";
+            this.FirstName.Width = 80;
             // 
-            // label5
+            // LastName
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(355, 97);
-            label5.Name = "label5";
-            label5.Size = new Size(26, 15);
-            label5.TabIndex = 7;
-            label5.Text = "Fra:";
+            this.LastName.Text = "Last Name";
+            this.LastName.Width = 80;
             // 
-            // dateTimePicker1
+            // MobilePhone
             // 
-            dateTimePicker1.Location = new Point(355, 126);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 11;
+            this.MobilePhone.Text = "Phone";
+            this.MobilePhone.Width = 80;
             // 
-            // dateTimePicker2
+            // Email
             // 
-            dateTimePicker2.Location = new Point(355, 215);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(200, 23);
-            dateTimePicker2.TabIndex = 13;
+            this.Email.Text = "Email";
+            this.Email.Width = 80;
             // 
-            // label3
+            // FullName
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(355, 186);
-            label3.Name = "label3";
-            label3.Size = new Size(22, 15);
-            label3.TabIndex = 12;
-            label3.Text = "Til:";
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(489, 47);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 15;
-            // 
-            // AgeLabel
-            // 
-            AgeLabel.AutoSize = true;
-            AgeLabel.Location = new Point(489, 21);
-            AgeLabel.Name = "AgeLabel";
-            AgeLabel.Size = new Size(31, 15);
-            AgeLabel.TabIndex = 14;
-            AgeLabel.Text = "Age:";
-            // 
-            // panel1
-            // 
-            panel1.Location = new Point(102, 62);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(181, 197);
-            panel1.TabIndex = 16;
-            panel1.Paint += panel1_Paint;
+            this.FullName.Text = "Full Name";
+            this.FullName.Width = 120;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(663, 351);
-            Controls.Add(panel1);
-            Controls.Add(textBox2);
-            Controls.Add(AgeLabel);
-            Controls.Add(dateTimePicker2);
-            Controls.Add(label3);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label5);
-            Controls.Add(textBox1);
-            Controls.Add(Navn);
-            Controls.Add(GETbtn);
-            Controls.Add(label1);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(663, 351);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.GETbtn);
+            this.Controls.Add(this.label1);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
 
         private Label label1;
         private Button GETbtn;
-        private Label Navn;
-        private TextBox textBox1;
-        private Label label5;
-        private DateTimePicker dateTimePicker1;
-        private DateTimePicker dateTimePicker2;
-        private Label label3;
-        private TextBox textBox2;
-        private Label AgeLabel;
-        private Panel panel1;
+        private ListView listView1;
+        private ColumnHeader FirstName;
+        private ColumnHeader LastName;
+        private ColumnHeader MobilePhone;
+        private ColumnHeader Email;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ColumnHeader FullName;
     }
 }

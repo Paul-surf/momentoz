@@ -1,4 +1,7 @@
+using MomentozClientApp.Model;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -6,8 +9,25 @@ namespace MomentozClientApp
 {
     public partial class Form1 : Form
     {
-        private const string BaseUrl = "https://localhost:5114/api/";
-        private const string Endpoint = "customers";
+        private async Task<List<Customer>?> GetCustomerDataAsync()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://localhost:5114/api/customers";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<Customer>>(content);
+                }
+                else
+                {
+                    // Handle error
+                    return null;
+                }
+            }
+        }
         public Form1()
         {
             InitializeComponent();
@@ -25,55 +45,43 @@ namespace MomentozClientApp
 
         private async void GETbtn_Click(object sender, EventArgs e)
         {
-            try
+            List<Customer>? customers = await GetCustomerDataAsync();
+
+            if (customers != null)
             {
-                using (HttpClient client = new HttpClient())
+                // Clear existing items in the ListView
+                listView1.Items.Clear();
+
+                // Add each customer to the ListView
+                foreach (var customer in customers)
                 {
-                    // Concatenate the base URL and endpoint
-                    string apiUrl = $"{BaseUrl}{Endpoint}";
+                    ListViewItem item = new ListViewItem(customer.FirstName);
+                    item.SubItems.Add(customer.LastName);
+                    item.SubItems.Add(customer.MobilePhone);
+                    item.SubItems.Add(customer.Email);
+                    item.SubItems.Add(customer.FullName);
 
-                    // Make a GET request to the API endpoint
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                    // Check if the request was successful (status code 200)
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // Read and display the response content
-                        string content = await response.Content.ReadAsStringAsync();
-                        
-                        // Update the panel with the retrieved information
-                        UpdatePanel(content);
-                    }
-                    else
-                    {
-                        // Display the error status code
-                        MessageBox.Show($"Error: {response.StatusCode}");
-                    }
+                    listView1.Items.Add(item);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Exception: {ex.Message}");
-            }
-        }
-        private void UpdatePanel(string content)
-        {
-            // Clear existing controls in the panel
-            panel1.Controls.Clear();
-
-            // Create a label to display the retrieved information
-            Label label = new Label
-            {
-                Text = content,
-                AutoSize = true,
-                Dock = DockStyle.Fill
-            };
-
-            // Add the label to the panel
-            panel1.Controls.Add(label);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
         {
 
         }
