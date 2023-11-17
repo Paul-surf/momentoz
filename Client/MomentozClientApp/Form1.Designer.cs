@@ -28,104 +28,85 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.GETbtn = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.FirstName = new System.Windows.Forms.ColumnHeader();
-            this.LastName = new System.Windows.Forms.ColumnHeader();
-            this.MobilePhone = new System.Windows.Forms.ColumnHeader();
-            this.Email = new System.Windows.Forms.ColumnHeader();
-            this.FullName = new System.Windows.Forms.ColumnHeader();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.SuspendLayout();
+            label1 = new Label();
+            GETbtn = new Button();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            button1 = new Button();
+            panel1 = new Panel();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Client";
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Client";
             // 
             // GETbtn
             // 
-            this.GETbtn.Location = new System.Drawing.Point(275, 273);
-            this.GETbtn.Name = "GETbtn";
-            this.GETbtn.Size = new System.Drawing.Size(100, 28);
-            this.GETbtn.TabIndex = 1;
-            this.GETbtn.Text = "Get Data";
-            this.GETbtn.UseVisualStyleBackColor = true;
+            GETbtn.Location = new Point(275, 273);
+            GETbtn.Name = "GETbtn";
+            GETbtn.Size = new Size(100, 28);
+            GETbtn.TabIndex = 1;
+            GETbtn.Text = "Get Data";
+            GETbtn.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // button1
             // 
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.FirstName,
-            this.LastName,
-            this.MobilePhone,
-            this.Email,
-            this.FullName});
-            this.listView1.Location = new System.Drawing.Point(112, 67);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(447, 171);
-            this.listView1.TabIndex = 16;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            button1.Location = new Point(288, 316);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 17;
+            button1.Text = "Test HTTP";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // FirstName
+            // panel1
             // 
-            this.FirstName.Text = "First Name";
-            this.FirstName.Width = 80;
+            panel1.Location = new Point(70, 26);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(550, 93);
+            panel1.TabIndex = 18;
+            panel1.Paint += panel1_Paint_1;
             // 
-            // LastName
+            // dataGridView1
             // 
-            this.LastName.Text = "Last Name";
-            this.LastName.Width = 80;
-            // 
-            // MobilePhone
-            // 
-            this.MobilePhone.Text = "Phone";
-            this.MobilePhone.Width = 80;
-            // 
-            // Email
-            // 
-            this.Email.Text = "Email";
-            this.Email.Width = 80;
-            // 
-            // FullName
-            // 
-            this.FullName.Text = "Full Name";
-            this.FullName.Width = 120;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(70, 143);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(317, 110);
+            dataGridView1.TabIndex = 19;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 351);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.GETbtn);
-            this.Controls.Add(this.label1);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load_1);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(663, 351);
+            Controls.Add(dataGridView1);
+            Controls.Add(panel1);
+            Controls.Add(button1);
+            Controls.Add(GETbtn);
+            Controls.Add(label1);
+            Name = "Form1";
+            Text = "Form1";
+            Load += Form1_Load_1;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
         private Button GETbtn;
-        private ListView listView1;
-        private ColumnHeader FirstName;
-        private ColumnHeader LastName;
-        private ColumnHeader MobilePhone;
-        private ColumnHeader Email;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ColumnHeader FullName;
+        private Button button1;
+        private Panel panel1;
+        private DataGridView dataGridView1;
     }
 }
