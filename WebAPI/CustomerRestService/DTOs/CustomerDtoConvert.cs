@@ -7,7 +7,7 @@ namespace CustomerRestService.ModelConversion
     public class CustomerDtoConvert
     {
 
-        // Convert from Person objects to PersonDTO objects
+        // Convert from Customer objects to CustomerDTO objects
         public static List<CustomerDto>? FromCustomerCollection(List<Customer> inCustomers)
         {
             List<CustomerDto>? aCustomerReadDtoList = null;

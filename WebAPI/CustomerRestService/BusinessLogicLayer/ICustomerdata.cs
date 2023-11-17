@@ -1,4 +1,6 @@
-﻿namespace CustomerRestService.DTOs
+﻿using CustomerRestService.DTOs;
+
+namespace CustomerRestService.BusinessLogicLayer
 {
 
     public interface ICustomerdata

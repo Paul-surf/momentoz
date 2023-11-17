@@ -2,6 +2,7 @@
 using CustomerData.DatabaseLayer;
 using CustomerRestService.DTOs;
 using System;
+using CustomerRestService.BusinessLogicLayer;
 
 namespace CustomerRestService.BusinesslogicLayer
 {

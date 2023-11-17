@@ -10,9 +10,11 @@ namespace MomentozClientApp
 {
     public partial class Form1 : Form
     {
+        readonly CustomerController _customerController;
         public Form1()
         {
             InitializeComponent();
+            _customerController = new CustomerController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -25,16 +27,6 @@ namespace MomentozClientApp
 
         }
 
-        private async void GETbtn_Click(object sender, EventArgs e)
-        {
-            CustomerController CustomerCtrl = new CustomerController();
-            List<Customer>? customers = await CustomerCtrl.getCustomers();
-
-            if (customers != null)
-            {
-                dataGridView1.DataSource = customers;
-            }
-        }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -56,28 +48,32 @@ namespace MomentozClientApp
 
         }
 
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            CustomerController CustomerCtrl = new CustomerController();
-            String content = await CustomerCtrl.grabJsonInfo();
-            updatePanel(content);
-        }
-
-        private void updatePanel(string content)
-        {
-            panel1.Controls.Clear();
-            Label label = new Label
-            {
-                Text = content,
-                AutoSize = true,
-                Dock = DockStyle.Fill
-            };
-            panel1.Controls.Add(label);
-        }
-
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void Form1_Load_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void GETbtn_Click_1(object sender, EventArgs e)
+        {
+            string processText = "OK"; 
+            List<Customer>? fetchedCustomers = await _customerController.GetAllCustomers();
+
+            if (fetchedCustomers != null) { 
+                if (fetchedCustomers.Count >= 1) { 
+                    processText = "Ok"; 
+                } else { 
+                    processText = "No persons found"; 
+                } 
+            } else { 
+                processText = "Failure: An error occurred"; 
+            }
+            label2.Text = processText;
+            ListBoxCustomers.DataSource = fetchedCustomers;
         }
     }
 }

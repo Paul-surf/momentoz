@@ -10,18 +10,20 @@ namespace MomentozClientApp.Controller
 {
     public class CustomerController
     {
-        public CustomerController() { }
-        public async Task<List<Customer>?> getCustomers()
-        {
-            IServiceConnection ServiceConnection = new ServiceConnection();
-            List<Customer>? customers = await ServiceConnection.GetCustomerDataAsync();
-            return customers;
+        readonly ICustomerServiceAccess _cAccess; 
+        public CustomerController() { 
+            _cAccess = new CustomerServiceAccess(); 
         }
-        public async Task<String> grabJsonInfo()
-        {
-            ServiceConnection ServiceConnection = new ServiceConnection();
-            String result = await ServiceConnection.establishConnection();
-            return result;
+        public async Task<List<Customer>?> GetAllCustomers() { 
+            List<Customer>? foundCustomers = null;
+            if (_cAccess != null) { 
+                foundCustomers = await _cAccess.GetCustomers(); 
+            } return foundCustomers; 
+        }
+        public async Task<int> SavePerson(string fName, string lName, string mPhone) {
+            Customer newCustomer = new(fName, lName, mPhone); 
+            int insertedId = await _cAccess.SaveCustomer(newCustomer);
+            return insertedId; 
         }
     }
 }

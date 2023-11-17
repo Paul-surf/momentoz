@@ -8,44 +8,15 @@ using System.Threading.Tasks;
 
 namespace MomentozClientApp.Servicelayer
 {
-    internal class ServiceConnection : IServiceConnection
+    public class ServiceConnection : IServiceConnection
     {
-        private const string BaseUrl = "https://localhost:5114/api/";
-        private const string Endpoint = "customers";
-        public async Task<String> establishConnection()
-        {
-            String content = "";
-            using (HttpClient client = new HttpClient())
-            {
-                string apiUrl = "https://localhost:5114/api/customers";
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                   content = await response.Content.ReadAsStringAsync();
-                }
-            }
-            return content;
-        }
-
-        public async Task<List<Customer>?> GetCustomerDataAsync()
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string apiUrl = "https://localhost:5114/api/customers";
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                try
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Customer>>(content) ?? new List<Customer>();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Deserialization Error: {ex.Message}");
-                    return new List<Customer>();
-                }
-            }
-        }
+        public ServiceConnection(String inBaseUrl) { HttpEnabler = new HttpClient(); BaseUrl = inBaseUrl; UseUrl = BaseUrl; }
+        public HttpClient HttpEnabler { private get; init; }
+        public string? BaseUrl { get; init; }
+        public string? UseUrl { get; set; }
+        public async Task<HttpResponseMessage?> CallServiceGet() { HttpResponseMessage? hrm = null; if (UseUrl != null) { hrm = await HttpEnabler.GetAsync(UseUrl); } return hrm; }
+        public async Task<HttpResponseMessage?> CallServicePost(StringContent postJson) { HttpResponseMessage? hrm = null; if (UseUrl != null) { hrm = await HttpEnabler.PostAsync(UseUrl, postJson); } return hrm; }
+        public Task<HttpResponseMessage?> CallServicePut(StringContent postJson) { throw new NotImplementedException(); }
+        public Task<HttpResponseMessage?> CallServiceDelete() { throw new NotImplementedException(); }
     }
 }
