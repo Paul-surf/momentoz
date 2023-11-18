@@ -1,8 +1,7 @@
 ﻿namespace CustomerRestService.DTOs
 {
     public class CustomerDto
-    {
-
+    { 
         public CustomerDto() { }
 
         public CustomerDto(string? inFirstName, string? inLastName, string? inMobilePhone, string? email)

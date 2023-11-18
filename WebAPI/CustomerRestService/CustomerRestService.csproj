@@ -14,10 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomerData\CustomerData.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ModelConversion\" />
+    <ProjectReference Include="..\MomentozWebAPI\TicketData\TicketData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

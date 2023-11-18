@@ -14,7 +14,7 @@ namespace CustomerRestService.ModelConversion
             if (inCustomers != null)
             {
                 aCustomerReadDtoList = new List<CustomerDto>();
-                CustomerDto? tempDto;
+                TicketDto? tempDto;
                 foreach (Customer aCustomer in inCustomers)
                 {
                     if (aCustomer != null)
@@ -30,7 +30,7 @@ namespace CustomerRestService.ModelConversion
         // Convert from Customer object to PersonDTO object
         public static CustomerDto? FromCustomer(Customer inCustomer)
         {
-            CustomerDto? aCustomerReadDto = null;
+            TicketDto? aCustomerReadDto = null;
             if (inCustomer != null)
             {
                 aCustomerReadDto = new CustomerDto(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email);
@@ -39,7 +39,7 @@ namespace CustomerRestService.ModelConversion
         }
 
         // Convert from CustomerDTO object to Customer object
-        public static Customer? ToCustomer(CustomerDto inDto)
+        public static Customer? ToCustomer(TicketDto inDto)
         {
             Customer? aCustomer = null;
             if (inDto != null)

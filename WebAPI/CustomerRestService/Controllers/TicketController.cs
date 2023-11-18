@@ -7,31 +7,31 @@ namespace PersonRestService.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class TicketController : ControllerBase
     {
 
-        private readonly ICustomerdata _businessLogicCtrl;
+        private readonly ITicketdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
-        public CustomersController(ICustomerdata inBusinessLogicCtrl)
+        public TicketController(ITicketdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
 
-        // URL: api/customers
-        
+        // URL: api/Ticket
+
         [HttpGet]
-        public ActionResult<List<CustomerDto>> Get()
+        public ActionResult<List<TicketDto>> Get()
         {
-            ActionResult<List<CustomerDto>> foundReturn;
+            ActionResult<List<TicketDto>> foundReturn;
             // retrieve data - converted to DTO
-            List<CustomerDto>? foundCustomers = _businessLogicCtrl.Get();
+            List<TicketDto>? foundTicket = _businessLogicCtrl.Get();
             // evaluate
-            if (foundCustomers != null)
+            if (foundTicket != null)
             {
-                if (foundCustomers.Count > 0)
+                if (foundTicket.Count > 0)
                 {
-                    foundReturn = Ok(foundCustomers);                 // Statuscode 200
+                    foundReturn = Ok(foundTicket);                 // Statuscode 200
                 }
                 else
                 {
@@ -47,23 +47,23 @@ namespace PersonRestService.Controllers
         }
 
 
-        // URL: api/customers/{id}
+        // URL: api/Ticket/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<CustomerDto> Get(int id)
+        public ActionResult<TicketDto> Get(int id)
         {
             return null;
         }
 
-        // URL: api/customers
-        
+        // URL: api/Ticket
+
         [HttpPost]
-        public ActionResult<int> PostNewCustomer(CustomerDto inCustomer)
+        public ActionResult<int> PostNewTicket(TicketDto inTicket)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
-           
+
             {
-                insertedId = _businessLogicCtrl.Add(inCustomer);
+                insertedId = _businessLogicCtrl.Add(inTicket);
             }
             // Evaluate
             if (insertedId > 0)
