@@ -30,19 +30,15 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.GETbtn = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.FirstName = new System.Windows.Forms.ColumnHeader();
-            this.LastName = new System.Windows.Forms.ColumnHeader();
-            this.MobilePhone = new System.Windows.Forms.ColumnHeader();
-            this.Email = new System.Windows.Forms.ColumnHeader();
-            this.FullName = new System.Windows.Forms.ColumnHeader();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.ListBoxCustomers = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(117, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 0;
@@ -54,63 +50,40 @@
             this.GETbtn.Name = "GETbtn";
             this.GETbtn.Size = new System.Drawing.Size(100, 28);
             this.GETbtn.TabIndex = 1;
-            this.GETbtn.Text = "Get Data";
+            this.GETbtn.Text = "Get Customers";
             this.GETbtn.UseVisualStyleBackColor = true;
+            this.GETbtn.Click += new System.EventHandler(this.GETbtn_Click_1);
             // 
-            // listView1
+            // ListBoxCustomers
             // 
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.FirstName,
-            this.LastName,
-            this.MobilePhone,
-            this.Email,
-            this.FullName});
-            this.listView1.Location = new System.Drawing.Point(112, 67);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(447, 171);
-            this.listView1.TabIndex = 16;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.ListBoxCustomers.FormattingEnabled = true;
+            this.ListBoxCustomers.ItemHeight = 15;
+            this.ListBoxCustomers.Location = new System.Drawing.Point(117, 84);
+            this.ListBoxCustomers.Name = "ListBoxCustomers";
+            this.ListBoxCustomers.Size = new System.Drawing.Size(417, 169);
+            this.ListBoxCustomers.TabIndex = 2;
             // 
-            // FirstName
+            // label2
             // 
-            this.FirstName.Text = "First Name";
-            this.FirstName.Width = 80;
-            // 
-            // LastName
-            // 
-            this.LastName.Text = "Last Name";
-            this.LastName.Width = 80;
-            // 
-            // MobilePhone
-            // 
-            this.MobilePhone.Text = "Phone";
-            this.MobilePhone.Width = 80;
-            // 
-            // Email
-            // 
-            this.Email.Text = "Email";
-            this.Email.Width = 80;
-            // 
-            // FullName
-            // 
-            this.FullName.Text = "Full Name";
-            this.FullName.Width = 120;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(439, 280);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Status";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 351);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ListBoxCustomers);
             this.Controls.Add(this.GETbtn);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.Load += new System.EventHandler(this.Form1_Load_2);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,12 +93,8 @@
 
         private Label label1;
         private Button GETbtn;
-        private ListView listView1;
-        private ColumnHeader FirstName;
-        private ColumnHeader LastName;
-        private ColumnHeader MobilePhone;
-        private ColumnHeader Email;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ColumnHeader FullName;
+        private ListBox ListBoxCustomers;
+        private Label label2;
     }
 }

@@ -1,3 +1,4 @@
+using MomentozClientApp.Controller;
 using MomentozClientApp.Model;
 using Newtonsoft.Json;
 using System;
@@ -9,28 +10,11 @@ namespace MomentozClientApp
 {
     public partial class Form1 : Form
     {
-        private async Task<List<Customer>?> GetCustomerDataAsync()
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string apiUrl = "https://localhost:5114/api/customers";
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Customer>>(content);
-                }
-                else
-                {
-                    // Handle error
-                    return null;
-                }
-            }
-        }
+        readonly CustomerController _customerController;
         public Form1()
         {
             InitializeComponent();
+            _customerController = new CustomerController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -43,28 +27,6 @@ namespace MomentozClientApp
 
         }
 
-        private async void GETbtn_Click(object sender, EventArgs e)
-        {
-            List<Customer>? customers = await GetCustomerDataAsync();
-
-            if (customers != null)
-            {
-                // Clear existing items in the ListView
-                listView1.Items.Clear();
-
-                // Add each customer to the ListView
-                foreach (var customer in customers)
-                {
-                    ListViewItem item = new ListViewItem(customer.FirstName);
-                    item.SubItems.Add(customer.LastName);
-                    item.SubItems.Add(customer.MobilePhone);
-                    item.SubItems.Add(customer.Email);
-                    item.SubItems.Add(customer.FullName);
-
-                    listView1.Items.Add(item);
-                }
-            }
-        }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -84,6 +46,34 @@ namespace MomentozClientApp
         private void Form1_Load_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Form1_Load_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void GETbtn_Click_1(object sender, EventArgs e)
+        {
+            string processText = "OK"; 
+            List<Customer>? fetchedCustomers = await _customerController.GetAllCustomers();
+
+            if (fetchedCustomers != null) { 
+                if (fetchedCustomers.Count >= 1) { 
+                    processText = "Ok"; 
+                } else { 
+                    processText = "No persons found"; 
+                } 
+            } else { 
+                processText = "Failure: An error occurred"; 
+            }
+            label2.Text = processText;
+            ListBoxCustomers.DataSource = fetchedCustomers;
         }
     }
 }

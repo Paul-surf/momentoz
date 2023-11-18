@@ -10,7 +10,7 @@
             LastName = inLastName;
             MobilePhone = inMobilePhone;
             Email = email;
-        }
+        }   
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }

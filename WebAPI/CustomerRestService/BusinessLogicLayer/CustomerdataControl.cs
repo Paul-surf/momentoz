@@ -1,6 +1,10 @@
 ﻿using CustomerData.ModelLayer;
 using CustomerData.DatabaseLayer;
 using CustomerRestService.DTOs;
+<<<<<<< HEAD
+=======
+using System;
+>>>>>>> bd7ce7fdc6b4cc02f81343fa8e1d8cc8c9eb46f8
 using CustomerRestService.BusinessLogicLayer;
 
 namespace CustomerRestService.BusinesslogicLayer
