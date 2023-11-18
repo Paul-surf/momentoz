@@ -1,15 +1,10 @@
 using CustomerRestService.BusinesslogicLayer;
 using CustomerData.DatabaseLayer;
-
 using System.Net.Security;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using CustomerRestService.BusinessLogicLayer;
-<<<<<<< HEAD
 using TicketData.DatabaseLayer;
-
-=======
->>>>>>> bd7ce7fdc6b4cc02f81343fa8e1d8cc8c9eb46f8
 
 var builder = WebApplication.CreateBuilder(args);
 

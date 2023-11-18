@@ -4,7 +4,15 @@
     { 
         public CustomerDto() { }
 
-        public CustomerDto(string? inFirstName, string? inLastName, string? inMobilePhone, string? email)
+        public CustomerDto(string? firstName, string? lastName, string? mobilePhone, string? email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
+            Email = email;
+        }
+
+        public CustomerDto(int id, string? inFirstName, string? inLastName, string? inMobilePhone, string? email)
         {
             FirstName = inFirstName;
             LastName = inLastName;

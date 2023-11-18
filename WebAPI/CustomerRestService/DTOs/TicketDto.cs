@@ -2,25 +2,10 @@
 {
     public class TicketDto
     {
-        public TicketDto() { }
-
-        public TicketDto(string? inFirstName, string? inLastName, string? inMobilePhone)
-        {
-            FirstName = inFirstName;
-            LastName = inLastName;
-            MobilePhone = inMobilePhone;
-        }
+        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
-        public string? FullName
-        {
-            get
-            {
-                return $"{FirstName} {LastName}";
-            }
-        }
+        public string? Email { get; set; }
     }
 }
-
- 

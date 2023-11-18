@@ -1,10 +1,6 @@
 ﻿using CustomerData.ModelLayer;
 using CustomerData.DatabaseLayer;
 using CustomerRestService.DTOs;
-<<<<<<< HEAD
-=======
-using System;
->>>>>>> bd7ce7fdc6b4cc02f81343fa8e1d8cc8c9eb46f8
 using CustomerRestService.BusinessLogicLayer;
 
 namespace CustomerRestService.BusinesslogicLayer
@@ -51,15 +47,15 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public int Add(TicketDto newCustomer)
+        public int Add(CustomerDto customerToAdd)
         {
             int insertedId = 0;
             try
             {
-                Customer? foundCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(newCustomer);
-                if (foundCustomer != null)
+                Customer? newCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);
+                if (newCustomer != null)
                 {
-                    insertedId = _customerAccess.CreateCustomer(foundCustomer);
+                    insertedId = _customerAccess.CreateCustomer(newCustomer);
                 }
             }
             catch
@@ -76,6 +72,13 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
         public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+     
+
+        public bool Put(CustomerDto customerToUpdate)
         {
             throw new NotImplementedException();
         }

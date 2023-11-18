@@ -1,54 +1,40 @@
-﻿
-using CustomerRestService.DTOs;
+﻿using CustomerRestService.DTOs;
 using TicketData.ModelLayer;
+using System.Collections.Generic;
 
 namespace CustomerRestService.ModelConversion
 {
-
     public class TicketDtoConvert
     {
-
         // Convert from Ticket objects to TicketDTO objects
-        public static List<TicketDto>? FromTicketCollection(List<Ticket> inTickets)
+        public static List<TicketDto> FromTicketCollection(List<Ticket> inTickets)
         {
-            List<TicketDto>? aTicketReadDtoList = null;
-            if (inTickets != null)
+            var aTicketReadDtoList = new List<TicketDto>();
+            foreach (Ticket aTicket in inTickets)
             {
-                aTicketReadDtoList = new List<TicketDto>();
-                TicketDto? tempDto;
-                foreach (Ticket aTicket in inTickets)
-                {
-                    if (aTicket != null)
-                    {
-                        tempDto = FromTicket(aTicket);
-                        aTicketReadDtoList.Add(tempDto);
-                    }
-                }
+                var tempDto = FromTicket(aTicket);
+                aTicketReadDtoList.Add(tempDto);
             }
             return aTicketReadDtoList;
         }
 
-        // Convert from Ticket object to PersonDTO object
-        public static Ticket? FromTicket(Ticket inTicket)
+        // Convert from Ticket object to TicketDTO object
+        public static TicketDto FromTicket(Ticket inTicket)
         {
-            Ticket? aTicketReadDto = null;
-            if (inTicket != null)
+            return new TicketDto
             {
-                aTicketReadDto = new Ticket(inTicket.FirstName, inTicket.LastName, inTicket.MobilePhone);
-            }
-            return aTicketReadDto;
+                Id = inTicket.Id,
+                FirstName = inTicket.FirstName,
+                LastName = inTicket.LastName,
+                MobilePhone = inTicket.MobilePhone,
+                Email = inTicket.Email
+            };
         }
 
-        // Convert from PersonDTO object to Ticket object
-        public static Ticket? ToTicket(Ticket inDto)
+        // Convert from TicketDTO object to Ticket object
+        public static Ticket ToTicket(TicketDto inDto)
         {
-            Ticket? aTicket = null;
-            if (inDto != null)
-            {
-                aTicket = new Ticket(inDto.FirstName, inDto.LastName, inDto.MobilePhone);
-            }
-            return aTicket;
+            return new Ticket(inDto.Id, inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email);
         }
     }
-
 }
