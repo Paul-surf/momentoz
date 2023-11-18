@@ -47,7 +47,7 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public int Add(CustomerDto newCustomer)
+        public int Add(TicketDto newCustomer)
         {
             int insertedId = 0;
             try
@@ -66,7 +66,7 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public bool Put(CustomerDto customerToUpdate)
+        public bool Put(TicketDto customerToUpdate)
         {
             throw new NotImplementedException();
         }

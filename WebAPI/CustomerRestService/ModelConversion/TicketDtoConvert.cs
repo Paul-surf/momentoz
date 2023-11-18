@@ -31,7 +31,7 @@ namespace CustomerRestService.ModelConversion
         // Convert from Ticket object to PersonDTO object
         public static Ticket? FromTicket(Ticket inTicket)
         {
-            @as? aTicketReadDto = null;
+            Ticket? aTicketReadDto = null;
             if (inTicket != null)
             {
                 aTicketReadDto = new Ticket(inTicket.FirstName, inTicket.LastName, inTicket.MobilePhone);
