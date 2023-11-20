@@ -8,7 +8,7 @@
       "sslPort": 44303
     }
   },
-  /**
+  
   "profiles": {
     "CustomerRestService": {
       "commandName": "Project",
@@ -19,17 +19,18 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-  **/
+  /**
       "profiles": {
         "CustomerRestService": {
           "commandName": "Project",
           "dotnetRunMessages": true,
           "launchBrowser": true,
-          "launchUrl": "api/tickets",
+          "launchUrl": "api/ticket",
           "applicationUrl": "http://localhost:7049;https://localhost:5132",
           "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
           }
+          **/
         },
         "IIS Express": {
           "commandName": "IISExpress",
