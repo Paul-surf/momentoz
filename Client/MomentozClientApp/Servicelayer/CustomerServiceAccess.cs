@@ -56,7 +56,7 @@ namespace MomentozClientApp.Servicelayer
                         // 204 no data
                         else if (serviceResponse.StatusCode == HttpStatusCode.NoContent)
                         {
-                            customerFromService = new List<Customer>();
+                            customerFromService = new List<Customer>(); 
                         }
                     }
                 }

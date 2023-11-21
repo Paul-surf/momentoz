@@ -1,0 +1,17 @@
+﻿<!-- Views/Account/Login.cshtml -->
+@model WebserverMomentoz.Models.Customer
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MobilePhone)
+        @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+}
+
