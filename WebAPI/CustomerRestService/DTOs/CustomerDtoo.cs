@@ -1,11 +1,11 @@
 ﻿namespace CustomerRestService.DTOs
 {
-    public class CustomerDto
+    public class CustomerDtoo
     {
 
-        public CustomerDto() { }
+        public CustomerDtoo() { }
 
-        public CustomerDto(string? inFirstName, string? inLastName, string? inMobilePhone, string? email)
+        public CustomerDtoo(string? inFirstName, string? inLastName, string? inMobilePhone, string? email)
         {
             FirstName = inFirstName;
             LastName = inLastName;
@@ -16,7 +16,7 @@
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
 
-        public string? Email { get; set; }  
+        public string? Email { get; set; }
         public string? FullName
         {
             get

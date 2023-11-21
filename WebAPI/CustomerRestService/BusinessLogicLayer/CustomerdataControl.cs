@@ -15,9 +15,9 @@ namespace CustomerRestService.BusinesslogicLayer
             }
 
 
-        public CustomerDto? Get(int idToMatch)
+        public CustomerDtoo? Get(int idToMatch)
         {
-            CustomerDto? foundCustomerDto;
+            CustomerDtoo? foundCustomerDto;
             try
             {
                 Customer? foundCustomer = _customerAccess.GetCustomerById(idToMatch);
@@ -31,9 +31,9 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public List<CustomerDto>? Get()
+        public List<CustomerDtoo>? Get()
         {
-            List<CustomerDto>? foundDtos;
+            List<CustomerDtoo>? foundDtos;
             try
             {
                 List<Customer>? foundCustomers = _customerAccess.GetCustomerAll();
@@ -47,7 +47,7 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public int Add(CustomerDto customerToAdd)
+        public int Add(CustomerDtoo customerToAdd)
         {
             int insertedId = 0;
             try
@@ -58,8 +58,9 @@ namespace CustomerRestService.BusinesslogicLayer
                     insertedId = _customerAccess.CreateCustomer(newCustomer);
                 }
             }
-            catch
+            catch(Exception es)
             {
+
                 insertedId = -1;
             }
             return insertedId;
@@ -78,7 +79,7 @@ namespace CustomerRestService.BusinesslogicLayer
 
      
 
-        public bool Put(CustomerDto customerToUpdate)
+        public bool Put(CustomerDtoo customerToUpdate)
         {
             throw new NotImplementedException();
         }

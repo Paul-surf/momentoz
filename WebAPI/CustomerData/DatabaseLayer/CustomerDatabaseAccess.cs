@@ -37,6 +37,7 @@ namespace CustomerData.DatabaseLayer
                 SqlParameter mPhoneParam = new("@MobilePhon", aCustomer.MobilePhone);
                 CreateCommand.Parameters.Add(mPhoneParam);
                 SqlParameter mEmailParam = new("@Emai", aCustomer.Email);
+                CreateCommand.Parameters.Add(mEmailParam);
                 //
                 con.Open();
                 // Execute save and read generated key (ID)

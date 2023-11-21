@@ -23,11 +23,11 @@ namespace CustomerRestService.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<CustomerDto>> Get()
+        public ActionResult<List<CustomerDtoo>> Get()
         {
-            ActionResult<List<CustomerDto>> foundReturn;
+            ActionResult<List<CustomerDtoo>> foundReturn;
             // retrieve data - converted to DTO
-            List<CustomerDto>? foundCustomers = _businessLogicCtrl.Get();
+            List<CustomerDtoo>? foundCustomers = _businessLogicCtrl.Get();
             // evaluate
             if (foundCustomers != null)
             {
@@ -52,14 +52,14 @@ namespace CustomerRestService.Controllers
 
         // URL: api/customers/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<CustomerDto> Get(int id)
+        public ActionResult<CustomerDtoo> Get(int id)
         {
             return null;
         }
 
         // URL: api/customers
         [HttpPost]
-        public ActionResult<int> PostNewCustomer(CustomerDto inCustomerDto)
+        public ActionResult<int> PostNewCustomer(CustomerDtoo inCustomerDto)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;

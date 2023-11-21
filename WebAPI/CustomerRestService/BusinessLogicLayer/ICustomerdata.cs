@@ -6,10 +6,10 @@ namespace CustomerRestService.BusinessLogicLayer
     public interface ICustomerdata
     {
 
-        CustomerDto? Get(int id);
-        List<CustomerDto>? Get();
-        int Add (CustomerDto customerToAdd);
-        bool Put(CustomerDto customerToUpdate);
+        CustomerDtoo? Get(int id);
+        List<CustomerDtoo>? Get();
+        int Add (CustomerDtoo customerToAdd);
+        bool Put(CustomerDtoo customerToUpdate);
         bool Delete(int id);
 
     }

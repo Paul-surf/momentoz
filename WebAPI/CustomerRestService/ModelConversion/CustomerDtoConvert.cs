@@ -8,13 +8,13 @@ namespace CustomerRestService.ModelConversion
     {
 
         // Convert from Customer objects to CustomerDTO objects
-        public static List<CustomerDto>? FromCustomerCollection(List<Customer> inCustomers)
+        public static List<DTOs.CustomerDtoo>? FromCustomerCollection(List<Customer> inCustomers)
         {
-            List<CustomerDto>? aCustomerReadDtoList = null;
+            List<DTOs.CustomerDtoo>? aCustomerReadDtoList = null;
             if (inCustomers != null)
             {
-                aCustomerReadDtoList = new List<CustomerDto>();
-                CustomerDto? tempDto;
+                aCustomerReadDtoList = new List<DTOs.CustomerDtoo>();
+                DTOs.CustomerDtoo? tempDto;
                 foreach (Customer aCustomer in inCustomers)
                 {
                     if (aCustomer != null)
@@ -28,18 +28,18 @@ namespace CustomerRestService.ModelConversion
         }
 
         // Convert from Customer object to CustomerDTO object
-        public static CustomerDto? FromCustomer(Customer inCustomer)
+        public static DTOs.CustomerDtoo? FromCustomer(Customer inCustomer)
         {
-            CustomerDto? aCustomerReadDto = null;
+            DTOs.CustomerDtoo? aCustomerReadDto = null;
             if (inCustomer != null)
             {
-                aCustomerReadDto = new CustomerDto(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email);
+                aCustomerReadDto = new DTOs.CustomerDtoo(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email);
             }
             return aCustomerReadDto;
         }
 
         // Convert from CustomerDTO object to Customer object
-        public static Customer? ToCustomer(CustomerDto inDto)
+        public static Customer? ToCustomer(DTOs.CustomerDtoo inDto)
         {
             Customer? aCustomer = null;
             if (inDto != null)
