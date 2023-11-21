@@ -10,13 +10,28 @@ namespace MomentozClientApp.Model
 
     public class Customer
     {
-        public Customer() { }
-        public Customer(string firstName, string lastName, string mobilePhone) { 
+        public string Username { get; set; }
+        public string PasswordHash { get; set; }
+        
+        public int? Id { get; set; }
+        public Customer(string username, string password) {
+
+            Username = username;
+            PasswordHash = password;
+            Id = Id;
+        }
+
+        private string HashPassword(string password)
+        {
+            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
+        }
+        public Customer(int id, string firstName, string lastName, string mobilePhone) { 
             FirstName = firstName; 
             LastName = lastName; 
-            MobilePhone = mobilePhone; 
+            MobilePhone = mobilePhone;
+            Id = id;
         }
-        public Customer(string firstName, string lastName, string fullName, string mobilePhone) : this(firstName, lastName, fullName) { MobilePhone = mobilePhone; }
+        public Customer(int id, string firstName, string lastName, string fullName, string mobilePhone) : this(id, firstName, lastName, fullName) { MobilePhone = mobilePhone; }
         [JsonProperty("firstName")]
         public string? FirstName { get; set; }
 

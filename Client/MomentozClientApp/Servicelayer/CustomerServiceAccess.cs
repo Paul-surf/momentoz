@@ -19,7 +19,7 @@ namespace MomentozClientApp.Servicelayer
         // Method to retrieve Customer(s)
         public async Task<List<Customer>> GetCustomers(int id = -1)
         {
-            List<Customer> customerFromService = null;
+            List<Customer>? customerFromService = null;
 
             if (_customerService != null)
             {
@@ -71,7 +71,37 @@ namespace MomentozClientApp.Servicelayer
 
         public async Task<int> SaveCustomer(Customer customerToSave)
         {
+            if (_customerService != null)
+            {
+                _customerService.UseUrl = _customerService.BaseUrl;
+                try
+                {
+                    var json = JsonConvert.SerializeObject(customerToSave);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _customerService.CallServicePost(data);
+                    if (serviceResponse.IsSuccessStatusCode)
+                    {
+                        var responseData = await serviceResponse.Content.ReadAsStringAsync();
+                        var savedCustomer = JsonConvert.DeserializeObject<Customer>(responseData);
+                        return savedCustomer?.Id ?? 0; // Assuming Id is the identifier in Customer
+                    }
+                    else
+                    {
+                        // Handle the case where the API response is not successful
+                        return 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception (ex.Message)
+                    // Handle exceptions (e.g., network error, no response from server)
+                    return 0;
+                }
+            }
+
             return 0;
         }
+
     }
 }

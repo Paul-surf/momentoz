@@ -21,7 +21,7 @@ namespace WebserverMomentoz.ServiceLayer
 
         public async Task<List<Customer>>? GetAllCustomers()
         {
-            List<Customer> customersFromService = null;
+            List<Customer>? customersFromService = null;
 
             _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
             _customerServiceConnection.UseUrl += "customers";
