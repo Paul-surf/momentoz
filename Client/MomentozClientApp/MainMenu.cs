@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace MomentozClientApp
 {
-    public partial class Form1 : Form
+    public partial class MainMenu : Form
     {
         readonly CustomerController _customerController;
-        public Form1()
+        public MainMenu()
         {
             InitializeComponent();
             _customerController = new CustomerController();
@@ -60,20 +60,31 @@ namespace MomentozClientApp
 
         private async void GETbtn_Click_1(object sender, EventArgs e)
         {
-            string processText = "OK"; 
+            string processText = "OK";
             List<Customer>? fetchedCustomers = await _customerController.GetAllCustomers();
 
-            if (fetchedCustomers != null) { 
-                if (fetchedCustomers.Count >= 1) { 
-                    processText = "Ok"; 
-                } else { 
-                    processText = "No persons found"; 
-                } 
-            } else { 
-                processText = "Failure: An error occurred"; 
+            if (fetchedCustomers != null)
+            {
+                if (fetchedCustomers.Count >= 1)
+                {
+                    processText = "Ok";
+                }
+                else
+                {
+                    processText = "No persons found";
+                }
             }
-            label2.Text = processText;
-            ListBoxCustomers.DataSource = fetchedCustomers;
+            else
+            {
+                processText = "Failure: An error occurred";
+            }
+          //  label2.Text = processText;
+           // ListBoxCustomers.DataSource = fetchedCustomers;
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

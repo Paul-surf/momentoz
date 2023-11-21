@@ -1,8 +1,8 @@
 ﻿using CustomerRestService.BusinessLogicLayer;
-using CustomerRestService.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using CustomerRestService.DTOs;
 
-namespace PersonRestService.Controllers
+namespace CustomerRestService.Controllers
 {
 
     [Route("api/[controller]")]
@@ -18,8 +18,10 @@ namespace PersonRestService.Controllers
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
 
+
         // URL: api/customers
-        
+
+
         [HttpGet]
         public ActionResult<List<CustomerDto>> Get()
         {
@@ -47,6 +49,7 @@ namespace PersonRestService.Controllers
         }
 
 
+
         // URL: api/customers/{id}
         [HttpGet, Route("{id}")]
         public ActionResult<CustomerDto> Get(int id)
@@ -55,15 +58,14 @@ namespace PersonRestService.Controllers
         }
 
         // URL: api/customers
-        
         [HttpPost]
-        public ActionResult<int> PostNewCustomer(CustomerDto inCustomer)
+        public ActionResult<int> PostNewCustomer(CustomerDto inCustomerDto)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
-           
+            if (inCustomerDto != null)
             {
-                insertedId = _businessLogicCtrl.Add(inCustomer);
+                insertedId = _businessLogicCtrl.Add(inCustomerDto);
             }
             // Evaluate
             if (insertedId > 0)
@@ -81,6 +83,9 @@ namespace PersonRestService.Controllers
             return foundReturn;
         }
 
-
     }
+
+
+
 }
+
