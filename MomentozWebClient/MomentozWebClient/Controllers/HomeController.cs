@@ -18,7 +18,7 @@ namespace MomentozWebClient.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Kurv()
         {
             return View();
         }
