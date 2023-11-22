@@ -9,9 +9,19 @@ namespace MomentozWebClient.Controllers
     public class DestinationController : Controller
     {
         // GET: DestinationController
+
+
+        readonly DestinationLogic _destinationsLogic;
+
+        public DestinationController(IConfiguration inConfiguration)
+        {
+            _destinationsLogic = new DestinationLogic(inConfiguration);
+        }
+
         public async Task<ActionResult> GetAllDestinations()
         {
-            List<Destination>? foundDestinations = await DestinationLogic.GetAllDestinations();
+           
+            List<Destination>? foundDestinations = await _destinationsLogic.GetAllDestinations();
             return View(foundDestinations);
 
 

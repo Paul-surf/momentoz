@@ -2,14 +2,14 @@
 {
     public class Destination
     {
-        string city{ get; set; }
-        string depature { get; set; }
+       public string city{ get; set; }
+       public string depature { get; set; }
 
-        string travelDestination { get; set; }
+       public string travelDestination { get; set; }
 
-        int price { get; set; }
+       public int price { get; set; }
 
-        DateTime depaturetime { get; set; }
+       public DateTime depaturetime { get; set; }
 
       
 

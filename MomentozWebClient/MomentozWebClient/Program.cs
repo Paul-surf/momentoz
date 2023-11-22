@@ -38,7 +38,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Customer}/{action=GetAllCustomers}/{id?}");
+    pattern: "{controller=Destination}/{action=GetAllDestinations}/{id?}");
 app.MapRazorPages();
 
 app.Run();

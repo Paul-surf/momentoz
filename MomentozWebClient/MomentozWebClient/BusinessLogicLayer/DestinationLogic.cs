@@ -14,12 +14,9 @@ namespace MomentozWebClient.BusinessLogicLayer
             _destinationServiceAccess = new DestinationService(inConfiguration);
         }
 
-        internal static Task<List<Destination>?> GetAllDestinations()
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public async Task<List<Destination>> GetAllDestination()
+        public async Task<List<Destination>> GetAllDestinations()
         {
             List<Destination> foundDestinations;
             try
