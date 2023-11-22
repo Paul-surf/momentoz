@@ -1,4 +1,4 @@
-﻿namespace WebserverMomentoz.ServiceLayer {
+﻿namespace MomentozWebClient.ServiceLayer {
     public class ServiceConnection : IServiceConnection {
 
         public ServiceConnection(String? inBaseUrl) {

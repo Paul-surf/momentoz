@@ -1,7 +1,7 @@
-﻿using WebserverMomentoz.Models;
-using WebserverMomentoz.ServiceLayer;
+﻿using MomentozWebClient.Models;
+using MomentozWebClient.ServiceLayer;
 
-namespace WebserverMomentoz.BusinessLogicLayer
+namespace MomentozWebClient.BusinessLogicLayer
 {
     public class CustomerLogic
     {

@@ -1,4 +1,4 @@
-﻿namespace WebserverMomentoz.ServiceLayer {
+﻿namespace MomentozWebClient.ServiceLayer {
     public interface IServiceConnection {
 
         public string? BaseUrl { get; init; }
