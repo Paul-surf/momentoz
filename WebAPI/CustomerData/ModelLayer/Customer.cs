@@ -1,4 +1,4 @@
-﻿namespace CustomerData.ModelLayer
+﻿namespace DatabaseData.ModelLayer
 {
     public class Customer
     {

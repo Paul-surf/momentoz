@@ -1,7 +1,7 @@
-﻿using CustomerData.ModelLayer;
+﻿using DatabaseData.ModelLayer;
 
 
-namespace CustomerData.DatabaseLayer
+namespace DatabaseData.DatabaseLayer
 {
 
     public interface ICustomerAccess

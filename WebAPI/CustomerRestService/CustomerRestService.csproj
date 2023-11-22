@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerData\CustomerData.csproj" />
-    <ProjectReference Include="..\MomentozWebAPI\TicketData\TicketData.csproj" />
+    <ProjectReference Include="..\CustomerData\DatabaseData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

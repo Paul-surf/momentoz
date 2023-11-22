@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using CustomerData.ModelLayer;
+using DatabaseData.ModelLayer;
 using Microsoft.Data.SqlClient;
 
-namespace CustomerData.DatabaseLayer
+namespace DatabaseData.DatabaseLayer
 {
     public class CustomerDatabaseAccess : ICustomerAccess
     {

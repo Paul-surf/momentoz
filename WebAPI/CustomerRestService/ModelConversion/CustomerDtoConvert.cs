@@ -1,4 +1,4 @@
-﻿using CustomerData.ModelLayer;
+﻿using DatabaseData.ModelLayer;
 using CustomerRestService.DTOs;
 
 

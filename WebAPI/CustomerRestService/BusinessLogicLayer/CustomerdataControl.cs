@@ -1,5 +1,5 @@
-﻿using CustomerData.ModelLayer;
-using CustomerData.DatabaseLayer;
+﻿using DatabaseData.ModelLayer;
+using DatabaseData.DatabaseLayer;
 using CustomerRestService.DTOs;
 using CustomerRestService.BusinessLogicLayer;
 
@@ -60,7 +60,7 @@ namespace CustomerRestService.BusinesslogicLayer
             }
             catch(Exception es)
             {
-
+                Console.WriteLine("Caught execption:" + es);
                 insertedId = -1;
             }
             return insertedId;
