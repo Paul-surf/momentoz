@@ -17,7 +17,8 @@ namespace WebserverMomentoz.Controllers
 
 
 
-        // GET: CustomerController
+        // GET: CustomerController. 
+
         public async Task<ActionResult> GetAllCustomers()
         {
             List<Customer>? foundCustomers = await _customerLogic.GetAllCustomers();
