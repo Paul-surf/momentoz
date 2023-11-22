@@ -34,14 +34,14 @@ namespace MomentozWebClient.ServiceLayer
                     {
                         var content = await serviceResponse.Content.ReadAsStringAsync();
 
-                        destinationsFromService = JsonConvert.DeserializeObject<List<Customer>>(content);
+                        destinationsFromService = JsonConvert.DeserializeObject<List<Destination>>(content);
 
                     }
                     else
                     {
                         if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            destinationsFromService = new List<Customer>();
+                            destinationsFromService = new List<Destination>();
                         }
                         else
                         {

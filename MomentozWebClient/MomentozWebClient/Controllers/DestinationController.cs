@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using MomentozWebClient.Models;
 using MomentozWebClient.BusinessLogicLayer;
 using MomentozWebClient.Models;
+
 
 namespace MomentozWebClient.Controllers
 {
@@ -11,7 +11,7 @@ namespace MomentozWebClient.Controllers
         // GET: DestinationController
         public async Task<ActionResult> GetAllDestinations()
         {
-            List<Destination>? foundDestinations = await _destinationLogic.GetAllCustomers();
+            List<Destination>? foundDestinations = await DestinationLogic.GetAllDestinations();
             return View(foundDestinations);
 
 
