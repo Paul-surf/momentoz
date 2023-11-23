@@ -25,13 +25,13 @@ namespace DatabaseData.ModelLayer
         }
         public Ticket(int ID, string Type, int TicketNumber, int? tempBagageID, int? tempFlightID)
         {
-            this.ID = ID;
+            this.Id = ID;
             this.Type = Type;
             this.TicketNumber = TicketNumber;
             this.BagageID = BagageID;
             this.FlightID = FlightID;
         }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Type { get; set; }
         public int TicketNumber { get; set; }
 

@@ -23,7 +23,7 @@ namespace CustomerRestService.ModelConversion
         {
             return new TicketDto
             {
-                ID = inTicket.ID,
+                Id = inTicket.Id,
                 Type = inTicket.Type,
                 TicketNumber = inTicket.TicketNumber,
                 BagageID = inTicket.BagageID,
@@ -34,7 +34,7 @@ namespace CustomerRestService.ModelConversion
         // Convert from TicketDTO object to Ticket object
         public static Ticket ToTicket(TicketDto inDto)
         {
-            return new Ticket(inDto.ID, inDto.Type, inDto.TicketNumber, inDto.BagageID, inDto.FlightID);
+            return new Ticket(inDto.Id, inDto.Type, inDto.TicketNumber, inDto.BagageID, inDto.FlightID);
         }
     }
 }
