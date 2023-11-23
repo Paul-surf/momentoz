@@ -17,6 +17,10 @@ namespace MomentozWebClient.Controllers
         {
             return View();
         }
+        public IActionResult Destination()
+        {
+            return View();
+        }
 
         public IActionResult Kurv()
         {

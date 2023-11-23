@@ -1,5 +1,6 @@
 ﻿using MomentozWebClient.Models;
 
+
 namespace MomentozWebClient.ServiceLayer
 {
     public interface ICustomerAccess

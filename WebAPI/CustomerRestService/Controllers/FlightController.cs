@@ -23,7 +23,7 @@ namespace CustomerRestService.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<FlightDto>> Get()
+        public ActionResult<List<FlightDto>> GetFlights()
         {
             ActionResult<List<FlightDto>> foundReturn;
             // retrieve data - converted to DTO

@@ -6,23 +6,23 @@ using MomentozWebClient.Models;
 
 namespace MomentozWebClient.Controllers
 {
-    public class DestinationController : Controller
+    public class FlightController : Controller
     {
         // GET: DestinationController
 
 
-        readonly DestinationLogic _destinationsLogic;
+        readonly FlightLogic _flightsLogic;
 
-        public DestinationController(IConfiguration inConfiguration)
+        public FlightController(IConfiguration inConfiguration)
         {
-            _destinationsLogic = new DestinationLogic(inConfiguration);
+            _flightsLogic = new FlightLogic(inConfiguration);
         }
 
-        public async Task<ActionResult> GetAllDestinations()
+        public async Task<ActionResult> GetAllFlights()
         {
            
-            List<Destination>? foundDestinations = await _destinationsLogic.GetAllDestinations();
-            return View(foundDestinations);
+            List<Flight>? foundFlights = await _flightsLogic.GetAllFlights();
+            return View(foundFlights);
 
 
         }

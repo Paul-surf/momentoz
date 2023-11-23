@@ -22,7 +22,7 @@ namespace DataTest
         public void TestGetCustomerAll()
         {
             // Arrange
-            _customerAccess = new CustomerDatabaseAccess(_connectionString);
+           // _customerAccess = new CustomerDatabaseAccess(_connectionString);
             // Act
             List<Customer> readCustomers = _customerAccess.GetCustomerAll();
             bool customersWereRead = (readCustomers.Count > 0);
