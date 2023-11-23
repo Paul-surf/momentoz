@@ -2,11 +2,11 @@
 
 namespace DatabaseData.DatabaseLayer
 {
-        public interface IFlightAccess
-        {
+    public interface IFlightAccess
+    {
 
-            List<Flight> GetFlightAll();
-            int CreateFlight(Flight flightToAdd);
-        }
+        List<Flight> GetFlightAll();
+        int CreateFlight(Flight flightToAdd);
+    }
 
-]
+}
