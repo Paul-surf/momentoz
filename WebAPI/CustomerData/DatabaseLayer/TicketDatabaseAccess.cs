@@ -78,7 +78,7 @@ namespace DatabaseData.DatabaseLayer
 
         private Ticket GetTicketFromReader(SqlDataReader ticketReader)
         {
-            int tempId = ticketReader.GetInt32(ticketReader.GetOrdinal("id"));
+            int tempId = ticketReader.GetInt32(ticketReader.GetOrdinal("Id"));
             string tempTicketType = ticketReader.GetString(ticketReader.GetOrdinal("Type"));
             int tempTicketNumber = ticketReader.GetInt32(ticketReader.GetOrdinal("TicketNumber"));
 

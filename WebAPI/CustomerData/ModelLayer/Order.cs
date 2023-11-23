@@ -9,16 +9,27 @@ namespace DatabaseData.ModelLayer
 {
     public class Order
     {
-        public int TotalPrice { get; set; }
-        public DateTime DateOfBuy { get; set; }
+        public int ID { get; set; }    
+        public double TotalPrice { get; set; }
+        public DateTime DateForPurchase { get; set; }
+        public int? CustomerID { get; set; }
+        public int? TicketID { get; set; }
 
-        public Ticket Ticket { get; set; }
-
-        public Order(int totalPrice, DateTime dateOfBuy, Ticket ticket)
+        public Order(double totalPrice, DateTime dateOfBuy, int? TicketID, int? CustomerID)
         {
             TotalPrice = totalPrice;
-            DateOfBuy = dateOfBuy;
-            Ticket = ticket;
+            DateForPurchase = dateOfBuy;
+            this.TicketID = TicketID;
+            this.CustomerID = CustomerID;
+
+        }
+        public Order(int ID, double TotalPrice, DateTime dateOfBuy, int? CustomerID, int? TicketID)
+        {
+            this.ID =ID;
+            this.TotalPrice = TotalPrice;
+            this.DateForPurchase = dateOfBuy;
+            this.CustomerID = CustomerID;
+            this.TicketID=TicketID;
         }
     }
 }
