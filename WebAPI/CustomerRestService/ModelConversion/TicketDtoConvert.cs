@@ -23,18 +23,18 @@ namespace CustomerRestService.ModelConversion
         {
             return new TicketDto
             {
-                Id = inTicket.Id,
-                FirstName = inTicket.FirstName,
-                LastName = inTicket.LastName,
-                MobilePhone = inTicket.MobilePhone,
-                Email = inTicket.Email
+                ID = inTicket.ID,
+                Type = inTicket.Type,
+                TicketNumber = inTicket.TicketNumber,
+                BagageID = inTicket.BagageID,
+                FlightID = inTicket.FlightID
             };
         }
 
         // Convert from TicketDTO object to Ticket object
         public static Ticket ToTicket(TicketDto inDto)
         {
-            return new Ticket(inDto.Id, inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email);
+            return new Ticket(inDto.ID, inDto.Type, inDto.TicketNumber, inDto.BagageID, inDto.FlightID);
         }
     }
 }

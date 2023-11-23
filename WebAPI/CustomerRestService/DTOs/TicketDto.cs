@@ -2,10 +2,10 @@
 {
     public class TicketDto
     {
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? MobilePhone { get; set; }
-        public string? Email { get; set; }
+        public int ID { get; set; }
+        public string Type { get; set; }
+        public int TicketNumber { get; set; }
+        public int? BagageID { get; set; }
+        public int? FlightID { get; set; }
     }
 }
