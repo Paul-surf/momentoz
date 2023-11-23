@@ -12,7 +12,8 @@ builder.Services.AddSingleton<ICustomerdata, CustomerdataControl>();
 builder.Services.AddSingleton<ICustomerAccess, CustomerDatabaseAccess>();
 builder.Services.AddSingleton<ITicketdata, TicketdataControl>();
 builder.Services.AddSingleton<ITicketAccess, TicketDatabaseAccess>();
-
+builder.Services.AddSingleton<IFlightdata, FlightdataControl>();
+builder.Services.AddSingleton<IFlightAccess, FlightDatabaseAccess>();
 
 builder.Services.AddControllers();
 
