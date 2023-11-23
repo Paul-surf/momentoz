@@ -1,9 +1,9 @@
-﻿using WebserverMomentoz.ServiceLayer;
+﻿using MomentozWebClient.ServiceLayer;
 using Microsoft.Extensions.DependencyInjection;
-using WebserverMomentoz.Models;
+using MomentozWebClient.Models;
 using Newtonsoft.Json;
 
-namespace WebserverMomentoz.ServiceLayer
+namespace MomentozWebClient.ServiceLayer
 {
     public class CustomerService : ICustomerAccess
 

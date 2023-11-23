@@ -1,6 +1,6 @@
-﻿using WebserverMomentoz.Models;
+﻿using MomentozWebClient.Models;
 
-namespace WebserverMomentoz.ServiceLayer
+namespace MomentozWebClient.ServiceLayer
 {
     public interface ICustomerAccess
     {

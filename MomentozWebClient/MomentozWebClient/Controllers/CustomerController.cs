@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebserverMomentoz.BusinessLogicLayer;
-using WebserverMomentoz.Models;
+using MomentozWebClient.BusinessLogicLayer;
+using MomentozWebClient.Models;
 
-namespace WebserverMomentoz.Controllers
+namespace MomentozWebClient.Controllers
 {
     public class CustomerController : Controller
     {
