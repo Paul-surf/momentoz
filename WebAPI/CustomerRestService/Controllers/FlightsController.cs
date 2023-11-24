@@ -7,13 +7,13 @@ namespace CustomerRestService.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightController : ControllerBase
+    public class FlightsController : ControllerBase
     {
 
         private readonly IFlightdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
-        public FlightController(IFlightdata inBusinessLogicCtrl)
+        public FlightsController(IFlightdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
@@ -23,7 +23,7 @@ namespace CustomerRestService.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<FlightDto>> GetFlights()
+        public ActionResult<List<FlightDto>> Get()
         {
             ActionResult<List<FlightDto>> foundReturn;
             // retrieve data - converted to DTO

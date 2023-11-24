@@ -16,6 +16,20 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
+        public FlightDto? Get(int idToMatch)
+        {
+            FlightDto? foundFlightDto;
+            try
+            {
+                Flight? foundFlight = _flightAccess.GetFlightById(idToMatch);
+                foundFlightDto = ModelConversion.FlightDtoConvert.FromFlight(foundFlight);
+            }
+            catch
+            {
+                foundFlightDto = null;
+            }
+            return foundFlightDto;
+        }
 
 
         public List<FlightDto>? Get()
@@ -54,7 +68,7 @@ namespace CustomerRestService.BusinesslogicLayer
         }
 
 
-        public bool Put(TicketDto flightToUpdate)
+        public bool Put(FlightDto flightToUpdate)
         {
             throw new NotImplementedException();
         }
@@ -66,9 +80,6 @@ namespace CustomerRestService.BusinesslogicLayer
 
 
 
-        public bool Put(FlightDto flightToUpdate)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

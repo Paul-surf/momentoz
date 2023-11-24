@@ -2,11 +2,7 @@ namespace DatabaseData.ModelLayer
 {
     public class Ticket
     {
-        private int tempId;
-        private string tempTicketType;
-        private int tempTicketNumber;
-        private int? tempBagageID;
-        private int? tempFlightID;
+   
 
 /*        public Ticket(int tempId, string tempTicketType, int tempTicketNumber, int? tempBagageID, int? tempFlightID)
         {

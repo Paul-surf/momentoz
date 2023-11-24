@@ -11,8 +11,8 @@ namespace DatabaseData.DatabaseLayer
     {
         Order GetOrderById(int id);
         List<Order> GetOrderAll();
-        int CreateOrder(Order ticketToAdd);
-        bool UpdateOrder(Order ticketToUpdate);
+        int CreateOrder(Order orderToAdd);
+        bool UpdateOrder(Order orderToUpdate);
         bool DeleteOrderById(int id);
     }
 }

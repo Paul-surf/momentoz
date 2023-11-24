@@ -11,22 +11,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.id)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.address)
+                @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.city)
+                @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.price)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.destinationAddress)
+                @Html.DisplayNameFor(model => model.DestinationAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.destinationCountry)
+                @Html.DisplayNameFor(model => model.DestinationCountry)
             </th>
             <th></th>
         </tr>
@@ -35,22 +35,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.id)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.address)
+                @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.city)
+                @Html.DisplayFor(modelItem => item.City)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.price)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
                 <th>
-                    @Html.DisplayNameFor(model => model.destinationAddress)
+                    @Html.DisplayNameFor(model => model.DestinationAddress)
                 </th>
             <td>
-                @Html.DisplayFor(modelItem => item.destinationCountry)
+                @Html.DisplayFor(modelItem => item.DestinationCountry)
             </td>
             <td>
                 @Html.ActionLink("tilføj", "tilføj", new { /* id=item.PrimaryKey */ }) |

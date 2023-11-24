@@ -38,7 +38,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Destination}/{action=GetAllDestinations}/{id?}");
+    pattern: "{controller=Flight}/{action=GetAllFlights}/{id?}");
 app.MapRazorPages();
 
 app.Run();

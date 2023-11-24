@@ -7,18 +7,18 @@ namespace PersonRestService.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketController : ControllerBase
+    public class TicketsController : ControllerBase
     {
 
         private readonly ITicketdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
-        public TicketController(ITicketdata inBusinessLogicCtrl)
+        public TicketsController(ITicketdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
 
-        // URL: api/Ticket
+        // URL: api/Tickets
 
         [HttpGet]
         public ActionResult<List<TicketDto>> Get()
