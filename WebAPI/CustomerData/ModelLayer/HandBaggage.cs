@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace DatabaseData.ModelLayer
 {
-    public class HandBagage
+    public class HandBaggage
     {
-        public HandBagage(int weight = 5)
+        public HandBaggage(int weight = 5)
         {
-            Weight = weight;
+            BaggegeWeight = weight;
         }
 
-        public int Weight { get; set; }
+        public int HandBaggageID { get; set; }
+        public int BaggegeWeight { get; set; }
+
+
     }
 }

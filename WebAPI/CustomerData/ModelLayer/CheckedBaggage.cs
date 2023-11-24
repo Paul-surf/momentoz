@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace DatabaseData.ModelLayer
 {
-    public class CheckedBagage
+    public class CheckedBaggage
     {
-        public int Weight { get; set; }
+        public int BaggageWeight { get; set; }
 
-        public CheckedBagage(int weight = 20)
+        public int CheckedBaggageId { get; set; }
+        public CheckedBaggage(int weight = 20)
         {
-            Weight = weight;
+            BaggageWeight = weight;
         }
     }
 }

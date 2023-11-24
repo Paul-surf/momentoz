@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DatabaseData.ModelLayer
 {
-    public class Bagage
+    public class Baggage
     {
-        public string HandBagageId { get; set; }
+        public string HandBaggageId { get; set; }
 
-        public string CheckedBagageId { get; set; }
+        public string CheckedBaggageId { get; set; }
 
         public int TotalWeight { get; set; }
 
