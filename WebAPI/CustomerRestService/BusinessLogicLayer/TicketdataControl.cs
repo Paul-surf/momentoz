@@ -40,7 +40,7 @@ namespace CustomerRestService.BusinesslogicLayer
                 List<Ticket>? foundTickets = _ticketAccess.GetTicketAll();
                 foundDtos = ModelConversion.TicketDtoConvert.FromTicketCollection(foundTickets);
             }
-            catch
+            catch(Exception ex) 
             {
                 foundDtos = null;
             }

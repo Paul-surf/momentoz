@@ -49,7 +49,7 @@ namespace DatabaseData.DatabaseLayer
         public List<Ticket> GetTicketAll()
         {
             List<Ticket> foundTickets = new List<Ticket>();
-            string queryString = "select * from Ticket";
+            string queryString = "select id, BagageID, FlightID, TicketNumber, Type from ticket";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -76,13 +76,15 @@ namespace DatabaseData.DatabaseLayer
 
         private Ticket GetTicketFromReader(SqlDataReader ticketReader)
         {
+
+            //select id, BagageID, FlightID, TicketNumber, Type from ticket
             int tempId = ticketReader.GetInt32(ticketReader.GetOrdinal("Id"));
             string tempTicketType = ticketReader.GetString(ticketReader.GetOrdinal("Type"));
             int tempTicketNumber = ticketReader.GetInt32(ticketReader.GetOrdinal("TicketNumber"));
 
             // Checker om der er bagage på ticket
-            int? tempBagageID = ticketReader.IsDBNull(ticketReader.GetOrdinal("BaggageID"))
-            ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("BaggageID"));
+            int? tempBagageID = ticketReader.IsDBNull(ticketReader.GetOrdinal("BagageID"))
+            ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("BagageID"));
 
             // Checker om der er FlightID på ticket
             int? tempFlightID = ticketReader.IsDBNull(ticketReader.GetOrdinal("FlightID"))

@@ -18,9 +18,17 @@ namespace DatabaseData.ModelLayer
             DestinationAddress = destinationAddress;
             DestinationCountry = destinationCountry;
         }
+        //todo better naming
         public Flight(int id, string? address, string? city, double price, string? destinationAddress, string? destinationCountry)
         {
-            Id = id;
+          
+          Id = id;
+            Address = address;
+            City = city;
+            Price = price;
+            DestinationAddress = destinationAddress;
+            DestinationCountry = destinationCountry;
+                
         }
         public int Id { get; set; }
         public string? Address { get; set; }
