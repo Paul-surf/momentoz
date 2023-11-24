@@ -8,9 +8,9 @@ namespace DatabaseData.ModelLayer
 {
     public class Bagage
     {
-        public HandBagage HandBagage { get; set; }
+        public string HandBagageId { get; set; }
 
-        public CheckedBagage CheckedBagage { get; set; }
+        public string CheckedBagageId { get; set; }
 
         public int TotalWeight { get; set; }
 
