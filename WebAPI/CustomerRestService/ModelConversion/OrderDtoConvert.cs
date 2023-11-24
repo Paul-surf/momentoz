@@ -21,7 +21,7 @@ namespace CustomerRestService.ModelConversion
             {
                 ID = inOrder.ID,
                 TotalPrice = inOrder.TotalPrice,
-                DateForPurchase = inOrder.DateForPurchase,
+                DateForPurchase = inOrder.PurchaseDate,
                 TicketID = inOrder.TicketID,
                 CustomerID = inOrder.CustomerID
             };

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DatabaseData.ModelLayer
+﻿namespace DatabaseData.ModelLayer
 {
     public class Flight
     {
         public Flight() { } 
 
-        public Flight(string? address, string? city, double price, string? destinationAddress, string? destinationCountry)
+     public Flight(string? address, string? city, double price, string? destinationAddress, string? destinationCountry)
         {
             Address = address;
             City = city;
@@ -18,9 +12,15 @@ namespace DatabaseData.ModelLayer
             DestinationAddress = destinationAddress;
             DestinationCountry = destinationCountry;
         }
+
         public Flight(int id, string? address, string? city, double price, string? destinationAddress, string? destinationCountry)
         {
             Id = id;
+            Address = address;
+            City = city;
+            Price = price;
+            DestinationAddress = destinationAddress;
+            DestinationCountry = destinationCountry;
         }
         public int Id { get; set; }
         public string? Address { get; set; }

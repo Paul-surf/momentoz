@@ -61,7 +61,7 @@ namespace CustomerRestService.BusinesslogicLayer
             }
             catch (Exception es)
             {
-                Console.WriteLine("Caught execption:" + es);
+                Console.WriteLine("Caught exception:" + es);
                 insertedId = -1;
             }
             return insertedId;

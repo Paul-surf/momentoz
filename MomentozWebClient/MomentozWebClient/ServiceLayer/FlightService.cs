@@ -59,14 +59,6 @@ namespace MomentozWebClient.ServiceLayer
             return flightFromService;
         }
 
-
-
-
-
-
-
-
-
         public bool AddFlightr(Flight flight)
         {
             throw new NotImplementedException();
@@ -76,8 +68,6 @@ namespace MomentozWebClient.ServiceLayer
         {
             throw new NotImplementedException();
         }
-
-
 
         public Customer GetFlight(int id)
         {

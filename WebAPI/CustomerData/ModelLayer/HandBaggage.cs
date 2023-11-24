@@ -10,11 +10,11 @@ namespace DatabaseData.ModelLayer
     {
         public HandBaggage(int weight = 5)
         {
-            BaggegeWeight = weight;
+            BaggageWeight = weight;
         }
 
         public int HandBaggageID { get; set; }
-        public int BaggegeWeight { get; set; }
+        public int BaggageWeight { get; set; }
 
 
     }

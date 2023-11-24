@@ -5,32 +5,49 @@ using Xunit.Abstractions;
 
 namespace DataTest
 {
-    [TestClass]
     public class TestCustomerDataAccess
     {
         private readonly ITestOutputHelper _extraOutput;
-        readonly private ICustomerAccess _customerAccess;
-        readonly string _connectionString = "Server=hildur.ucn.dk; Database=DMA-CSD-S222_10461241; User Id=DMA-CSD-S222_10461241; Password=Password1!; Encrypt=False;";
-        // readonly string _connectionString = "Server=localhost,1401; Database=momentoz; User Id=sa; Password=Password1!; Encrypt=True; TrustServerCertificate=False; CertificateFile=<path-to-certificate>; CertificatePassword=<certificate-password>;";
+        private readonly ICustomerAccess _customerAccess;
+        private readonly IFlightAccess _flightAccess;
 
         public TestCustomerDataAccess(ITestOutputHelper output)
         {
             _extraOutput = output;
-            _customerAccess = new CustomerDatabaseAccess(_connectionString);
+            _customerAccess = new CustomerDatabaseAccess("Server=hildur.ucn.dk; Database=DMA-CSD-S222_10461241; User Id=DMA-CSD-S222_10461241");
+            _flightAccess = new FlightDatabaseAccess("Server=hildur.ucn.dk; Database=DMA-CSD-S222_10461241; User Id=DMA-CSD-S222_10461241");
         }
+
         [Fact]
         public void TestGetCustomerAll()
         {
-            // Arrange
-           // _customerAccess = new CustomerDatabaseAccess(_connectionString);
+            // Arrange is done in the constructor
+
             // Act
             List<Customer> readCustomers = _customerAccess.GetCustomerAll();
-            bool customersWereRead = (readCustomers.Count > 0);
+            bool customersWereRead = readCustomers.Any(); // Using LINQ to check if any customers were read
+
             // Print additional output
             _extraOutput.WriteLine("Number of customers: " + readCustomers.Count);
 
             // Assert
             Assert.IsTrue(customersWereRead);
+        }
+
+        [Fact]
+        public void TestGetFlightAll()
+        {
+            // Arrange is done in the constructor
+
+            // Act
+            List<Flight> readFlights = _flightAccess.GetFlightAll();
+            bool flightsWereRead = readFlights.Any(); // Using LINQ to check if any flights were read
+
+            // Print additional output
+            _extraOutput.WriteLine("Number of flights: " + readFlights.Count);
+
+            // Assert
+            Assert.IsTrue(flightsWereRead);
         }
     }
 }

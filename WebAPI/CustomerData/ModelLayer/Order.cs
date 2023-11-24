@@ -11,14 +11,14 @@ namespace DatabaseData.ModelLayer
     {
         public int ID { get; set; }    
         public double TotalPrice { get; set; }
-        public DateTime DateForPurchase { get; set; }
+        public DateTime PurchaseDate { get; set; }
         public int? CustomerID { get; set; }
         public int? TicketID { get; set; }
 
         public Order(double totalPrice, DateTime dateOfBuy, int? TicketID, int? CustomerID)
         {
             TotalPrice = totalPrice;
-            DateForPurchase = dateOfBuy;
+            PurchaseDate = dateOfBuy;
             this.TicketID = TicketID;
             this.CustomerID = CustomerID;
 
@@ -27,7 +27,7 @@ namespace DatabaseData.ModelLayer
         {
             this.ID =ID;
             this.TotalPrice = TotalPrice;
-            this.DateForPurchase = dateOfBuy;
+            this.PurchaseDate = dateOfBuy;
             this.CustomerID = CustomerID;
             this.TicketID=TicketID;
         }

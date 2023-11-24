@@ -30,7 +30,7 @@ namespace DatabaseData.DatabaseLayer
             {
                 CreateCommand.Parameters.Add(new SqlParameter("@TicketType", aTicket.Type));
                 CreateCommand.Parameters.Add(new SqlParameter("@TicketNumber", aTicket.TicketNumber));
-/*              CreateCommand.Parameters.Add(new SqlParameter("@Bagage", aTicket.Bagage));
+/*              CreateCommand.Parameters.Add(new SqlParameter("@Baggage", aTicket.Baggage));
                 CreateCommand.Parameters.Add(new SqlParameter("@Flight", aTicket.Flight));*/
 
                 con.Open();
@@ -49,7 +49,7 @@ namespace DatabaseData.DatabaseLayer
         public List<Ticket> GetTicketAll()
         {
             List<Ticket> foundTickets = new List<Ticket>();
-            string queryString = "select * from Ticket";
+            string queryString = "SELECT id, baggageid, flightid, ticketnumber, type from Ticket";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))

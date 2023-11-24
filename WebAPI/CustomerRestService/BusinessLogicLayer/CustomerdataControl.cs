@@ -60,14 +60,14 @@ namespace CustomerRestService.BusinesslogicLayer
             }
             catch(Exception es)
             {
-                Console.WriteLine("Caught execption:" + es);
+                Console.WriteLine("Caught exeception:" + es);
                 insertedId = -1;
             }
             return insertedId;
         }
 
 
-        public bool Put(TicketDto customerToUpdate)
+        public bool Put(CustomerDtoo customerToUpdate)
         {
             throw new NotImplementedException();
         }
@@ -77,11 +77,6 @@ namespace CustomerRestService.BusinesslogicLayer
             throw new NotImplementedException();
         }
 
-     
-
-        public bool Put(CustomerDtoo customerToUpdate)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
 }
