@@ -1,17 +1,15 @@
 ﻿@model IEnumerable<MomentozWebClient.Models.Customer>
 
 @{
-    ViewData["Title"] = "Customers";
+    ViewData["Title"] = "Kunder";
 }
 
-
+<h1>Kunder</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -32,9 +30,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>

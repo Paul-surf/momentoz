@@ -49,7 +49,7 @@ namespace DatabaseData.DatabaseLayer
         public List<Ticket> GetTicketAll()
         {
             List<Ticket> foundTickets = new List<Ticket>();
-            string queryString = "SELECT id, baggageid, flightid, ticketnumber, type from Ticket";
+            string queryString = "SELECT id, baggageid, flightid, ticketNumber, type FROM Ticket";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -81,7 +81,7 @@ namespace DatabaseData.DatabaseLayer
             int tempTicketNumber = ticketReader.GetInt32(ticketReader.GetOrdinal("TicketNumber"));
 
             // Checker om der er bagage på ticket
-            int? tempBagageID = ticketReader.IsDBNull(ticketReader.GetOrdinal("BaggageID"))
+            int? tempBaggageID = ticketReader.IsDBNull(ticketReader.GetOrdinal("BaggageID"))
             ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("BaggageID"));
 
             // Checker om der er FlightID på ticket
@@ -89,7 +89,7 @@ namespace DatabaseData.DatabaseLayer
             ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("FlightID"));
 
 
-            return new Ticket(tempId, tempTicketType, tempTicketNumber, tempBagageID, tempFlightID);
+            return new Ticket(tempId, tempTicketType, tempTicketNumber, tempBaggageID, tempFlightID);
         }
 
         // The method GetTicketById would be here, similar to GetTicketAll, but with parameterized SQL for a single ID.

@@ -15,9 +15,12 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: url('/images/fly.png'); /* Opdater dette med den korrekte sti til dit billede */
-    background-size: cover; /* Sørger for at billedet dækker hele skærmen */
-    background-repeat: no-repeat; /* Forhindrer billedet i at gentage sig */
-    background-attachment: fixed; /* Billedet ruller ikke med siden */
-    background-position: center center; /* Centrerer billedet på skærmen */
+    background: linear-gradient( rgba(255, 255, 255, 0.7), /* Hvid farve med 70% opacitet */
+    rgba(255, 255, 255, 0.7) /* Du kan justere opaciteten efter behov */
+    ), url('/images/flyet.png') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
 }

@@ -21,14 +21,19 @@ namespace CustomerRestService.ModelConversion
             {
                 ID = inOrder.ID,
                 TotalPrice = inOrder.TotalPrice,
-                DateForPurchase = inOrder.PurchaseDate,
+                PurchaseDate = inOrder.PurchaseDate,
                 TicketID = inOrder.TicketID,
                 CustomerID = inOrder.CustomerID
             };
         }
         public static Order ToOrder(OrderDto inDto)
         {
-            return new Order(inDto.ID, inDto.TotalPrice, inDto.DateForPurchase, inDto.CustomerID, inDto.TicketID);
+            Order? aOrder = null;
+            if(inDto != null)
+            {
+                aOrder = new Order(inDto.TotalPrice, inDto.PurchaseDate, inDto.TicketID, inDto.CustomerID);
+            }
+            return aOrder;
         }
     }
 }

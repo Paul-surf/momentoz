@@ -1,32 +1,42 @@
 ﻿@model IEnumerable<MomentozWebClient.Models.Flight>
 
 @{
-    ViewData["Title"] = "Fly";
+    ViewData["Title"] = "Billetter";
 }
 
-<h1>Flyrejser</h1>
+<h1>Biletter</h1>
 
 
 <table class="table">
+    <!-- ... linje 11-21 er påbegyndt udvikling af ordre funktionalitet hvor brugeren som bestiller billet føres her til og skal have logget ind først... -->
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <!-- ... dine andre table data cells ... -->
+                <td>
+                    @Html.ActionLink("Vælg", "CreateOrder", "Order", new { flightId = item.Id }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
     <thead>
         <tr>
+            
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Afgangs adresse
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                By
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                Pris
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Destination
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DestinationAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DestinationCountry)
+                Land
             </th>
             <th></th>
         </tr>
@@ -34,9 +44,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
@@ -46,17 +54,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-                <th>
+                <td>
                     @Html.DisplayNameFor(model => model.DestinationAddress)
-                </th>
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DestinationCountry)
             </td>
             <td>
-               @Html.ActionLink("Tilføj", "Læs mere", new { /* id=item.PrimaryKey */ }) 
+               @Html.ActionLink("Vælg", "Læs mere", new { /* id=item.PrimaryKey */ }) 
                
             </td>
         </tr>
 }
     </tbody>
+</table>
+
+
+
+
 </table>

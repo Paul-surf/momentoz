@@ -5,12 +5,12 @@ namespace CustomerRestService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IOrderdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
-        public OrderController(IOrderdata inBusinessLogicCtrl)
+        public OrdersController(IOrderdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
