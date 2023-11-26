@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CustomerData\DatabaseData.csproj" />
-    <ProjectReference Include="..\..\CustomerRestService\CustomerRestService.csproj" />
+    <ProjectReference Include="..\..\CustomerRestService\RESTfulService.csproj" />
   </ItemGroup>
 
 </Project>

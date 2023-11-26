@@ -1,6 +1,6 @@
 ﻿using Microsoft.Identity.Client;
 
-namespace CustomerRestService.DTOs
+namespace RESTfulService.DTOs
 {
     public class FlightDto
     {

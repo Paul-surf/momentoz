@@ -1,4 +1,4 @@
-﻿namespace CustomerRestService.DTOs
+﻿namespace RESTfulService.DTOs
 {
     public class CustomerDtoo
     {

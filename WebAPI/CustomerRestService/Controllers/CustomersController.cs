@@ -1,8 +1,8 @@
-﻿using CustomerRestService.BusinessLogicLayer;
+﻿using RESTfulService.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
-using CustomerRestService.DTOs;
+using RESTfulService.DTOs;
 
-namespace CustomerRestService.Controllers
+namespace RESTfulService.Controllers
 {
 
     [Route("api/[controller]")]

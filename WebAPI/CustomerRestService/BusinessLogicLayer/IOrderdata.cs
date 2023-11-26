@@ -1,6 +1,6 @@
 ﻿using DatabaseData.ModelLayer;
-using CustomerRestService.DTOs;
-namespace CustomerRestService.BusinessLogicLayer
+using RESTfulService.DTOs;
+namespace RESTfulService.BusinessLogicLayer
 {
     public interface IOrderdata
     {

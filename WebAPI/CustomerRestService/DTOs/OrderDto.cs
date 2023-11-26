@@ -1,6 +1,6 @@
 ﻿using DatabaseData.ModelLayer;
 
-namespace CustomerRestService.DTOs
+namespace RESTfulService.DTOs
 {
         public class OrderDto
         {

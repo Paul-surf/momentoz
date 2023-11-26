@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerRestService", "..\CustomerRestService\CustomerRestService.csproj", "{87F13AB5-EF1B-4E09-868F-47CE5183D5AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTfulService", "..\CustomerRestService\RESTfulService.csproj", "{87F13AB5-EF1B-4E09-868F-47CE5183D5AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseData", "..\CustomerData\DatabaseData.csproj", "{4132C929-3DFF-4D39-BA64-4F52E691E077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTest", "DataTest\DataTest.csproj", "{2560C7F2-2CB7-45D3-8799-9F5EAED25C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTest", "DataTest\DataTest.csproj", "{2560C7F2-2CB7-45D3-8799-9F5EAED25C3D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4132C929-3DFF-4D39-BA64-4F52E691E077} = {4132C929-3DFF-4D39-BA64-4F52E691E077}
 		{87F13AB5-EF1B-4E09-868F-47CE5183D5AA} = {87F13AB5-EF1B-4E09-868F-47CE5183D5AA}

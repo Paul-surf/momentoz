@@ -1,9 +1,9 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
-using CustomerRestService.DTOs;
-using CustomerRestService.BusinessLogicLayer;
+using RESTfulService.DTOs;
+using RESTfulService.BusinessLogicLayer;
 
-namespace CustomerRestService.BusinesslogicLayer
+namespace RESTfulService.BusinesslogicLayer
 {
 
     public class CustomerdataControl : ICustomerdata
@@ -58,9 +58,9 @@ namespace CustomerRestService.BusinesslogicLayer
                     insertedId = _customerAccess.CreateCustomer(newCustomer);
                 }
             }
-            catch(Exception es)
+            catch
             {
-                Console.WriteLine("Caught exeception:" + es);
+               
                 insertedId = -1;
             }
             return insertedId;

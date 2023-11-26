@@ -53,7 +53,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Flight> foundFlights;
             Flight readFlight;
-            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flight";
+            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flights";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -93,7 +93,7 @@ namespace DatabaseData.DatabaseLayer
         public Flight GetFlightById(int findId)
         {
             Flight foundFlight;
-            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flight where id = @Id";
+            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flights where id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

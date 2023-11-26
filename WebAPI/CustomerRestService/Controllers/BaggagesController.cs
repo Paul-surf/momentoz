@@ -1,39 +1,39 @@
 ﻿using RESTfulService.BusinessLogicLayer;
-using RESTfulService.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using RESTfulService.DTOs;
 
 namespace RESTfulService.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightsController : ControllerBase
+    public class BaggagesController : ControllerBase
     {
 
-        private readonly IFlightdata _businessLogicCtrl;
+        private readonly IBaggagedata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
-        public FlightsController(IFlightdata inBusinessLogicCtrl)
+        public BaggagesController(IBaggagedata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
 
 
-        // URL: api/Flights
+        // URL: api/customers
 
 
         [HttpGet]
-        public ActionResult<List<FlightDto>> Get()
+        public ActionResult<List<BaggageDto>> Get()
         {
-            ActionResult<List<FlightDto>> foundReturn;
+            ActionResult<List<BaggageDto>> foundReturn;
             // retrieve data - converted to DTO
-            List<FlightDto>? foundFlights = _businessLogicCtrl.Get();
+            List<BaggageDto>? foundBaggages = _businessLogicCtrl.Get();
             // evaluate
-            if (foundFlights != null)
+            if (foundBaggages != null)
             {
-                if (foundFlights.Count > 0)
+                if (foundBaggages.Count > 0)
                 {
-                    foundReturn = Ok(foundFlights);                 // Statuscode 200
+                    foundReturn = Ok(foundBaggages);                 // Statuscode 200
                 }
                 else
                 {
@@ -50,22 +50,22 @@ namespace RESTfulService.Controllers
 
 
 
-        // URL: api/Flights/{id}
+        // URL: api/customers/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<FlightDto> Get(int id)
+        public ActionResult<BaggageDto> Get(int id)
         {
             return null;
         }
 
-        // URL: api/Flights
+        // URL: api/customers
         [HttpPost]
-        public ActionResult<int> PostNewFlight(FlightDto inFlightDto)
+        public ActionResult<int> PostNewBaggage(BaggageDto inBaggageDto)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
-            if (inFlightDto != null)
+            if (inBaggageDto != null)
             {
-                insertedId = _businessLogicCtrl.Add(inFlightDto);
+                insertedId = _businessLogicCtrl.Add(inBaggageDto);
             }
             // Evaluate
             if (insertedId > 0)
@@ -83,8 +83,7 @@ namespace RESTfulService.Controllers
             return foundReturn;
         }
 
+
     }
-
-
 
 }

@@ -62,7 +62,7 @@ namespace DatabaseData.DatabaseLayer
             List<Customer> foundCustomers;
             Customer readCustomer;
             //
-            string queryString = "SELECT id, firstName, lastName, mobilePhone, EMAIL from Customer";
+            string queryString = "SELECT id, firstName, lastName, mobilePhone, EMAIL from Customers";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -111,7 +111,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select id, firstName, lastName, mobilePhone, email from Customer where id = @Id";
+            string queryString = "select id, firstName, lastName, mobilePhone, email from Customers where id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

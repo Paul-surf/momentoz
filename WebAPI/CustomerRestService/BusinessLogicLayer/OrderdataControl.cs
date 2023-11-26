@@ -1,18 +1,18 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
-using CustomerRestService.DTOs;
-using CustomerRestService.BusinessLogicLayer;
+using RESTfulService.DTOs;
+using RESTfulService.BusinessLogicLayer;
 using System;
 
-namespace CustomerRestService.BusinessLogicLayer
+namespace RESTfulService.BusinessLogicLayer
 {
     public class OrderdataControl : IOrderdata
     {
-        private readonly IOrderAccess _OrderAccess;
+        private readonly IOrderAccess _orderAccess;
 
         public OrderdataControl(IOrderAccess inOrderAccess)
         {
-            _OrderAccess = inOrderAccess;
+            _orderAccess = inOrderAccess;
         }
 
 
@@ -21,7 +21,7 @@ namespace CustomerRestService.BusinessLogicLayer
             OrderDto? foundOrderDto;
             try
             {
-                Order? foundOrder = _OrderAccess.GetOrderById(idToMatch);
+                Order? foundOrder = _orderAccess.GetOrderById(idToMatch);
                 foundOrderDto = ModelConversion.OrderDtoConvert.FromOrder(foundOrder);
             }
             catch
@@ -37,7 +37,7 @@ namespace CustomerRestService.BusinessLogicLayer
             List<OrderDto>? foundDtos;
             try
             {
-                List<Order>? foundOrders = _OrderAccess.GetOrderAll();
+                List<Order>? foundOrders = _orderAccess.GetOrderAll();
                 foundDtos = ModelConversion.OrderDtoConvert.FromOrderCollection(foundOrders);
             }
             catch
@@ -56,7 +56,7 @@ namespace CustomerRestService.BusinessLogicLayer
                 Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(newOrder);
                 if (foundOrder != null)
                 {
-                    insertedId = _OrderAccess.CreateOrder(foundOrder);
+                    insertedId = _orderAccess.CreateOrder(foundOrder);
                 }
             }
             catch

@@ -2,7 +2,7 @@
 
 
 
-namespace CustomerRestService.ModelConversion
+namespace RESTfulService.ModelConversion
 {
     public class FlightDtoConvert
     {

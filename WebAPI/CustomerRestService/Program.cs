@@ -1,9 +1,10 @@
-using CustomerRestService.BusinesslogicLayer;
+using RESTfulService.BusinesslogicLayer;
 using DatabaseData.DatabaseLayer;
 using System.Net.Security;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using CustomerRestService.BusinessLogicLayer;
+using RESTfulService.BusinessLogicLayer;
+using RESTfulService.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,10 @@ builder.Services.AddSingleton<IFlightdata, FlightdataControl>();
 builder.Services.AddSingleton<IFlightAccess, FlightDatabaseAccess>();
 builder.Services.AddSingleton<IOrderdata, OrderdataControl>();
 builder.Services.AddSingleton<IOrderAccess, OrderDatabaseAccess>();
-
-builder.Services.AddControllers();
-
+builder.Services.AddSingleton<IBaggagedata, BaggageDataControl>();
+builder.Services.AddSingleton<IBaggageAccess, BaggageDatabaseAccess>();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers(); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,3 +34,5 @@ app.MapControllers();
 
 
 app.Run();
+
+

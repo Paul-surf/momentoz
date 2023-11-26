@@ -1,6 +1,6 @@
-﻿using CustomerRestService.DTOs;
+﻿using RESTfulService.DTOs;
 
-namespace CustomerRestService.DTOs
+namespace RESTfulService.DTOs
 {
     public class TicketDto
     {
@@ -18,7 +18,7 @@ namespace CustomerRestService.DTOs
         
 
         public int Id { get; set; }
-        public string Type { get; set; }
+        public string? Type { get; set; }
         public int TicketNumber { get; set; }
         public int? BaggageID { get; set; }
         public int? FlightID { get; set; }

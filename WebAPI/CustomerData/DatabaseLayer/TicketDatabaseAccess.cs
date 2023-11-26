@@ -49,7 +49,7 @@ namespace DatabaseData.DatabaseLayer
         public List<Ticket> GetTicketAll()
         {
             List<Ticket> foundTickets = new List<Ticket>();
-            string queryString = "SELECT id, baggageid, flightid, ticketNumber, type FROM Ticket";
+            string queryString = "SELECT id, baggageid, flightid, ticketNumber, type FROM Tickets";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))

@@ -6,15 +6,39 @@ using System.Threading.Tasks;
 
 namespace DatabaseData.ModelLayer
 {
-    public class Baggage
+    public class Baggage { 
+
+        public Baggage() { }
+
+        public Baggage(double totalWeight, double price)
+        {
+       
+            this.TotalWeight = totalWeight;
+            this.Price = price;
+            //     this.baggageID = baggageID;
+            //   this.baggageId = baggageId;
+        }
+        public Baggage(int id, double totalWeight, double price) : this(totalWeight, price)
     {
-        public string HandBaggageId { get; set; }
+        Id = id;
 
-        public string CheckedBaggageId { get; set; }
 
-        public int TotalWeight { get; set; }
+    }
+    
+     //   private int baggageID;
+       // private int baggageId;
+        
 
-        public int Price { get; set; }
+     
+
+        //  public int BaggageId { get; set; }
+
+        //public int BaggageId { get; set; }
+        public int Id { get; set; }
+
+        public double TotalWeight { get; set; }
+
+        public double Price { get; set; }
 
 
     }

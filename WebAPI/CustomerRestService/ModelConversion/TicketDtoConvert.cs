@@ -1,8 +1,8 @@
-﻿using CustomerRestService.DTOs;
+﻿using RESTfulService.DTOs;
 using DatabaseData.ModelLayer;
 using System.Collections.Generic;
 
-namespace CustomerRestService.ModelConversion
+namespace RESTfulService.ModelConversion
 {
     public class TicketDtoConvert
     {

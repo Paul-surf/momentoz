@@ -1,8 +1,8 @@
 ﻿using DatabaseData.ModelLayer;
-using CustomerRestService.DTOs;
+using RESTfulService.DTOs;
 
 
-namespace CustomerRestService.ModelConversion
+namespace RESTfulService.ModelConversion
 {
     public class CustomerDtoConvert
     {

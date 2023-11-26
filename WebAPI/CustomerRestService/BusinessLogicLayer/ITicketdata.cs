@@ -1,6 +1,6 @@
-﻿using CustomerRestService.DTOs;
+﻿using RESTfulService.DTOs;
 
-namespace CustomerRestService.BusinessLogicLayer
+namespace RESTfulService.BusinessLogicLayer
 {
 
     public interface ITicketdata

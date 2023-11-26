@@ -1,9 +1,9 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
-using CustomerRestService.DTOs;
-using CustomerRestService.BusinessLogicLayer;
+using RESTfulService.DTOs;
+using RESTfulService.BusinessLogicLayer;
 
-namespace CustomerRestService.BusinesslogicLayer
+namespace RESTfulService.BusinesslogicLayer
 {
 
     public class FlightdataControl : IFlightdata
