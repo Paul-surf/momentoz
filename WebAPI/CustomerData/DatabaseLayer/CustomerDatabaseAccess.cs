@@ -137,6 +137,29 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
+        public Customer GetCustomerByUserId(string? findUserId)
+        {
+            Customer foundCustomer;
+            //
+            string queryString = "select customerId, firstName, lastName, email, loginUserId from Customer where loginUserId = @UserId";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                // Prepace SQL
+                SqlParameter idParam = new SqlParameter("@UserId", findUserId);
+                readCommand.Parameters.Add(idParam);
+                //
+                con.Open();
+                // Execute read
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                foundCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    foundCustomer = GetCustomerFromReader(customerReader);
+                }
+            }
+            return foundCustomer;
+        }
     }
 
 

@@ -83,6 +83,34 @@ namespace RESTfulService.Controllers
             return foundReturn;
         }
 
+
+        // URL: api/customers/{loginid}
+        [HttpGet, Route("{loginid}")]
+        public ActionResult<CustomerDtoo?> Get(string loginid)
+        {
+            ActionResult<CustomerDtoo> foundReturn;
+            // retrieve and convert data
+            CustomerDtoo? foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
+            // evaluate
+            if (foundCustomer != null)
+            {
+                if (!String.IsNullOrEmpty(foundCustomer.LoginUserId))
+                {
+                    foundReturn = Ok(foundCustomer);                 // Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    // Ok, but no content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        // Internal server error
+            }
+            // send response back to client
+            return foundReturn;
+        }
+
     }
 
 

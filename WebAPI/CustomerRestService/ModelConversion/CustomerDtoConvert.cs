@@ -33,7 +33,7 @@ namespace RESTfulService.ModelConversion
             DTOs.CustomerDtoo? aCustomerReadDto = null;
             if (inCustomer != null)
             {
-                aCustomerReadDto = new DTOs.CustomerDtoo(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email);
+                aCustomerReadDto = new DTOs.CustomerDtoo(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.LoginUserId);
             }
             return aCustomerReadDto;
         }
@@ -44,7 +44,7 @@ namespace RESTfulService.ModelConversion
             Customer? aCustomer = null;
             if (inDto != null)
             {
-                aCustomer = new Customer(inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email);
+                aCustomer = new Customer(inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email, inDto.LoginUserId);
             }
             return aCustomer;
         }

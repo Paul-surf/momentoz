@@ -20,6 +20,9 @@ namespace MomentozWebClient.Controllers
 
         public async Task<ActionResult> GetAllCustomers()
         {
+            System.Security.Claims.ClaimsPrincipal loggedInUser = User;
+            
+            
             List<Customer>? foundCustomers = await _customerLogic.GetAllCustomers();
             return View(foundCustomers);
 

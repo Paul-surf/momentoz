@@ -13,6 +13,19 @@
             Email = email;
         }
 
+        public Customer(string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
+            Email = email;
+            LoginUserId = loginUserId;
+
+        }
+
+
+
+
         public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email) : this(firstName, lastName, mobilePhone, email)
         {
             Id = id;
@@ -23,7 +36,11 @@
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
 
-        public string? Email { get; set; }  
+        public string? Email { get; set; }
+
+        public string? LoginUserId { get; set; }
+
+
 
         public bool IsCustomerEmpty
         {
