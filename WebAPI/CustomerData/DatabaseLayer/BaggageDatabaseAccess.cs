@@ -22,7 +22,9 @@ namespace DatabaseData.DatabaseLayer
         public int CreateBaggage(Baggage aBaggage)
         {
             int insertedId = -1; // Antag at -1 repræsenterer en fejltilstand
-            string insertString = "INSERT INTO Baggage(TotalWeight, Price) OUTPUT INSERTED.ID VALUES(@TotalWeight, @Price)";
+            string insertString = @"INSERT INTO Baggage(TotalWeight, Price)  
+                OUTPUT INSERTED.ID 
+                 VALUES(@TotalWeight, @Price)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             
                 using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
@@ -55,7 +57,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Baggage> foundBaggages = new List<Baggage>();
             Baggage readBaggage;
-            string queryString = "select id, totalWeight, Price from Baggages;";
+            string queryString = "SELECT id, totalWeight, Price FROM Baggages";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -65,7 +67,7 @@ namespace DatabaseData.DatabaseLayer
                 while (baggageReader.Read())
                 {
                     readBaggage = GetBaggageFromReader(baggageReader);
-                    foundBaggages.Add(GetBaggageFromReader(baggageReader));
+                    foundBaggages.Add(readBaggage);
                 }
             }
             return foundBaggages;
@@ -94,27 +96,36 @@ namespace DatabaseData.DatabaseLayer
 
         public Baggage GetBaggageById(int findId)
         {
-            Baggage foundBaggage;
-            //
-            string queryString = "SELECT id, totalWeight, price FROM baggages where id = @id";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            try
             {
-                // Prepace SQL
-                SqlParameter idParam = new SqlParameter("@Id", findId);
-                readCommand.Parameters.Add(idParam);
-                //
-                con.Open();
-                // Execute read
-                SqlDataReader baggageReader = readCommand.ExecuteReader();
-                foundBaggage = new Baggage();
-                while (baggageReader.Read())
+                string queryString = "SELECT id, totalWeight, price FROM Baggages WHERE id = @id";
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(queryString, con))
                 {
-                    foundBaggage = GetBaggageFromReader(baggageReader);
+                    SqlParameter idParam = new SqlParameter("@Id", findId);
+                    readCommand.Parameters.Add(idParam);
+                    con.Open();
+                    using (SqlDataReader baggageReader = readCommand.ExecuteReader())
+                    {
+                        if (baggageReader.Read())
+                        {
+                            return GetBaggageFromReader(baggageReader);
+                        }
+                        else
+                        {
+                            return null; // eller kast en tilpasset exception
+                        }
+                    }
                 }
             }
-            return foundBaggage;
+            catch (SqlException ex)
+            {
+                // Log fejlen, og kast eventuelt videre eller returner null
+                Debug.WriteLine("Database error: " + ex.Message);
+                return null; // Eller kast en tilpasset exception
+            }
         }
+
 
         public bool UpdateBaggage(Baggage BaggageToUpdate)
         {

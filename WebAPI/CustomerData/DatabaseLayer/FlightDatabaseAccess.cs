@@ -22,7 +22,7 @@ namespace DatabaseData.DatabaseLayer
         {
             int insertedId = -1;
             // Corrected the parameter names in the SQL command
-            string insertString = "insert into Flight(address, city, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
+            string insertString = "INSERT INTO Flight(address, city, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
@@ -53,7 +53,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Flight> foundFlights;
             Flight readFlight;
-            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flights";
+            string queryString = "SELECT id, address, city, price, destinationAddress, destinationCountry FROM Flights";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -93,7 +93,7 @@ namespace DatabaseData.DatabaseLayer
         public Flight GetFlightById(int findId)
         {
             Flight foundFlight;
-            string queryString = "select id, address, city, price, destinationAddress, destinationCountry from Flights where id = @Id";
+            string queryString = "SELECT id, address, city, price, destinationAddress, destinationCountry FROM Flights WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

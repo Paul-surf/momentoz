@@ -101,7 +101,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Order foundOrder;
             //
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders where id = @id";
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE id = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

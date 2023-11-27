@@ -19,7 +19,7 @@ namespace RESTfulService.Controllers
         }
 
 
-        // URL: api/customers
+        // URL: api/baggages
 
 
         [HttpGet]
@@ -50,7 +50,7 @@ namespace RESTfulService.Controllers
 
 
 
-        // URL: api/customers/{id}
+        // URL: api/baggages/{id}
         [HttpGet, Route("{id}")]
         public ActionResult<BaggageDto> Get(int id)
         {

@@ -25,7 +25,7 @@ namespace DatabaseData.DatabaseLayer
         {
             int insertedId = -1;
             //
-            string insertString = "insert into Customer(firstName, lastName, mobilePhone, email) OUTPUT INSERTED.ID values(@FirstNam, @LastNam, @MobilePhon, @Emai)";
+            string insertString = "INSERT INTO Customer(firstName, lastName, mobilePhone, email) OUTPUT INSERTED.ID values(@FirstNam, @LastNam, @MobilePhon, @Emai)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
@@ -62,7 +62,7 @@ namespace DatabaseData.DatabaseLayer
             List<Customer> foundCustomers;
             Customer readCustomer;
             //
-            string queryString = "SELECT id, firstName, lastName, mobilePhone, EMAIL from Customers";
+            string queryString = "SELECT id, firstName, lastName, mobilePhone, email FROM Customers";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -111,7 +111,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select id, firstName, lastName, mobilePhone, email from Customers where id = @Id";
+            string queryString = "SELECT id, firstName, lastName, mobilePhone, email FROM Customers WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

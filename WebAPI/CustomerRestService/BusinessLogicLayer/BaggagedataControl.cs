@@ -31,20 +31,26 @@ namespace RESTfulService.BusinessLogicLayer
         }
 
 
-        public List<BaggageDto>? Get()
+        public List<BaggageDto> Get()
         {
-            List<BaggageDto>? foundDtos;
+            List<BaggageDto> foundDtos;
             try
             {
-                List<Baggage>? foundBaggages = _baggageAccess.GetBaggageAll();
+                List<Baggage> foundBaggages = _baggageAccess.GetBaggageAll();
                 foundDtos = ModelConversion.BaggageDtoConvert.FromBaggageCollection(foundBaggages);
             }
-            catch
+            catch (Exception ex)
             {
-                foundDtos = null;
+                // Log exception her. Brug din logger afhængig af opsætningen, f.eks.:
+                // _logger.LogError(ex, "Fejl under hentning af bagages.");
+
+                // Kast exceptionen videre op i call stacken, så den kan håndteres opad.
+                throw new ApplicationException("Fejl under hentning af baggages.", ex);
             }
-            return foundDtos;
+
+            return foundDtos ?? new List<BaggageDto>(); // Returner en tom liste i stedet for null
         }
+
 
 
         public int Add(BaggageDto newBaggage)
