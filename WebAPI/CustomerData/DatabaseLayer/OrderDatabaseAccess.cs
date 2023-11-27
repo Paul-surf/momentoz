@@ -72,10 +72,6 @@ namespace DatabaseData.DatabaseLayer
             return foundOrders;
         }
 
-
-
-
-
         private Order GetOrderFromReader(SqlDataReader orderReader)
         {
 
