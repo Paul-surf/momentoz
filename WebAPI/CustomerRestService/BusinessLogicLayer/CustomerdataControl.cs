@@ -77,6 +77,22 @@ namespace RESTfulService.BusinesslogicLayer
             throw new NotImplementedException();
         }
 
-    
+        public CustomerDtoo? GetByUserId(string loginUserId)
+        {
+            CustomerDtoo? foundCustomerDto = null;
+            try
+            {
+                Customer? foundCustomer = _customerAccess.GetCustomerByUserId(loginUserId);
+                if (foundCustomer != null)
+                {
+                    foundCustomerDto = ModelConversion.CustomerDtoConvert.FromCustomer(foundCustomer);
+                }
+            }
+            catch
+            {
+                foundCustomerDto = null;
+            }
+            return foundCustomerDto;
+        }
     }
 }
