@@ -12,6 +12,6 @@ namespace DatabaseData.DatabaseLayer
         int CreateCustomer(Customer customerToAdd);
         bool UpdateCustomer(Customer customerToUpdate);
         bool DeleteCustomerById(int id);
-
+        Customer? GetCustomerByUserId(string loginUserId);
     }
 }
