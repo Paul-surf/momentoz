@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MomentozClientApp.Servicelayer
 {
-    public class CustomerServiceAccess : ICustomerServiceAccess
+    public class CustomerServiceAccess : ICustomerAccess
     {
         readonly IServiceConnection _customerService; 
         readonly String _serviceBaseUrl = "https://localhost:5114/api/customers"; 

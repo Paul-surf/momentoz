@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MomentozClientApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace MomentozClientApp.Servicelayer
 {
     public class FlightServiceAccess : IFlightConnection
     {
-        private readonly IGeometryDataAccess _flightServiceAccess;
+        private readonly IFlightServiceAccess _flightServiceAccess;
 
-        public FlighServiceAccess()
+        public FlightServiceAccess()
         {
             _flightServiceAccess = new FlightServiceAccess();
         }

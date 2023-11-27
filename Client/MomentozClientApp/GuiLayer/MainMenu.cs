@@ -78,11 +78,16 @@ namespace MomentozClientApp
             {
                 processText = "Failure: An error occurred";
             }
-          //  label2.Text = processText;
-           // ListBoxCustomers.DataSource = fetchedCustomers;
+            //  label2.Text = processText;
+            // ListBoxCustomers.DataSource = fetchedCustomers;
         }
 
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
         }
