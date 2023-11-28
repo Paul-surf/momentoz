@@ -10,6 +10,7 @@
 <table class="table">
     <!-- ... linje 11-21 er påbegyndt udvikling af ordre funktionalitet hvor brugeren som bestiller billet føres her til og skal have logget ind først... -->
     <tbody>
+        
         @foreach (var item in Model)
         {
             <tr>
@@ -62,7 +63,9 @@
             </td>
             <td>
                @Html.ActionLink("Vælg", "Læs mere", new { /* id=item.PrimaryKey */ }) 
-               
+                Her skal du oprette en ticket med rejsen der blev valgt
+                Her skal du oprette en ordre der har reference til kunden OG ticket
+                Her skal sende brugeren hen til Order SIDEN. 
             </td>
         </tr>
 }

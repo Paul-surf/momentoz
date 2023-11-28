@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MomentozWebClient.BusinessLogicLayer;
 using MomentozWebClient.Models;
+using System.Security.Claims;
 
 namespace MomentozWebClient.Controllers
 {
@@ -28,6 +30,27 @@ namespace MomentozWebClient.Controllers
 
             
         }
+
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            // Get id logged in user
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // Get customer through service
+            Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
+            // If customer was not found (but call ok)
+            if (customerFromService != null && customerFromService.LoginUserId == null)
+            {
+                string? loginEmail = User.Identity is not null ? User.Identity.Name : null;
+                /* Create customer - and get created customer */
+                customerFromService = await _customerLogic.CreateCustomerFromUserAccount(userId, loginEmail);
+            }
+            return View(customerFromService);
+        }
+
+
+
 
         // GET: CustomerController/Details/5
         public ActionResult Details(int id)
