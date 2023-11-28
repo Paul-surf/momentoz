@@ -40,12 +40,12 @@ namespace MomentozWebClient.Controllers
             // Get customer through service
             Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
             // If customer was not found (but call ok)
-            //if (customerFromService != null && customerFromService.LoginUserId == null)
-            //{
-            //    string? loginEmail = User.Identity is not null ? User.Identity.Name : null;
-            //    /* Create customer - and get created customer */
-            //    customerFromService = await _customerLogic.CreateCustomerFromUserAccount(userId, loginEmail);
-            //}
+            if (customerFromService != null && customerFromService.LoginUserId == null)
+            {
+                string? loginEmail = User.Identity is not null ? User.Identity.Name : null;
+                /* Create customer - and get created customer */
+                customerFromService = await _customerLogic.CreateCustomerFromUserAccount(userId, loginEmail);
+            }
             return View(customerFromService);
         }
 

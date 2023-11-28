@@ -35,5 +35,18 @@ namespace MomentozWebClient.BusinessLogicLayer
 
             return foundCustomer;
         }
+
+        public async Task<Customer?> CreateCustomerFromUserAccount(string userId, string? email)
+        {
+            Customer? createdCust = null;
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                Customer custToSave = new Customer(email, userId);
+                createdCust = await _customerServiceAccess.SaveCustomerMinimal(custToSave);
+            }
+
+            return createdCust;
+        }
     }
 }

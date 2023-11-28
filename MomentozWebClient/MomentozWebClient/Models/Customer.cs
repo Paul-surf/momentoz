@@ -32,5 +32,12 @@
         public Customer()
         {
         }
+
+
+        public Customer(string? inEmail, string? inLoginUserId)
+        {
+            Email = inEmail;
+            LoginUserId = inLoginUserId;
+        }
     }
 }
