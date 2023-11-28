@@ -57,7 +57,7 @@ namespace RESTfulService.Controllers
             return null;
         }
 
-        // URL: api/customers
+        /*// URL: api/customers
         [HttpPost]
         public ActionResult<int> PostNewCustomer(CustomerDtoo inCustomerDto)
         {
@@ -75,6 +75,28 @@ namespace RESTfulService.Controllers
             else if (insertedId == 0)
             {
                 foundReturn = BadRequest();     // missing input
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);    // Internal server error
+            }
+            return foundReturn;
+        }*/
+
+        // URL: api/customers
+        [HttpPost]
+        public ActionResult<CustomerDtoo> CreateNewCustomer(CustomerDtoo inCustomer)
+        {
+            ActionResult<CustomerDtoo> foundReturn;
+            CustomerDtoo? createdCustomer = null;
+            if (inCustomer != null)
+            {
+                createdCustomer = _businessLogicCtrl.Add(inCustomer);
+            }
+            // Evaluate
+            if (createdCustomer is not null)
+            {
+                foundReturn = Ok(createdCustomer);
             }
             else
             {
