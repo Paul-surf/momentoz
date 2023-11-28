@@ -116,13 +116,13 @@ namespace MomentozClientApp.GuiLayer
         }
 
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             var username = textBox1.Text;
             var password = maskedTextBox1.Text; // Assuming the password is in the maskedTextBox
 
             // Validate the credentials through the CustomerController
-            bool isValidUser = await _customerAccess.ValidateLogin(username, password);
+            bool isValidUser = _customerAccess.ValidateLogin(username, password);
 
             if (isValidUser)
             {

@@ -36,7 +36,7 @@ namespace MomentozClientApp.ModelConversion
             DTOs.FlightDto? aFlightReadDto = null;
             if (inFlight != null)
             {
-                aFlightReadDto = new DTOs.FlightDto(inFlight.Address, inFlight.City, inFlight.Price, inFlight.DestinationAddress, inFlight.DestinationCountry);
+                aFlightReadDto = new DTOs.FlightDto(inFlight.Id, inFlight.Address, inFlight.City, inFlight.Price, inFlight.DestinationAddress, inFlight.DestinationCountry);
             }
             return aFlightReadDto;
         }

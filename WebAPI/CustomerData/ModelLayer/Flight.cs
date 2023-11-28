@@ -28,5 +28,7 @@
         public double Price { get; set; }
         public string? DestinationAddress { get; set;}
         public string? DestinationCountry { get; set;}
+
+        public string CustomDisplay => $"{Address}, {City}, {DestinationAddress}, {DestinationCountry}";
     }
 }

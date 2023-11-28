@@ -82,18 +82,18 @@ namespace MomentozClientApp.ServiceLayer
         {
             throw new NotImplementedException();
         }
-        internal async Task<bool> ValidateLogin(string brugernavn, string adgangskode)
+        internal Task<bool> ValidateLogin(string brugernavn, string adgangskode)
         {
             // Tjek om brugernavnet er "bigboss" og adgangskoden er "1234".
             if (brugernavn == "bigboss" && adgangskode == "1234")
             {
                 // Brugernavn og adgangskode er korrekte, så returner true (gyldigt login).
-                return true;
+                return Task.FromResult(true);
             }
             else
             {
                 // Brugernavn og adgangskode er ikke korrekte, så returner false (ugyldigt login).
-                return false;
+                return Task.FromResult(false);
             }
         }
 

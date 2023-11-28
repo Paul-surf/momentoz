@@ -78,7 +78,7 @@ namespace MomentozClientApp.ServiceLayer
         {
             throw new NotImplementedException();
         }
-        internal async Task<bool> ValidateLogin(string brugernavn, string adgangskode)
+        internal bool ValidateLogin(string brugernavn, string adgangskode)
         {
             // Tjek om brugernavnet er "bigboss" og adgangskoden er "1234".
             if (brugernavn == "bigboss" && adgangskode == "1234")
