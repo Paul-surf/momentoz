@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using DatabaseData.ModelLayer;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace DatabaseData.DatabaseLayer
 {
@@ -87,17 +88,22 @@ namespace DatabaseData.DatabaseLayer
             bool isNotNull;     // Test for null value in mobilePhone
             string? tempMobilePhone;
             string? tempEmail;
-            string tempFirstName, tempLastName;
+            string tempFirstName, tempLastName, tempUserId;
+             
             // Fetch values
             tempId = customerReader.GetInt32(customerReader.GetOrdinal("id"));
             tempFirstName = customerReader.GetString(customerReader.GetOrdinal("firstName"));
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
             tempLastName = customerReader.GetString(customerReader.GetOrdinal("lastName"));
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("mobilePhone"));
-            tempEmail = customerReader.GetString(customerReader.GetOrdinal("email"));
             tempMobilePhone = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("mobilePhone")) : null;
+            tempEmail = customerReader.GetString(customerReader.GetOrdinal("email"));
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
+
+            tempUserId = customerReader.GetString(customerReader.GetOrdinal("loginUserId"));
            
             // Create object
-            foundCustomer = new Customer(tempId, tempFirstName, tempLastName, tempMobilePhone, tempEmail);
+            foundCustomer = new Customer(tempId, tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempUserId);
             return foundCustomer;
         }
 

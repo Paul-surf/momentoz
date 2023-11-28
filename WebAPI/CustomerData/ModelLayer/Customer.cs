@@ -26,9 +26,15 @@
 
 
 
-        public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email) : this(firstName, lastName, mobilePhone, email)
+        public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId) 
         {
             Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
+            Email = email;
+            LoginUserId = loginUserId;
+
         }
 
         public int Id { get; set; }
