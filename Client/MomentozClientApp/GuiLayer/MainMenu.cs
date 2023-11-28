@@ -1,6 +1,8 @@
 using MomentozClientApp.DTOs;
+using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using Timer = System.Windows.Forms.Timer;
 
@@ -8,8 +10,8 @@ using Timer = System.Windows.Forms.Timer;
 namespace MomentozClientApp
 {
     public partial class MainMenu : Form
-        { 
-   
+    {
+
         private readonly CustomerAccess _customerAccess;
         private string loggedInUsername;
         private Timer flightRefreshTimer;
@@ -41,10 +43,10 @@ namespace MomentozClientApp
 
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
-    
+
             comboBox1.Enabled = false;
             await LoadFlightsAsync();
-     
+
             comboBox1.Enabled = true;
         }
         private async void MainMenu_Load(object sender, EventArgs e)
@@ -220,10 +222,10 @@ namespace MomentozClientApp
 
                         if (flights != null && flights.Any())
                         {
-                            comboBox1.DisplayMember = "CustomDisplay"; 
-                            comboBox1.ValueMember = "Id"; 
+                            comboBox1.DisplayMember = "CustomDisplay";
+                            comboBox1.ValueMember = "Id";
                             comboBox1.DataSource = flights;
-                            flightsLoaded = true; 
+                            flightsLoaded = true;
                         }
                         else
                         {
@@ -261,13 +263,36 @@ namespace MomentozClientApp
         {
 
         }
-         private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            // Saml kvitteringsoplysningerne
+            string customer = "Kunde: John Doe";
+            string departure = "Afgang: Aalborg";
+            string returnTicket = "Returbillet: " + (comboBox2.SelectedIndex != -1 ? comboBox2.SelectedItem.ToString() : "Ingen valgt");
+            string baggage = "Bagage: " + (comboBox3.SelectedIndex != -1 ? comboBox3.SelectedItem.ToString() : "Ingen valgt");
+            string price = "Pris: $100";
+            string destination = "Valgt destination: New York";
 
+            // Opret en kvitteringstekst
+            string receiptText = $"{customer}\n{departure}\n{returnTicket}\n{baggage}\n{price}\n{destination}";
+
+            // Vis kvitteringsmeddelelsen som en MessageBox
+            MessageBox.Show(receiptText, "Kvittering", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string message = "MomentoZ er et mindre svæveflyudlejningsselskab med afgangslokationer fra Aalborg, der tilbydes rejsedestinationer til alle klodens kontinenter, med mulighed for at flyve retur efter behov, virksomheden er stiftet 11.november 2023";
+            string caption = "Om MomentoZ";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            MessageBoxIcon icon = MessageBoxIcon.Information;
+
+            MessageBox.Show(message, caption, buttons, icon);
+        }
+
     }
 }
