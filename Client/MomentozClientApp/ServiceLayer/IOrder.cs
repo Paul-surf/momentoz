@@ -11,5 +11,4 @@ namespace MomentozClientApp.ServiceLayer
         Task<bool> DeleteOrderById(int id);
         Task<Order> GetOrderByUserId(string loginUserId);
     }
-
 }

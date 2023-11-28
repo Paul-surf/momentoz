@@ -12,8 +12,8 @@ namespace MomentozClientApp.BusinessLogicLayer
         FlightDto Get(int id);
         List<FlightDto>? Get();
         int Add(FlightDto flightToAdd);
-        bool Put(FlightDto flightToUpdate); // If this should be async
-        bool Delete(int id); // If this should be async
+        bool Put(FlightDto flightToUpdate);
+        bool Delete(int id); 
 
         FlightDto? GetFlightById(int id);
     }
