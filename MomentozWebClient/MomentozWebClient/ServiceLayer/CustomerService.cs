@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using MomentozWebClient.Models;
 using Newtonsoft.Json;
+using System.Net;
+using System.Text;
 
 namespace MomentozWebClient.ServiceLayer
 {
@@ -58,6 +60,76 @@ namespace MomentozWebClient.ServiceLayer
             }
             return customersFromService;
         }
+
+
+        public async Task<Customer> GetCustomerByUserId(string userId)
+        {
+            Customer customerFromService = null;
+
+            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
+            _customerServiceConnection.UseUrl += userId;
+
+            if (_customerServiceConnection != null)
+            {
+                try
+                {
+                    var serviceResponse = await _customerServiceConnection.CallServiceGet();      
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        if (serviceResponse.StatusCode == HttpStatusCode.OK)
+                        {
+                            var content = await serviceResponse.Content.ReadAsStringAsync();
+                            customerFromService = JsonConvert.DeserializeObject<Customer>(content);
+                        }
+                        else
+                        {
+                            customerFromService = new Customer();
+                        }
+                    }
+                    else
+                    {
+                        customerFromService = null;
+                    }
+                }
+                catch
+                {
+                    customerFromService = null;
+                }
+            }
+            return customerFromService;
+        }
+
+
+        public async Task<Customer> SaveCustomerMinimal(Customer newCust)
+        {
+            Customer customerFromService = null;
+
+            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
+
+            if (_customerServiceConnection != null)
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(newCust);
+                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _customerServiceConnection.CallServicePost(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
+                        customerFromService = JsonConvert.DeserializeObject<Customer>(resultContent);
+                    }
+                }
+                catch
+                {
+                    customerFromService = null;
+                }
+            }
+
+            return customerFromService;
+        }
+
+
 
 
 

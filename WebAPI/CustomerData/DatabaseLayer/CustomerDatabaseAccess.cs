@@ -26,7 +26,7 @@ namespace DatabaseData.DatabaseLayer
         {
             int insertedId = -1;
             //
-            string insertString = "INSERT INTO Customer(firstName, lastName, mobilePhone, email) OUTPUT INSERTED.ID values(@FirstNam, @LastNam, @MobilePhon, @Emai)";
+            string insertString = "INSERT INTO Customers(firstName, lastName, mobilePhone, email) OUTPUT INSERTED.ID values(@FirstNam, @LastNam, @MobilePhon, @Emai)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
@@ -144,11 +144,13 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
+
+        // Finds the customer by loginUserId and NOT id 
         public Customer GetCustomerByUserId(string? findUserId)
         {
             Customer foundCustomer;
             //
-            string queryString = "select customerId, firstName, lastName, email, loginUserId from Customer where loginUserId = @UserId";
+            string queryString = "select Id, firstName, lastName, email, loginUserId from Customers where loginUserId = @UserId";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
