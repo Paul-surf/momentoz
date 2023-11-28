@@ -63,7 +63,7 @@ namespace DatabaseData.DatabaseLayer
             List<Customer> foundCustomers;
             Customer readCustomer;
             //
-            string queryString = "SELECT id, firstName, lastName, mobilePhone, email FROM Customers";
+            string queryString = "SELECT id, firstName, lastName, mobilePhone, email, loginUserId FROM Customers";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -88,19 +88,20 @@ namespace DatabaseData.DatabaseLayer
             bool isNotNull;     // Test for null value in mobilePhone
             string? tempMobilePhone;
             string? tempEmail;
-            string tempFirstName, tempLastName, tempUserId;
+            string? tempFirstName, tempLastName, tempUserId;
              
             // Fetch values
             tempId = customerReader.GetInt32(customerReader.GetOrdinal("id"));
-            tempFirstName = customerReader.GetString(customerReader.GetOrdinal("firstName"));
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
-            tempLastName = customerReader.GetString(customerReader.GetOrdinal("lastName"));
+            tempFirstName = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("firstName")) : null;
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("lastName"));
+            tempLastName = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("lastName")) : null;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("mobilePhone"));
             tempMobilePhone = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("mobilePhone")) : null;
-            tempEmail = customerReader.GetString(customerReader.GetOrdinal("email"));
-            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
-
-            tempUserId = customerReader.GetString(customerReader.GetOrdinal("loginUserId"));
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("email"));
+            tempEmail = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("email")) : null;
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("loginUserId"));
+            tempUserId = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("loginUserId")) : null;
            
             // Create object
             foundCustomer = new Customer(tempId, tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempUserId);
