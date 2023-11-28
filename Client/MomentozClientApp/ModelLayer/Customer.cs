@@ -1,61 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿
 
-namespace MomentozClientApp.Model
+
+namespace MomentozClientApp.ModelLayer
 {
-
     public class Customer
     {
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        
-        public int? Id { get; set; }
-        public Customer(string username, string password) {
 
-            Username = username;
-            PasswordHash = password;
-            Id = Id;
-        }
+        public Customer() { }
 
-        private string HashPassword(string password)
+        public Customer(string? firstName, string? lastName, string? mobilePhone, string? email)
         {
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
-        }
-        public Customer(int id, string firstName, string lastName, string mobilePhone) { 
-            FirstName = firstName; 
-            LastName = lastName; 
+            FirstName = firstName;
+            LastName = lastName;
             MobilePhone = mobilePhone;
+            Email = email;
+        }
+
+        public Customer(string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
+            Email = email;
+            LoginUserId = loginUserId;
+
+        }
+
+
+
+
+        public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email) : this(firstName, lastName, mobilePhone, email)
+        {
             Id = id;
         }
-        public Customer(int id, string firstName, string lastName, string fullName, string mobilePhone) : this(id, firstName, lastName, fullName) { MobilePhone = mobilePhone; }
-        [JsonProperty("firstName")]
+
+        public int Id { get; set; }
         public string? FirstName { get; set; }
-
-        [JsonProperty("lastName")]
         public string? LastName { get; set; }
-
-        [JsonProperty("mobilePhone")]
         public string? MobilePhone { get; set; }
 
-        [JsonProperty("email")]
         public string? Email { get; set; }
 
-        [JsonProperty("fullName")]
-        public string? FullName { 
-            get { 
-                return $"{FirstName} {LastName}"; 
+        public string? LoginUserId { get; set; }
+
+
+
+        public bool IsCustomerEmpty
+        {
+            get
+            {
+                bool customerIsEmpty = false;
+                if (String.IsNullOrWhiteSpace(FirstName) || String.IsNullOrWhiteSpace(LastName))
+                {
+                    customerIsEmpty = true;
+                }
+                return customerIsEmpty;
             }
-        }
-        public override string? ToString() { 
-            string? pText = FullName; 
-            if (MobilePhone != null) { 
-                pText += " - mobil no: " + MobilePhone; 
-            } 
-            return pText; 
         }
     }
 }

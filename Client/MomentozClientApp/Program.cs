@@ -1,3 +1,5 @@
+using MomentozClientApp.GuiLayer;
+
 namespace MomentozClientApp
 {
     static class Program

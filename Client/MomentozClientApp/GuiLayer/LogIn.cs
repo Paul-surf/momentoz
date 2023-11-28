@@ -1,19 +1,25 @@
-using MomentozClientApp.Controller;
 
-namespace MomentozClientApp
+
+using MomentozClientApp.ServiceLayer;
+
+namespace MomentozClientApp.GuiLayer
 {
     public partial class LogIn : Form
     {
-        private readonly CustomerController _customerController;
+        private readonly CustomerAccess _customerAccess;
         private Button button1;
         private Label label1;
         private Label label2;
         private MaskedTextBox maskedTextBox1;
+        // This might be in your Login.Designer.cs file
+        private System.Windows.Forms.TextBox textBoxUsername;
+        private System.Windows.Forms.TextBox textBoxPassword;
+
 
         public LogIn()
         {
             InitializeComponent();
-            _customerController = new CustomerController();
+            _customerAccess = new CustomerAccess();
         }
 
         private void InitializeComponent()
@@ -116,20 +122,18 @@ namespace MomentozClientApp
             var password = maskedTextBox1.Text; // Assuming the password is in the maskedTextBox
 
             // Validate the credentials through the CustomerController
-            bool isValidUser = await _customerController.ValidateLogin(username, password);
-
-            // Rest of the code remains the same...
-
-
+            bool isValidUser = await _customerAccess.ValidateLogin(username, password);
 
             if (isValidUser)
             {
                 MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Assuming you want to close the login form and show the main form
-                this.Hide();
-                var mainForm = new MainMenu(); // MainForm should be the form you want to show after login
-                mainForm.Closed += (s, args) => this.Close();
+                // Hide the login form
+                Hide();
+
+                // Create a new instance of MainMenu form, passing the username as an argument
+                var mainForm = new MainMenu(username); // Pass the username to the MainMenu form
+                mainForm.Closed += (s, args) => Close();
                 mainForm.Show();
             }
             else
@@ -138,38 +142,61 @@ namespace MomentozClientApp
             }
         }
 
+
         private void LogIn_Load(object sender, EventArgs e)
         {
 
         }
 
+        /*   private void button2_Click(object sender, EventArgs e)
+           {
+               var username = textBoxUsername.Text;
+               var password = textBoxPassword.Text;
+
+               if (username == "BigBoss" && password == "1234")
+               {
+                   MessageBox.Show("Du er nu logget ind som BigBoss.", "Velkommen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                   // Her kan du lukke login-formen og åbne hovedformen
+                   this.Close();
+                   MainMenu mainForm = new MainMenu();
+                    mainForm.Show();
+               }
+               else
+               {
+                   MessageBox.Show("Ugyldigt brugernavn eller adgangskode.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               }
+           }
+
+           */
         private async void button2_Click(object sender, EventArgs e)
         {
-            // Her antager vi, at du bruger de samme textBox1 og maskedTextBox1 til at indsamle brugernavn og adgangskode.
-            // I et rigtigt program vil du sandsynligvis have separate inputfelter for "Opret bruger" funktionen.
-            var newUsername = textBox1.Text;
-            var newPassword = maskedTextBox1.Text;
+            var username = textBox1.Text;
+            var password = maskedTextBox1.Text;
 
-            // Valider input (grundlæggende eksempel, skal udvides med mere robust validering)
-            if (string.IsNullOrWhiteSpace(newUsername) || string.IsNullOrWhiteSpace(newPassword))
+            bool isValidUser = await ValidateLogin(username, password);
+
+            if (isValidUser)
             {
-                MessageBox.Show("Brugernavn og adgangskode må ikke være tomme.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Opret den nye bruger (asynkron kald, antager metoden eksisterer i CustomerController)
-            var creationResult = await _customerController.CreateCustomer(newUsername, newPassword);
-
-            // Håndter resultatet af brugeroprettelsen
-            if (creationResult)
-            {
-                MessageBox.Show("Bruger oprettet!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Åbn hovedskærmen med brugeroplysninger
+                var mainForm = new MainMenu(username); // Send brugernavn som parameter til hovedskærmen
+                Hide();
+                mainForm.Closed += (s, args) => Close();
+                mainForm.Show();
             }
             else
             {
-                MessageBox.Show("Fejl ved oprettelse af bruger. Prøv igen.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Login failed. Please check your username and password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+       // User
+        private Task<bool> ValidateLogin(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
 
         // ... Resten af din kode ...
     }

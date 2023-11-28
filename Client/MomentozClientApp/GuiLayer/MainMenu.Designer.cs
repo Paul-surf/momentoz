@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            comboBox1 = new ComboBox();
             linkLabel1 = new LinkLabel();
             linkLabel2 = new LinkLabel();
             backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
@@ -37,28 +36,26 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            comboBox2 = new ComboBox();
             label5 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             textBox4 = new TextBox();
             comboBox3 = new ComboBox();
             button1 = new Button();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            comboBox2 = new ComboBox();
+            comboBox1 = new ComboBox();
+            textBox5 = new TextBox();
+            label9 = new Label();
+            comboBox4 = new ComboBox();
             SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(32, 61);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(192, 23);
-            comboBox1.TabIndex = 7;
-            comboBox1.Text = "OneWay";
             // 
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(601, 23);
+            linkLabel1.Location = new Point(715, 9);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(37, 15);
             linkLabel1.TabIndex = 8;
@@ -79,7 +76,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(585, 145);
+            label1.Location = new Point(598, 172);
             label1.Name = "label1";
             label1.Size = new Size(53, 15);
             label1.TabIndex = 10;
@@ -88,7 +85,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(585, 69);
+            label2.Location = new Point(605, 72);
             label2.Name = "label2";
             label2.Size = new Size(46, 15);
             label2.TabIndex = 11;
@@ -97,7 +94,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(585, 107);
+            label3.Location = new Point(598, 131);
             label3.Name = "label3";
             label3.Size = new Size(67, 15);
             label3.TabIndex = 12;
@@ -106,20 +103,11 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(585, 186);
+            label4.Location = new Point(614, 213);
             label4.Name = "label4";
             label4.Size = new Size(26, 15);
             label4.TabIndex = 13;
             label4.Text = "Pris";
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(315, 61);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(183, 23);
-            comboBox2.TabIndex = 14;
-            comboBox2.Text = "Tur - Retur";
             // 
             // label5
             // 
@@ -139,14 +127,14 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(683, 104);
+            textBox2.Location = new Point(685, 128);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 17;
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(683, 186);
+            textBox4.Location = new Point(685, 210);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(100, 23);
             textBox4.TabIndex = 19;
@@ -154,49 +142,124 @@
             // comboBox3
             // 
             comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(683, 145);
+            comboBox3.Location = new Point(685, 169);
             comboBox3.Name = "comboBox3";
             comboBox3.Size = new Size(100, 23);
             comboBox3.TabIndex = 20;
+            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
             // 
             // button1
             // 
-            button1.Location = new Point(652, 261);
+            button1.Location = new Point(654, 305);
             button1.Name = "button1";
             button1.Size = new Size(131, 37);
             button1.TabIndex = 21;
             button1.Text = "Godkend";
             button1.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(587, 38);
+            label6.Name = "label6";
+            label6.Size = new Size(44, 15);
+            label6.TabIndex = 22;
+            label6.Text = "Kunde:";
+            label6.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(637, 38);
+            label7.Name = "label7";
+            label7.Size = new Size(59, 15);
+            label7.TabIndex = 23;
+            label7.Text = "Customer";
+            label7.Click += label7_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(598, 102);
+            label8.Name = "label8";
+            label8.Size = new Size(64, 15);
+            label8.TabIndex = 24;
+            label8.Text = "Retur billet";
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(683, 99);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(100, 23);
+            comboBox2.TabIndex = 25;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // 
+            // comboBox1
+            // 
+            comboBox1.Location = new Point(12, 53);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(547, 23);
+            comboBox1.TabIndex = 29;
+            comboBox1.SelectedIndexChanged += Form1_Load;
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(686, 254);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(100, 23);
+            textBox5.TabIndex = 28;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(585, 257);
+            label9.Name = "label9";
+            label9.Size = new Size(95, 15);
+            label9.TabIndex = 27;
+            label9.Text = "Valgt destination";
+            // 
+            // comboBox4
+            // 
+            comboBox4.Location = new Point(12, 205);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(547, 23);
+            comboBox4.TabIndex = 30;
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(819, 376);
+            Controls.Add(comboBox4);
+            Controls.Add(textBox5);
+            Controls.Add(label9);
+            Controls.Add(comboBox1);
+            Controls.Add(comboBox2);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(label6);
             Controls.Add(button1);
             Controls.Add(comboBox3);
             Controls.Add(textBox4);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(label5);
-            Controls.Add(comboBox2);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(linkLabel2);
             Controls.Add(linkLabel1);
-            Controls.Add(comboBox1);
             Name = "MainMenu";
             Text = "Momentoz";
-            Load += Form1_Load_2;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ComboBox comboBox1;
         private LinkLabel linkLabel1;
         private LinkLabel linkLabel2;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
@@ -204,12 +267,20 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private ComboBox comboBox2;
         private Label label5;
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox4;
         private ComboBox comboBox3;
         private Button button1;
+        private Label label6;
+        private Label label7;
+        private TextBox textBox3;
+        private Label label8;
+        private ComboBox comboBox2;
+        private ComboBox comboBox1;
+        private TextBox textBox5;
+        private Label label9;
+        private ComboBox comboBox4;
     }
 }
