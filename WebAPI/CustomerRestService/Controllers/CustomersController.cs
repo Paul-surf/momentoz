@@ -50,12 +50,12 @@ namespace RESTfulService.Controllers
 
 
 
-        // URL: api/customers/{id}
+        /*// URL: api/customers/{id}
         [HttpGet, Route("{id}")]
         public ActionResult<CustomerDtoo> Get(int id)
         {
             return null;
-        }
+        }*/
 
         /*// URL: api/customers
         [HttpPost]

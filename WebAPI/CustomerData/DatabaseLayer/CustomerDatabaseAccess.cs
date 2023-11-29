@@ -150,7 +150,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select Id, firstName, lastName, email, loginUserId from Customers where loginUserId = @UserId";
+            string queryString = "select Id, email from AspNetUsers where loginUserId = @UserId";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -164,10 +164,23 @@ namespace DatabaseData.DatabaseLayer
                 foundCustomer = new Customer();
                 while (customerReader.Read())
                 {
-                    foundCustomer = GetCustomerFromReader(customerReader);
+                    foundCustomer = GetUserFromReader(customerReader);
                 }
             }
             return foundCustomer;
+        }
+
+        private Customer GetUserFromReader(SqlDataReader customerReader)
+        {
+            string tempUserId;
+            string? tempEmail;
+            bool isNotNull;
+
+            tempUserId = customerReader.GetString(customerReader.GetOrdinal("Id"));
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("email"));
+            tempEmail = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("email")) : null;
+            
+            return new Customer(null, null, null, tempEmail, tempUserId);
         }
 
 
