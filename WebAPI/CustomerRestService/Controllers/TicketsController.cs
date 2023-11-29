@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace RESTfulService.Controllers
 {
 
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TicketsController : ControllerBase
+        [Route("api/[controller]")]
+        [ApiController]
+        public class TicketsController : ControllerBase
     {
-
         private readonly ITicketdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
@@ -80,7 +79,5 @@ namespace RESTfulService.Controllers
             }
             return foundReturn;
         }
-
-
     }
 }

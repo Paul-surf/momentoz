@@ -21,12 +21,11 @@ namespace DatabaseData.DatabaseLayer
         public int CreateFlight(Flight aFlight)
         {
             int insertedId = -1;
-            // Corrected the parameter names in the SQL command
+
             string insertString = "INSERT INTO Flight(address, city, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Corrected the parameter names to match the SQL command
                 SqlParameter AddressParam = new("@Address", aFlight.Address);
                 CreateCommand.Parameters.Add(AddressParam);
                 SqlParameter CityParam = new("@City", aFlight.City);
@@ -109,7 +108,7 @@ namespace DatabaseData.DatabaseLayer
                 }
                 else
                 {
-                    return null; // No record found
+                    return null;
                 }
             }
             return foundFlight;

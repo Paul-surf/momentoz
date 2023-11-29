@@ -1,10 +1,6 @@
 using RESTfulService.BusinesslogicLayer;
 using DatabaseData.DatabaseLayer;
-using System.Net.Security;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using RESTfulService.BusinessLogicLayer;
-using RESTfulService.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 

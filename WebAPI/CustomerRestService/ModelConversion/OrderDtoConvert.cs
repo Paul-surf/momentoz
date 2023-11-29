@@ -1,10 +1,10 @@
-﻿using RESTfulService.DTOs;
-using DatabaseData.ModelLayer;
-using System.Collections.Generic;
-namespace RESTfulService.ModelConversion
-{
-    public class OrderDtoConvert
-    {
+﻿        using RESTfulService.DTOs;
+        using DatabaseData.ModelLayer;
+
+        namespace RESTfulService.ModelConversion
+        {
+        public class OrderDtoConvert
+        {
         public static List<OrderDto> FromOrderCollection(List<Order> inOrder)
         {
             var aOrderReadDtoList = new List<OrderDto>();

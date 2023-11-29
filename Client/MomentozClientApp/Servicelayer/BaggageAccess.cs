@@ -1,12 +1,6 @@
-﻿using MomentozClientApp.Model;
-using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.ModelLayer;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace MomentozClientApp.Servicelayer
 {
     public class BaggageAccess : IBaggageAccess
@@ -32,7 +26,6 @@ namespace MomentozClientApp.Servicelayer
             }
             catch
             {
-                // Log the exception or handle it as needed
             }
             return listFromService;
         }
@@ -51,7 +44,6 @@ namespace MomentozClientApp.Servicelayer
             }
             catch
             {
-                // Log the exception or handle it as needed
             }
             return foundBaggage;
         }
@@ -71,8 +63,5 @@ namespace MomentozClientApp.Servicelayer
         {
             throw new NotImplementedException();
         }
-        // ... Resten af dine metoder her ...
-        // Implementer de andre metoder baseret på interfacets krav, som du har gjort med GetBaggages og GetBaggageById
-        // Husk at implementere alle metoder fra interfacet, også dem du måske endnu ikke har brug for; du kan markere dem med NotImplementedException(), indtil du har deres implementering klar.
     }
 }

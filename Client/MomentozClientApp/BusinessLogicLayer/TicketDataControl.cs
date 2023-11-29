@@ -1,11 +1,5 @@
 ﻿using MomentozClientApp.DTOs;
-using MomentozClientApp.ModelLayer;
 using MomentozClientApp.Servicelayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace MomentozClientApp.BusinessLogicLayer
 {
     public class TicketdataControl : ITicketdata
@@ -25,7 +19,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return null;
             }
         }
@@ -38,7 +31,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return null;
             }
         }
@@ -55,7 +47,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return -1;
             }
         }
@@ -73,7 +64,6 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
                 var foundTicket = _ticketAccess.GetTicketById(id).Result;
                 return foundTicket != null ? ModelConversion.TicketDtoConvert.FromTicket(foundTicket) : null;
             }

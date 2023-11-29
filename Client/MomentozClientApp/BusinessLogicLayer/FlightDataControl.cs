@@ -1,10 +1,5 @@
 ﻿using MomentozClientApp.DTOs;
-using MomentozClientApp.Model;
 using MomentozClientApp.Servicelayer;
-using MomentozClientApp.ServiceLayer;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MomentozClientApp.BusinessLogicLayer
 {

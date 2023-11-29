@@ -44,7 +44,6 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
-        // Other methods like DeleteTicketById, UpdateTicket would be here.
 
         public List<Ticket> GetTicketAll()
         {
@@ -79,20 +78,13 @@ namespace DatabaseData.DatabaseLayer
             int tempId = ticketReader.GetInt32(ticketReader.GetOrdinal("Id"));
             string tempTicketType = ticketReader.GetString(ticketReader.GetOrdinal("Type"));
             int tempTicketNumber = ticketReader.GetInt32(ticketReader.GetOrdinal("TicketNumber"));
-
-            // Checker om der er bagage på ticket
             int? tempBaggageID = ticketReader.IsDBNull(ticketReader.GetOrdinal("BaggageID"))
             ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("BaggageID"));
-
-            // Checker om der er FlightID på ticket
             int? tempFlightID = ticketReader.IsDBNull(ticketReader.GetOrdinal("FlightID"))
             ? (int?)null : ticketReader.GetInt32(ticketReader.GetOrdinal("FlightID"));
 
 
             return new Ticket(tempId, tempTicketType, tempTicketNumber, tempBaggageID, tempFlightID);
         }
-
-        // The method GetTicketById would be here, similar to GetTicketAll, but with parameterized SQL for a single ID.
-
     }
 }

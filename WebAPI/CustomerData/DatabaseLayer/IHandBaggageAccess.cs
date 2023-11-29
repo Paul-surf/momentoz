@@ -4,7 +4,6 @@
 
 namespace DatabaseData.DatabaseLayer
 {
-
     public interface IHandBaggageAccess
     {
 

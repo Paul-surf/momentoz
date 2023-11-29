@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DatabaseData.ModelLayer
+﻿namespace DatabaseData.ModelLayer
 {
     public class HandBaggage
     {
@@ -12,10 +6,7 @@ namespace DatabaseData.ModelLayer
         {
             BaggageWeight = weight;
         }
-
         public int HandBaggageID { get; set; }
         public int BaggageWeight { get; set; }
-
-
     }
 }

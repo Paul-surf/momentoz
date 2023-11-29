@@ -21,7 +21,7 @@ namespace DatabaseData.DatabaseLayer
 
         public int CreateBaggage(Baggage aBaggage)
         {
-            int insertedId = -1; // Antag at -1 repræsenterer en fejltilstand
+            int insertedId = -1; 
             string insertString = @"INSERT INTO Baggage(TotalWeight, Price)  
                 OUTPUT INSERTED.ID 
                  VALUES(@TotalWeight, @Price)";
@@ -36,7 +36,7 @@ namespace DatabaseData.DatabaseLayer
                     CreateCommand.Parameters.Add(priceParam);
 
                     con.Open();
-                    // Execute save and read generated key (ID)
+
                     insertedId = (int)CreateCommand.ExecuteScalar();
                 }
                 return insertedId;
@@ -76,20 +76,17 @@ namespace DatabaseData.DatabaseLayer
         private Baggage GetBaggageFromReader(SqlDataReader baggageReader)
         {
             Baggage foundBaggage;
-            // Deklarer lokale variabler for at opbevare værdierne læst fra readeren
             int tempId;
             double tempTotalWeight;
             double tempPrice;
 
-            // Læs værdierne ved hjælp af GetDouble og GetOrdinal metoderne
             tempId = baggageReader.GetInt32(baggageReader.GetOrdinal("id"));
             tempTotalWeight = baggageReader.GetDouble(baggageReader.GetOrdinal("totalWeight"));
             tempPrice = baggageReader.GetDouble(baggageReader.GetOrdinal("Price"));
 
-            // Opret et nyt Baggage objekt med de læste værdier
              foundBaggage = new Baggage(tempId, tempTotalWeight, tempPrice);
 
-            // Returner det oprettede Baggage objekt
+  
             return foundBaggage;
         }
 
@@ -113,16 +110,16 @@ namespace DatabaseData.DatabaseLayer
                         }
                         else
                         {
-                            return null; // eller kast en tilpasset exception
+                            return null; 
                         }
                     }
                 }
             }
             catch (SqlException ex)
             {
-                // Log fejlen, og kast eventuelt videre eller returner null
+                
                 Debug.WriteLine("Database error: " + ex.Message);
-                return null; // Eller kast en tilpasset exception
+                return null; 
             }
         }
 

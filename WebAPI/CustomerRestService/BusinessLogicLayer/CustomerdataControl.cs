@@ -12,9 +12,8 @@ namespace RESTfulService.BusinesslogicLayer
 
         public CustomerdataControl(ICustomerAccess inCustomerAccess) { 
             _customerAccess = inCustomerAccess;
-            }
-
-
+           
+        }
         public CustomerDtoo? Get(int idToMatch)
         {
             CustomerDtoo? foundCustomerDto;
@@ -30,7 +29,6 @@ namespace RESTfulService.BusinesslogicLayer
             return foundCustomerDto;
         }
 
-
         public List<CustomerDtoo>? Get()
         {
             List<CustomerDtoo>? foundDtos;
@@ -45,31 +43,9 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
-
-
-        /*public int Add(CustomerDtoo customerToAdd)
-        {
-            int insertedId = 0;
-            try
-            {
-                Customer? newCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);
-                if (newCustomer != null)
-                {
-                    insertedId = _customerAccess.CreateCustomer(newCustomer);
-                }
-            }
-            catch
-            {
-               
-                insertedId = -1;
-            }
-            return insertedId;
-        }*/
-
         public CustomerDtoo? Add(CustomerDtoo customerToAdd)
         {
             CustomerDtoo? createdCustomer = null;
-            // Convert to Customer - save in db ang get created customer - convert to CustomerDto
             try
             {
                 Customer? dbCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);

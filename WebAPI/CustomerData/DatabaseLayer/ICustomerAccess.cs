@@ -3,7 +3,6 @@
 
 namespace DatabaseData.DatabaseLayer
 {
-
     public interface ICustomerAccess
     {
 

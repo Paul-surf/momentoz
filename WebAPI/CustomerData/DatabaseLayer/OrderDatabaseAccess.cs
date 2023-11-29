@@ -28,7 +28,6 @@ namespace DatabaseData.DatabaseLayer
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Corrected the parameter names to match the SQL command
                 SqlParameter TotalPriceParam = new("@TotalPrice", aOrder.TotalPrice);
                 CreateCommand.Parameters.Add(TotalPriceParam);
                 SqlParameter PurchaseDateParam = new("@PurchaseDate", aOrder.PurchaseDate);
@@ -48,8 +47,6 @@ namespace DatabaseData.DatabaseLayer
         {
             throw new NotImplementedException();
         }
-
-        // Other methods like DeleteOrderById, UpdateTicket would be here.
 
         public List<Order> GetOrderAll()
         {
@@ -71,7 +68,6 @@ namespace DatabaseData.DatabaseLayer
             }
             return foundOrders;
         }
-
         private Order GetOrderFromReader(SqlDataReader orderReader)
         {
 
@@ -96,17 +92,16 @@ namespace DatabaseData.DatabaseLayer
         public Order GetOrderById(int findId)
         {
             Order foundOrder;
-            //
+         
             string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE id = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                // Prepace SQL
                 SqlParameter idParam = new SqlParameter("@Id", findId);
                 readCommand.Parameters.Add(idParam);
-                //
+                
                 con.Open();
-                // Execute read
+               
                 SqlDataReader orderReader = readCommand.ExecuteReader();
                 foundOrder = new Order();
                 while (orderReader.Read())
