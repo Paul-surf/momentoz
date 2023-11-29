@@ -150,7 +150,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select ID, FirstName, LastName, Email, MobilePhone from Customers where loginUserId = @UserId";
+            string queryString = "select ID, FirstName, LastName, Email, MobilePhone, loginUserId from Customers where loginUserId = @UserId";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
