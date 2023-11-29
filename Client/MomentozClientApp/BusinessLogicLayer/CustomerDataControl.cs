@@ -19,7 +19,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
+             
                 var foundCustomer = _customerAccess.GetCustomerById(id).Result;
                 return ModelConversion.CustomerDtoConvert.FromCustomer(foundCustomer);
             }
@@ -33,7 +33,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
+                
                 var foundCustomers = _customerAccess.GetCustomerAll().Result;
                 return ModelConversion.CustomerDtoConvert.FromCustomerCollection(foundCustomers);
             }
@@ -50,7 +50,6 @@ namespace MomentozClientApp.BusinessLogicLayer
                 var newCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);
                 if (newCustomer != null)
                 {
-                    // Synchronously waiting on an asynchronous method.
                     return _customerAccess.CreateCustomer(newCustomer).Result;
                 }
                 return 0;
@@ -75,7 +74,6 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
                 var foundCustomer = _customerAccess.GetCustomerByUserId(loginUserId).Result;
                 return foundCustomer != null ? ModelConversion.CustomerDtoConvert.FromCustomer(foundCustomer) : null;
             }

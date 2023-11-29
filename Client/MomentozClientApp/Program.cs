@@ -9,7 +9,7 @@ namespace MomentozClientApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LogIn()); // This should be the LogIn form
+            Application.Run(new LogIn());
         }
     }
 }

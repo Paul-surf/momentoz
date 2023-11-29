@@ -26,7 +26,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return null;
             }
         }
@@ -40,7 +39,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return null;
             }
         }
@@ -58,7 +56,6 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch
             {
-                // Log the exception or handle it as needed
                 return -1;
             }
         }
@@ -78,7 +75,6 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
                 var foundFlight = _flightAccess.GetFlightById(id).Result;
                 return foundFlight != null ? ModelConversion.FlightDtoConvert.FromFlight(foundFlight) : null;
             }
