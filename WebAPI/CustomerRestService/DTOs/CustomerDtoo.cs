@@ -1,7 +1,7 @@
-﻿namespace RESTfulService.DTOs
-{
-    public class CustomerDtoo
-    {
+﻿        namespace RESTfulService.DTOs
+        {
+        public class CustomerDtoo
+        {
 
         public CustomerDtoo() { }
 
@@ -27,9 +27,7 @@
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
-
         public string? Email { get; set; }
-
         public string? LoginUserId { get; set; }
         public string? FullName
         {

@@ -1,13 +1,10 @@
-﻿using DatabaseData.ModelLayer;
-using RESTfulService.DTOs;
+﻿        using DatabaseData.ModelLayer;
 
 
-namespace RESTfulService.ModelConversion
-{
-    public class CustomerDtoConvert
-    {
-
-        // Convert from Customer objects to CustomerDTO objects
+        namespace RESTfulService.ModelConversion
+        {
+        public class CustomerDtoConvert
+        {
         public static List<DTOs.CustomerDtoo>? FromCustomerCollection(List<Customer> inCustomers)
         {
             List<DTOs.CustomerDtoo>? aCustomerReadDtoList = null;
@@ -26,8 +23,6 @@ namespace RESTfulService.ModelConversion
             }
             return aCustomerReadDtoList;
         }
-
-        // Convert from Customer object to CustomerDTO object
         public static DTOs.CustomerDtoo? FromCustomer(Customer inCustomer)
         {
             DTOs.CustomerDtoo? aCustomerReadDto = null;
@@ -37,8 +32,6 @@ namespace RESTfulService.ModelConversion
             }
             return aCustomerReadDto;
         }
-
-        // Convert from CustomerDTO object to Customer object
         public static Customer? ToCustomer(DTOs.CustomerDtoo inDto)
         {
             Customer? aCustomer = null;

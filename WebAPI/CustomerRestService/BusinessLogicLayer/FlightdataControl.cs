@@ -5,7 +5,6 @@ using RESTfulService.BusinessLogicLayer;
 
 namespace RESTfulService.BusinesslogicLayer
 {
-
     public class FlightdataControl : IFlightdata
     {
         private readonly IFlightAccess _flightAccess;
@@ -31,7 +30,6 @@ namespace RESTfulService.BusinesslogicLayer
             return foundFlightDto;
         }
 
-
         public List<FlightDto>? Get()
         {
             List<FlightDto>? foundDtos;
@@ -46,7 +44,6 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
-
 
         public int Add(FlightDto flightToAdd)
         {
@@ -67,7 +64,6 @@ namespace RESTfulService.BusinesslogicLayer
             return insertedId;
         }
 
-
         public bool Put(FlightDto flightToUpdate)
         {
             throw new NotImplementedException();
@@ -76,10 +72,6 @@ namespace RESTfulService.BusinesslogicLayer
         public bool Delete(int id)
         {
             throw new NotImplementedException();
-        }
-
-
-
-      
+        }      
     }
 }

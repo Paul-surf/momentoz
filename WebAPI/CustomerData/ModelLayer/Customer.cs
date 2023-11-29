@@ -20,11 +20,7 @@
             MobilePhone = mobilePhone;
             Email = email;
             LoginUserId = loginUserId;
-
         }
-
-
-
 
         public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId) 
         {
@@ -34,18 +30,14 @@
             MobilePhone = mobilePhone;
             Email = email;
             LoginUserId = loginUserId;
-
         }
 
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
-
         public string? Email { get; set; }
-
         public string? LoginUserId { get; set; }
-
 
 
         public bool IsCustomerEmpty

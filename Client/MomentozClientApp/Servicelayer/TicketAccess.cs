@@ -1,12 +1,6 @@
-﻿using MomentozClientApp.Model;
-using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.ModelLayer;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace MomentozClientApp.Servicelayer
 {
     public class TicketAccess : ITicketAccess

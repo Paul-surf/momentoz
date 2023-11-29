@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RESTfulService.Controllers
 {
-
-    [Route("api/[controller]")]
-    [ApiController]
-    public class FlightsController : ControllerBase
-    {
+        [Route("api/[controller]")]
+        [ApiController]
+        public class FlightsController : ControllerBase
+        {
 
         private readonly IFlightdata _businessLogicCtrl;
 
@@ -20,8 +19,6 @@ namespace RESTfulService.Controllers
 
 
         // URL: api/Flights
-
-
         [HttpGet]
         public ActionResult<List<FlightDto>> Get()
         {
@@ -47,8 +44,6 @@ namespace RESTfulService.Controllers
             // send response back to client
             return foundReturn;
         }
-
-
 
         // URL: api/Flights/{id}
         [HttpGet, Route("{id}")]
@@ -82,9 +77,5 @@ namespace RESTfulService.Controllers
             }
             return foundReturn;
         }
-
     }
-
-
-
 }

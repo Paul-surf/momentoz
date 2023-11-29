@@ -1,7 +1,6 @@
-﻿using DatabaseData.ModelLayer;
-
-namespace RESTfulService.DTOs
-{
+﻿
+        namespace RESTfulService.DTOs
+        {
         public class OrderDto
         {
         public OrderDto() { }

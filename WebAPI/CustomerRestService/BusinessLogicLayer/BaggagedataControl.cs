@@ -5,16 +5,14 @@ using RESTfulService.DTOs;
 
 namespace RESTfulService.BusinessLogicLayer
 {
-    public class BaggageDataControl : IBaggagedata
-    {
+        public class BaggageDataControl : IBaggagedata
+        {
         private readonly IBaggageAccess _baggageAccess;
 
         public BaggageDataControl(IBaggageAccess inBaggageAccess)
         {
             _baggageAccess = inBaggageAccess;
         }
-
-
         public BaggageDto Get(int idToMatch)
         {
             BaggageDto? foundBaggageDto;
@@ -29,8 +27,6 @@ namespace RESTfulService.BusinessLogicLayer
             }
             return foundBaggageDto;
         }
-
-
         public List<BaggageDto> Get()
         {
             List<BaggageDto> foundDtos;
@@ -41,17 +37,10 @@ namespace RESTfulService.BusinessLogicLayer
             }
             catch (Exception ex)
             {
-                // Log exception her. Brug din logger afhængig af opsætningen, f.eks.:
-                // _logger.LogError(ex, "Fejl under hentning af bagages.");
-
-                // Kast exceptionen videre op i call stacken, så den kan håndteres opad.
                 throw new ApplicationException("Fejl under hentning af baggages.", ex);
             }
-
-            return foundDtos ?? new List<BaggageDto>(); // Returner en tom liste i stedet for null
-        }
-
-
+            return foundDtos ?? new List<BaggageDto>();
+            }
 
         public int Add(BaggageDto newBaggage)
         {
@@ -80,7 +69,5 @@ namespace RESTfulService.BusinessLogicLayer
         {
             throw new NotImplementedException();
         }
-
-
-    }
+        }
 }

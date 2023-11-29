@@ -1,10 +1,4 @@
-﻿using MomentozClientApp.DTOs;
-using MomentozClientApp.ModelLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MomentozClientApp.ModelLayer;
 namespace MomentozClientApp.Servicelayer
 {
     public interface IBaggageAccess

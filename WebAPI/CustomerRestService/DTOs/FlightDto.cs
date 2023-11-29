@@ -1,9 +1,7 @@
-﻿using Microsoft.Identity.Client;
-
-namespace RESTfulService.DTOs
+﻿        namespace RESTfulService.DTOs
 {
-    public class FlightDto
-    {
+        public class FlightDto
+        {
 
         public FlightDto() { }
 
@@ -22,6 +20,5 @@ namespace RESTfulService.DTOs
         public string? DestinationCountry { get; set; }
 
         public string CustomDisplay => $"{Address}, {City}, {DestinationAddress}, {DestinationCountry}";
-
     }
 }

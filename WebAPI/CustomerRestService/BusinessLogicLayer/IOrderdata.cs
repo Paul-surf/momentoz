@@ -1,9 +1,8 @@
-﻿using DatabaseData.ModelLayer;
-using RESTfulService.DTOs;
+﻿using RESTfulService.DTOs;
 namespace RESTfulService.BusinessLogicLayer
 {
     public interface IOrderdata
-    {
+    {   
         OrderDto? Get(int id);
         List<OrderDto>? Get();
         int Add(OrderDto orderToAdd);

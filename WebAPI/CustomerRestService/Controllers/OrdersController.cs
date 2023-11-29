@@ -6,8 +6,8 @@ namespace RESTfulService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
-    {
+        public class OrdersController : ControllerBase
+        {
         private readonly IOrderdata _businessLogicCtrl;
 
         // Constructor with Dependency Injection
@@ -18,7 +18,6 @@ namespace RESTfulService.Controllers
 
 
         // URL: api/Orders
-
         [HttpGet]
         public ActionResult<List<OrderDto>> Get()
         {

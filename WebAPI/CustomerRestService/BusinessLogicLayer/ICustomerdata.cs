@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RESTfulService.DTOs;
+﻿using RESTfulService.DTOs;
 
 namespace RESTfulService.BusinessLogicLayer
 {
@@ -9,7 +8,6 @@ namespace RESTfulService.BusinessLogicLayer
 
         CustomerDtoo? Get(int id);
         List<CustomerDtoo>? Get();
-        /*int Add (CustomerDtoo customerToAdd);*/
         bool Put(CustomerDtoo customerToUpdate);
         bool Delete(int id);
         CustomerDtoo? GetByUserId(string loginid);

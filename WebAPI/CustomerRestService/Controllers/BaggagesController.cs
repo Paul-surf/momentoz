@@ -20,8 +20,6 @@ namespace RESTfulService.Controllers
 
 
         // URL: api/baggages
-
-
         [HttpGet]
         public ActionResult<List<BaggageDto>> Get()
         {
@@ -33,7 +31,7 @@ namespace RESTfulService.Controllers
             {
                 if (foundBaggages.Count > 0)
                 {
-                    foundReturn = Ok(foundBaggages);                 // Statuscode 200
+                    foundReturn = Ok(foundBaggages);             // Statuscode 200
                 }
                 else
                 {

@@ -1,8 +1,6 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
 using RESTfulService.DTOs;
-using RESTfulService.BusinessLogicLayer;
-using System;
 
 namespace RESTfulService.BusinessLogicLayer
 {
@@ -14,7 +12,6 @@ namespace RESTfulService.BusinessLogicLayer
         {
             _orderAccess = inOrderAccess;
         }
-
 
         public OrderDto? Get(int idToMatch)
         {

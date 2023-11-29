@@ -1,5 +1,4 @@
-﻿using MomentozClientApp.Model;
-using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.ModelLayer;
 namespace MomentozClientApp.Servicelayer
 {
     public interface ITicketAccess

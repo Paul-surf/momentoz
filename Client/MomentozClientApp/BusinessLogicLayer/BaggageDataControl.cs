@@ -19,7 +19,6 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
                 var foundBaggage = _baggageAccess.GetBaggageById(id).Result;
                 return ModelConversion.BaggageDtoConvert.FromBaggage(foundBaggage);
             }
@@ -32,7 +31,6 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                // Synchronously waiting on an asynchronous method.
                 var foundBaggages = _baggageAccess.GetBaggageAll().Result;
                 return ModelConversion.BaggageDtoConvert.FromBaggageCollection(foundBaggages);
             }
@@ -48,7 +46,6 @@ namespace MomentozClientApp.BusinessLogicLayer
                 var newBaggage = ModelConversion.BaggageDtoConvert.ToBaggage(baggageToAdd);
                 if (newBaggage != null)
                 {
-                    // Synchronously waiting on an asynchronous method.
                     return _baggageAccess.CreateBaggage(newBaggage).Result;
                 }
                 return 0;

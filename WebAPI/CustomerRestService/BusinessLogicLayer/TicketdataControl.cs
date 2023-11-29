@@ -2,7 +2,6 @@
 using DatabaseData.DatabaseLayer;
 using RESTfulService.DTOs;
 using RESTfulService.BusinessLogicLayer;
-using System;
 namespace RESTfulService.BusinesslogicLayer
 {
 
@@ -14,7 +13,6 @@ namespace RESTfulService.BusinesslogicLayer
         {
             _ticketAccess = inTicketAccess;
         }
-
 
         public TicketDto? Get(int idToMatch)
         {
@@ -31,7 +29,6 @@ namespace RESTfulService.BusinesslogicLayer
             return foundTicketDto;
         }
 
-
         public List<TicketDto>? Get()
         {
             List<TicketDto>? foundDtos;
@@ -46,7 +43,6 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
-
 
         public int Add(TicketDto newTicket)
         {
