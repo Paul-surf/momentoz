@@ -110,7 +110,7 @@ namespace RESTfulService.Controllers
         [HttpGet, Route("{loginid}")]
         public ActionResult<CustomerDtoo?> Get(string loginid)
         {
-            ActionResult<CustomerDtoo> foundReturn;
+            ActionResult<CustomerDtoo> foundReturn = new CustomerDtoo();
             // retrieve and convert data
             CustomerDtoo? foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
             // evaluate

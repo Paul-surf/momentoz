@@ -150,7 +150,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select Id, email from AspNetUsers where loginUserId = @UserId";
+            string queryString = "select ID, FirstName, LastName, Email, MobilePhone from Customers where loginUserId = @UserId";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -164,23 +164,10 @@ namespace DatabaseData.DatabaseLayer
                 foundCustomer = new Customer();
                 while (customerReader.Read())
                 {
-                    foundCustomer = GetUserFromReader(customerReader);
+                    foundCustomer = GetCustomerFromReader(customerReader);
                 }
             }
             return foundCustomer;
-        }
-
-        private Customer GetUserFromReader(SqlDataReader customerReader)
-        {
-            string tempUserId;
-            string? tempEmail;
-            bool isNotNull;
-
-            tempUserId = customerReader.GetString(customerReader.GetOrdinal("Id"));
-            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("email"));
-            tempEmail = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("email")) : null;
-            
-            return new Customer(null, null, null, tempEmail, tempUserId);
         }
 
 
@@ -189,11 +176,11 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer createdCustomer;
             //
-            string insertString = "insert into Customer(loginUserId, email) values(@loginUserI, @emai)";
+            string insertString = "insert into Customers(loginUserId, email) values(@loginUserI, @emai)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Prepace SQL
+                // Prepare SQL
                 SqlParameter fNameParam = new("@loginUserI", aMinimalCustomer.LoginUserId);
                 CreateCommand.Parameters.Add(fNameParam);
                 SqlParameter lNameParam = new("@emai", aMinimalCustomer.Email);
