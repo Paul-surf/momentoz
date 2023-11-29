@@ -105,7 +105,7 @@ namespace MomentozWebClient.ServiceLayer
             Customer customerFromService = null;
 
             _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
-
+            _customerServiceConnection.UseUrl += "Customers/";
             if (_customerServiceConnection != null)
             {
                 try
