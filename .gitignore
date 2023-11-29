@@ -33,3 +33,4 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 WebAPI/CustomerRestService/DockerFile.txt
+WebAPI/MomentozWebAPI/.vs/MomentozWebAPI/v17/.suo
