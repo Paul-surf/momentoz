@@ -169,6 +169,31 @@ namespace DatabaseData.DatabaseLayer
             }
             return foundCustomer;
         }
+
+
+        // Save customer with loginUserId and email only
+        public Customer CreateCustomerMinimal(Customer aMinimalCustomer)
+        {
+            Customer createdCustomer;
+            //
+            string insertString = "insert into Customer(loginUserId, email) values(@loginUserI, @emai)";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            {
+                // Prepace SQL
+                SqlParameter fNameParam = new("@loginUserI", aMinimalCustomer.LoginUserId);
+                CreateCommand.Parameters.Add(fNameParam);
+                SqlParameter lNameParam = new("@emai", aMinimalCustomer.Email);
+                CreateCommand.Parameters.Add(lNameParam);
+                //
+                con.Open();
+                // Execute save
+                CreateCommand.ExecuteNonQuery();
+                // Read customer to verify saving was ok
+                createdCustomer = GetCustomerByUserId(aMinimalCustomer.LoginUserId);
+            }
+            return createdCustomer;
+        }
     }
 
 

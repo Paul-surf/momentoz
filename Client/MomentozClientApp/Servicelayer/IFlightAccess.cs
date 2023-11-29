@@ -18,6 +18,5 @@ namespace MomentozClientApp.Servicelayer
         Task<bool> DeleteFlightById(int id);
         Task<Flight> GetFlightByUserId(string loginUserId);
     }
-
 }
 

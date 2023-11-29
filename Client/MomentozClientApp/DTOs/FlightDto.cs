@@ -23,6 +23,6 @@ namespace MomentozClientApp.DTOs
         public string DestinationAddress { get; set; }
         public string DestinationCountry { get; set; }
 
-        public string CustomDisplay => $"{Address}, {City}, {DestinationAddress}, {DestinationCountry}";
+        public string CustomDisplay => $"{Address}, {City}, {Price}, {DestinationAddress}, {DestinationCountry}";
     }
 }

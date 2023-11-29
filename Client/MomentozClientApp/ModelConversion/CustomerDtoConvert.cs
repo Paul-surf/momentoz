@@ -4,8 +4,6 @@ namespace MomentozClientApp.ModelConversion
 {
     public class CustomerDtoConvert
     {
-
-        // Convert from Customer objects to CustomerDTO objects
         public static List<DTOs.CustomerDto>? FromCustomerCollection(List<Customer> inCustomers)
         {
             List<DTOs.CustomerDto>? aCustomerReadDtoList = null;
@@ -24,8 +22,6 @@ namespace MomentozClientApp.ModelConversion
             }
             return aCustomerReadDtoList;
         }
-
-        // Convert from Customer object to CustomerDTO object
         public static DTOs.CustomerDto? FromCustomer(Customer inCustomer)
         {
             DTOs.CustomerDto? aCustomerReadDto = null;
@@ -35,8 +31,6 @@ namespace MomentozClientApp.ModelConversion
             }
             return aCustomerReadDto;
         }
-
-        // Convert from CustomerDTO object to Customer object
         public static Customer? ToCustomer(DTOs.CustomerDto inDto)
         {
             Customer? aCustomer = null;

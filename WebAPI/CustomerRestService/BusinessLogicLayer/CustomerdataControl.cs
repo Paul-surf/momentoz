@@ -47,7 +47,7 @@ namespace RESTfulService.BusinesslogicLayer
         }
 
 
-        public int Add(CustomerDtoo customerToAdd)
+        /*public int Add(CustomerDtoo customerToAdd)
         {
             int insertedId = 0;
             try
@@ -64,6 +64,27 @@ namespace RESTfulService.BusinesslogicLayer
                 insertedId = -1;
             }
             return insertedId;
+        }*/
+
+        public CustomerDtoo? Add(CustomerDtoo customerToAdd)
+        {
+            CustomerDtoo? createdCustomer = null;
+            // Convert to Customer - save in db ang get created customer - convert to CustomerDto
+            try
+            {
+                Customer? dbCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);
+                if (dbCustomer is not null)
+                {
+                    Customer createdDbCustomer = _customerAccess.CreateCustomerMinimal(dbCustomer);
+                    createdCustomer = ModelConversion.CustomerDtoConvert.FromCustomer(dbCustomer);
+                }
+            }
+            catch
+            {
+
+                createdCustomer = null;
+            }
+            return createdCustomer;
         }
 
 

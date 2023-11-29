@@ -9,8 +9,6 @@ namespace MomentozClientApp.ModelConversion
 {
     public class FlightDtoConvert
     {
-
-        // Convert from Flight objects to FlightDTO objects
         public static List<DTOs.FlightDto>? FromFlightCollection(List<Flight> inFlights)
         {
             List<DTOs.FlightDto>? aFlightReadDtoList = null;
@@ -29,8 +27,6 @@ namespace MomentozClientApp.ModelConversion
             }
             return aFlightReadDtoList;
         }
-
-        // Convert from Flight object to FlightDTO object
         public static DTOs.FlightDto? FromFlight(Flight inFlight)
         {
             DTOs.FlightDto? aFlightReadDto = null;
@@ -40,8 +36,6 @@ namespace MomentozClientApp.ModelConversion
             }
             return aFlightReadDto;
         }
-
-        // Convert from FlightDTO object to Flight object
         public static Flight? ToFlight(DTOs.FlightDto inDto)
         {
             Flight? aFlight = null;
