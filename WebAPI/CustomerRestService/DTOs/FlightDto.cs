@@ -13,6 +13,7 @@
             DestinationAddress = inDestinationAddress;
             DestinationCountry = inDestinationCountry;
         }
+        public bool IsLocked { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
         public double Price { get; set; }

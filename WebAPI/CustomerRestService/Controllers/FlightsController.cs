@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RESTfulService.Controllers
 {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class FlightsController : ControllerBase
-        {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FlightsController : ControllerBase
+    {
 
         private readonly IFlightdata _businessLogicCtrl;
+
 
         // Constructor with Dependency Injection
         public FlightsController(IFlightdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
-
 
         // URL: api/Flights
         [HttpGet]
@@ -77,5 +77,9 @@ namespace RESTfulService.Controllers
             }
             return foundReturn;
         }
+       
+
     }
 }
+
+

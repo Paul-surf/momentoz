@@ -1,8 +1,6 @@
 using MomentozClientApp.DTOs;
-using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using System.Net.Http.Headers;
 using Timer = System.Windows.Forms.Timer;
 
@@ -21,6 +19,10 @@ namespace MomentozClientApp
         private double basePrice; // Basispris for flyvningen
         private double returnTicketCost; // Ekstra omkostning for returbillet
         private double baggageCost; // Ekstra omkostning for bagage
+        private bool customersLoaded = false; // Denne variable holder styr på, om kunde-data er blevet indlæst
+        private string loggedInCustomerId;
+        private bool flightsLoaded = false;
+
 
         public MainMenu(string customerId)
         {
@@ -37,13 +39,12 @@ namespace MomentozClientApp
             LoadCustomersAsync();
             comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
             UpdateTotalPrice();
-
+            comboBox1.DropDown += comboBox1_DropDown;
+            comboBox2.DropDown += comboBox2_DropDown;
+            comboBox3.DropDown += comboBox3_DropDown;
+            comboBox4.DropDown += comboBox4_DropDown;
 
         }
-
-
-
-    
 
     public MainMenu()
         {
@@ -53,6 +54,26 @@ namespace MomentozClientApp
         {
             label1.Text = loggedInCustomerId;
         }
+        private void InitializeYesNoComboBox()
+        {
+            comboBox2.Items.Clear();
+            comboBox2.Items.Add("Ja");
+            comboBox2.Items.Add("Nej");
+            comboBox2.SelectedIndex = -1;
+        }
+
+
+
+        private void InitializeBagageWeightCombobox()
+        {
+            comboBox3.Items.Clear();
+            comboBox3.Items.Add("2kg");
+            comboBox3.Items.Add("5kg");
+            comboBox3.Items.Add("10kg");
+            comboBox3.Items.Add("15kg");
+            comboBox3.SelectedIndex = -1;
+        }
+
 
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
@@ -76,13 +97,6 @@ namespace MomentozClientApp
         {
             label7.Text = loggedInCustomerId;
         }
-
-        private void Form3_Load(object sender, EventArgs e)
-        {
-            InitializeBagageWeightCombobox();
-        }
-
-
         private async void Form1_Load(object sender, EventArgs e)
         {
             if (!isDataLoaded)
@@ -92,10 +106,13 @@ namespace MomentozClientApp
                 flightRefreshTimer.Start();
             }
         }
-        private void label1_Click(object sender, EventArgs e)
+        private void Form3_Load(object sender, EventArgs e)
         {
-
+            InitializeBagageWeightCombobox();
         }
+
+
+
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -116,9 +133,6 @@ namespace MomentozClientApp
         {
 
         }
-
-
-
 
         private void label1_Click_1(object sender, EventArgs e)
         {
@@ -141,47 +155,36 @@ namespace MomentozClientApp
         }
         private async Task LoadFlightsAsync()
         {
-            try
+
+            using (var httpClient = new HttpClient())
             {
-                using (var httpClient = new HttpClient())
+                httpClient.BaseAddress = new Uri("https://localhost:5114");
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await httpClient.GetAsync("api/flights");
+
+                if (response.IsSuccessStatusCode)
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114");
-                    httpClient.DefaultRequestHeaders.Accept.Clear();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var flightData = await response.Content.ReadAsStringAsync();
+                    flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
 
-                    var response = await httpClient.GetAsync("api/flights");
-
-                    if (response.IsSuccessStatusCode)
+                    if (flightsData != null && flightsData.Any())
                     {
-                        var flightData = await response.Content.ReadAsStringAsync();
-                        flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
-
-                        if (flightsData != null && flightsData.Any())
-                        {
-                            comboBox1.DisplayMember = "CustomDisplay";
-                            comboBox1.ValueMember = "Id";
-                            comboBox1.DataSource = flightsData;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen flights blev fundet.");
-                        }
+                        comboBox1.DisplayMember = "CustomDisplay";
+                        comboBox1.ValueMember = "Id";
+                        comboBox1.DataSource = flightsData;
                     }
                     else
                     {
-                        MessageBox.Show("Fejl i hentning fra API.");
+                        MessageBox.Show("Ingen flights blev fundet.");
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Der opstod en fejl ved hentning af flights: {ex.Message}");
             }
         }
         private async Task LoadCustomersAsync()
         {
-            try
-            {
+            
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.BaseAddress = new Uri("https://localhost:5114");
@@ -206,6 +209,41 @@ namespace MomentozClientApp
                             MessageBox.Show("Ingen kunder blev fundet.");
                         }
                     }
+                }
+            
+            
+        }
+        private async void comboBox1_DropDown(object sender, EventArgs e)
+        {
+
+            //   LoadFlightsAsync();
+
+            if (flightsLoaded) return;
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
+                    var response = await httpClient.GetAsync("api/flights");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var flightData = await response.Content.ReadAsStringAsync();
+                        flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
+
+                        if (flightsData != null && flightsData.Any())
+                        {
+                            // Ændr 'CustomDisplay' til det faktiske navn på egenskaben for destinationens adresse.
+                            comboBox1.DisplayMember = "DestinationAddress";
+                            comboBox1.ValueMember = "Id";
+                            comboBox1.DataSource = flightsData;
+                            flightsLoaded = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingen flyvninger blev fundet.");
+                        }
+                    }
                     else
                     {
                         MessageBox.Show("Fejl i hentning fra API.");
@@ -214,30 +252,64 @@ namespace MomentozClientApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Der opstod en fejl ved hentning af kunder: {ex.Message}");
+                MessageBox.Show($"Der opstod en fejl ved hentning af flyvninger: {ex.Message}");
+            }
+        }
+        private void comboBox2_DropDown(object sender, EventArgs e)
+        {
+            // Opdater returbilletten ved dropdown
+            UpdateTotalPrice();
+        }
+
+        private void comboBox3_DropDown(object sender, EventArgs e)
+        {
+            // Opdater bagageomkostningerne ved dropdown
+            UpdateTotalPrice(baggageCost);
+        }
+
+        private async void comboBox4_DropDown(object sender, EventArgs e)
+        {
+            LoadCustomersAsync();
+            // For at undgå at hente data flere gange, kan du have en boolsk flag til at kontrollere dette.
+            if (customersLoaded) return;
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
+                    var response = await httpClient.GetAsync("api/customers"); // Opdater URL'en til din customers API
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var customerData = await response.Content.ReadAsStringAsync();
+                        var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData); // Erstat 'CustomerDto' med din faktiske customer DTO klasse
+
+                        if (customers != null && customers.Any())
+                        {
+                            comboBox4.DisplayMember = "FullName"; // Erstat 'FullName' med den egenskab du vil vise i dropdown
+                            comboBox4.ValueMember = "Id"; // Antager at dit CustomerDto har en 'Id' egenskab
+                            comboBox4.DataSource = customers;
+                            customersLoaded = true; // Sæt din boolske flag til true, så data ikke genindlæses
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingen kunder blev fundet.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Fejl i hentning af kundeinformation fra API.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
 
-        private void InitializeYesNoComboBox()
-        {
-            comboBox2.Items.Clear();
-            comboBox2.Items.Add("Ja");
-            comboBox2.Items.Add("Nej");
-            comboBox2.SelectedIndex = -1;
-        }
 
-      
-
-        private void InitializeBagageWeightCombobox()
-        {
-            comboBox3.Items.Clear();
-            comboBox3.Items.Add("2kg");
-            comboBox3.Items.Add("5kg");
-            comboBox3.Items.Add("10kg");
-            comboBox3.Items.Add("15kg");
-            comboBox3.SelectedIndex = -1;
-        }
 
 
 
@@ -289,80 +361,14 @@ namespace MomentozClientApp
             label12.Text = $"Pris: {basePrice:C}";
         }
 
-        private bool flightsLoaded = false;
+        
 
-        private async void comboBox1_DropDown(object sender, EventArgs e)
-        {
-            if (flightsLoaded) return;
-
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
-                    var response = await httpClient.GetAsync("api/flights");
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var flightData = await response.Content.ReadAsStringAsync();
-                        flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
-
-                        if (flightsData != null && flightsData.Any())
-                        {
-                            // Ændr 'CustomDisplay' til det faktiske navn på egenskaben for destinationens adresse.
-                            comboBox1.DisplayMember = "DestinationAddress";
-                            comboBox1.ValueMember = "Id";
-                            comboBox1.DataSource = flightsData;
-                            flightsLoaded = true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen flyvninger blev fundet.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fejl i hentning fra API.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Der opstod en fejl ved hentning af flyvninger: {ex.Message}");
-            }
-        }
+        
 
 
 
-        private void label10_Click(object sender, EventArgs e)
-        {
-            label10.Text = "Aalborg";
-        }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedItem != null)
-            {
-                var selectedFlight = (FlightDto)comboBox1.SelectedItem;
-                // Tjek for null eller tom DestinationAddress
-                if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
-                {
-                    label11.Text = selectedFlight.DestinationAddress;
-                }
-                else
-                {
-                    label11.Text = "Ingen adresse tilgængelig";
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ingen flyvning er valgt.");
-            }
-        }
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -390,6 +396,40 @@ namespace MomentozClientApp
             }
         }
 
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox2.SelectedItem != null)
+            {
+                string choice = comboBox2.SelectedItem.ToString();
+                returnTicketCost = choice == "Ja" ? 150 : 0;
+            }
+            else
+            {
+                returnTicketCost = 0;
+            }
+
+            UpdateTotalPrice();
+        }
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedItem != null)
+            {
+                var selectedCustomer = (CustomerDto)comboBox4.SelectedItem;
+                label14.Text = $"{selectedCustomer.FirstName}";
+                label19.Text = $" {selectedCustomer.LastName}";
+                label20.Text = $" {selectedCustomer.MobilePhone}";
+                label21.Text = $" {selectedCustomer.Email}";
+
+
+            }
+            else
+            {
+                label14.Text = "Ingen kunde valgt";
+                label19.Text = "Ingen kunde valgt";
+                label20.Text = "Ingen kunde valgt";
+                label21.Text = "Ingen kunde valgt";
+            }
+        }
 
         private void UpdatePriceBasedOnSelections()
         {
@@ -407,22 +447,6 @@ namespace MomentozClientApp
             label12.Text = $"Pris: {originalPrice + additionalCosts:C}";
         }
 
-        // Husk at opdatere comboBox2's SelectedIndexChanged event også, hvis det påvirker prisen:
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox2.SelectedItem != null)
-            {
-                string choice = comboBox2.SelectedItem.ToString();
-                returnTicketCost = choice == "Ja" ? 150 : 0;
-            }
-            else
-            {
-                returnTicketCost = 0;
-            }
-
-            UpdateTotalPrice();
-        }
-
         private void UpdateTotalPrice()
         {
             // Samlede pris er summen af basisprisen, returbilletten og bagageomkostningerne
@@ -430,12 +454,53 @@ namespace MomentozClientApp
             label12.Text = $"Pris: {totalPrice:C}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+     //   private void button1_Click(object sender, EventArgs e)
+       // {
+        //}
+        private async Task<bool> LockFlight()
         {
+            try
+            {
+                // Erstat med det faktiske ID for det valgte flysæde
+                var selectedFlightId = 1;
+
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
+
+                    // Antager, at API'et har en endpoint til at låse et sæde
+                    var response = await httpClient.GetAsync($"api/flights/{selectedFlightId}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+
+                        // Antager, at API'et returnerer en boolsk værdi, der indikerer, om låsningen lykkedes
+                        return bool.Parse(content);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+               return true;
+            }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+
+        private async void button1_Click_1(object sender, EventArgs e)
         {
+            var isFlightLocked = await LockFlight();
+
+            if (!isFlightLocked)
+            {
+                MessageBox.Show("Sædet er allerede booket. Vælg venligst en anden flyvning.", "Bookingfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Saml kvitteringsoplysningerne
             string customerInfo = "Kundeoplysninger:\n";
 
@@ -531,87 +596,46 @@ namespace MomentozClientApp
             MessageBox.Show(message, caption, buttons, icon);
         }
 
-        private void label12_Click(object sender, EventArgs e)
-        {
-            // Kommenter alt indholdet i denne metode ud, eller fjern metoden helt,
-            // hvis det ikke er nødvendigt at have en Click event på prislappen.
 
-            // Eksempel på at kommentere koden ud:
-            /*
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+            label10.Text = "Aalborg";
+        }
+        private void label11_Click(object sender, EventArgs e)
+        {
             if (comboBox1.SelectedItem != null)
             {
                 var selectedFlight = (FlightDto)comboBox1.SelectedItem;
-                label12.Text = $"Pris: {selectedFlight.Price:C}";
-            }
-            */
-        }
-
-
-
-        private bool customersLoaded = false; // Denne variable holder styr på, om kunde-data er blevet indlæst
-        private string loggedInCustomerId;
-
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox4.SelectedItem != null)
-            {
-                var selectedCustomer = (CustomerDto)comboBox4.SelectedItem;
-                label14.Text = $"{selectedCustomer.FirstName}";
-                label19.Text = $" {selectedCustomer.LastName}";
-                label20.Text = $" {selectedCustomer.MobilePhone}";
-                label21.Text = $" {selectedCustomer.Email}";
-
-
+                // Tjek for null eller tom DestinationAddress
+                if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
+                {
+                    label11.Text = selectedFlight.DestinationAddress;
+                }
+                else
+                {
+                    label11.Text = "Ingen adresse tilgængelig";
+                }
             }
             else
             {
-                label14.Text = "Ingen kunde valgt";
-                label19.Text = "Ingen kunde valgt";
-                label20.Text = "Ingen kunde valgt";
-                label21.Text = "Ingen kunde valgt";
+                MessageBox.Show("Ingen flyvning er valgt.");
             }
         }
 
-
-        private async void comboBox4_DropDown(object sender, EventArgs e)
+        private void label12_Click(object sender, EventArgs e)
         {
-            // For at undgå at hente data flere gange, kan du have en boolsk flag til at kontrollere dette.
-            if (customersLoaded) return;
 
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
-                    var response = await httpClient.GetAsync("api/customers"); // Opdater URL'en til din customers API
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var customerData = await response.Content.ReadAsStringAsync();
-                        var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData); // Erstat 'CustomerDto' med din faktiske customer DTO klasse
-
-                        if (customers != null && customers.Any())
-                        {
-                            comboBox4.DisplayMember = "FullName"; // Erstat 'FullName' med den egenskab du vil vise i dropdown
-                            comboBox4.ValueMember = "Id"; // Antager at dit CustomerDto har en 'Id' egenskab
-                            comboBox4.DataSource = customers;
-                            customersLoaded = true; // Sæt din boolske flag til true, så data ikke genindlæses
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen kunder blev fundet.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fejl i hentning af kundeinformation fra API.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Der opstod en fejl ved hentning af kunder: {ex.Message}");
-            }
         }
+
 
         private void label14_Click(object sender, EventArgs e)
         {
