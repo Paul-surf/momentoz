@@ -72,7 +72,7 @@ namespace MomentozClientApp.GuiLayer
             if (IsValidCustomerId(customerId))
             {
                 // Kunde-ID er gyldigt, og brugeren bliver logget ind.
-                MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          //      MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Hide();
 
