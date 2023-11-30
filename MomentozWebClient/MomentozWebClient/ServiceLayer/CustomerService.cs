@@ -134,9 +134,10 @@ namespace MomentozWebClient.ServiceLayer
         public async Task<Customer> UpdateCustomer(Customer customer)
         {
             Customer customerFromService = null;
+            string userId = customer.LoginUserId;
 
             _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
-            _customerServiceConnection.UseUrl += "Customers/" + customer.LoginUserId;
+            _customerServiceConnection.UseUrl += "Customers/" + userId;
 
             if (_customerServiceConnection != null)
             {
@@ -145,7 +146,7 @@ namespace MomentozWebClient.ServiceLayer
                     var json = JsonConvert.SerializeObject(customer);
                     var inContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    var serviceResponse = await _customerServiceConnection.CallServicePost(inContent);
+                    var serviceResponse = await _customerServiceConnection.CallServicePut(inContent);
                     if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                     {
                         var resultContent = await serviceResponse.Content.ReadAsStringAsync();
