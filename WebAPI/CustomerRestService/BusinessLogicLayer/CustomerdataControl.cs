@@ -64,9 +64,24 @@ namespace RESTfulService.BusinesslogicLayer
         }
 
 
-        public bool Put(CustomerDtoo customerToUpdate)
+        public CustomerDtoo Put(CustomerDtoo customerToUpdate)
         {
-            throw new NotImplementedException();
+            CustomerDtoo? createdCustomer = null;
+            try
+            {
+                Customer? dbCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToUpdate);
+                if (dbCustomer is not null)
+                {
+                    Customer createdDbCustomer = _customerAccess.UpdateCustomer(dbCustomer);
+                    createdCustomer = ModelConversion.CustomerDtoConvert.FromCustomer(dbCustomer);
+                }
+            }
+            catch
+            {
+
+                createdCustomer = null;
+            }
+            return createdCustomer;
         }
 
         public bool Delete(int id)

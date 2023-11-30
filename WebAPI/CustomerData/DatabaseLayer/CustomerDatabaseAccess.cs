@@ -139,9 +139,38 @@ namespace DatabaseData.DatabaseLayer
         }
 
 
-        public bool UpdateCustomer(Customer customerToUpdate)
+        public Customer UpdateCustomer(Customer customerToUpdate)
         {
-            throw new NotImplementedException();
+            Customer updatedCustomer;
+
+            string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone";
+            string condition = "WHERE loginUserId = @UserId";
+
+            string queryString = "UPDATE Customers " + setVariables + " " + condition;
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                // Prepare SQL
+                SqlParameter idParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
+                SqlParameter fnameParam = new SqlParameter("@fName", customerToUpdate.FirstName);
+                SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
+                SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
+                readCommand.Parameters.Add(idParam);
+                readCommand.Parameters.Add(fnameParam);
+                readCommand.Parameters.Add(lnameParam);
+                readCommand.Parameters.Add(phoneParam);
+                //
+                con.Open();
+                // Execute read
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                updatedCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    updatedCustomer = GetCustomerByUserId(customerToUpdate.LoginUserId);
+                }
+            }
+            return updatedCustomer;
         }
 
 

@@ -4,6 +4,7 @@ using MomentozWebClient.Models;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MomentozWebClient.ServiceLayer
 {
@@ -60,7 +61,6 @@ namespace MomentozWebClient.ServiceLayer
             }
             return customersFromService;
         }
-
 
         public async Task<Customer> GetCustomerByUserId(string userId)
         {
@@ -131,7 +131,35 @@ namespace MomentozWebClient.ServiceLayer
 
 
 
+        public async Task<Customer> UpdateCustomer(Customer customer)
+        {
+            Customer customerFromService = null;
 
+            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
+            _customerServiceConnection.UseUrl += "Customers/" + customer.LoginUserId;
+
+            if (_customerServiceConnection != null)
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(customer);
+                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _customerServiceConnection.CallServicePost(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
+                        customerFromService = JsonConvert.DeserializeObject<Customer>(resultContent);
+                    }
+                }
+                catch
+                {
+                    customerFromService = null;
+                }
+            }
+
+            return customerFromService;
+        }
 
 
 
@@ -156,10 +184,7 @@ namespace MomentozWebClient.ServiceLayer
             throw new NotImplementedException();
         }
 
-        public bool UpdateCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         Task<Customer> ICustomerAccess.GetCustomer(int id)
         {
