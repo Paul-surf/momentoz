@@ -102,7 +102,7 @@ namespace MomentozWebClient.Controllers
 
                 if (customerUpdated == null) {/* handle error */}
                     
-                return RedirectToAction(nameof(Profile));
+                return RedirectToAction("Profile");
             }
             catch
             {
