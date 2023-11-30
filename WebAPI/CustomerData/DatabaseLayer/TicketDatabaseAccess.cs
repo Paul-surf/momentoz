@@ -21,7 +21,7 @@ namespace DatabaseData.DatabaseLayer
         public int CreateTicket(Ticket aTicket)
         {
             int insertedId = -1;
-            string insertString = @"insert into Ticket(flightID) 
+            string insertString = @"insert into Tickets(flightID) 
                                     OUTPUT INSERTED.ID 
                                     values(@Flight)";
 
