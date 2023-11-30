@@ -14,5 +14,9 @@
             this.CustomerID = CustomerID;
         }
         public Order() { }
+        public Order(int ticketId) 
+        {
+            TicketID = ticketId;
+        }
     }
 }
