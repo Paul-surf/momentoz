@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-   
+    <Compile Remove="App.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="App.xaml" />
   </ItemGroup>
 
   <ItemGroup>

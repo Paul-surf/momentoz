@@ -1,4 +1,5 @@
 using MomentozClientApp.DTOs;
+using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -11,7 +12,7 @@ namespace MomentozClientApp
     {
 
         private readonly CustomerAccess _customerAccess;
-        
+
         private Timer flightRefreshTimer;
         private List<FlightDto> flightsData;
         private bool isDataLoaded = false;
@@ -22,31 +23,33 @@ namespace MomentozClientApp
         private bool customersLoaded = false; // Denne variable holder styr på, om kunde-data er blevet indlæst
         private string loggedInCustomerId;
         private bool flightsLoaded = false;
-
-
-        public MainMenu(string customerId)
+        private readonly string _customerId;
+        private Customer _customer;
+        public MainMenu(Customer customer)
         {
+            _customer = customer;
+            //   loggedInCustomerId = customerId; // Gem kunde-ID i en lokal variabel
+            //  label7.Text = customerId; // Opdater et label eller anden brugergrænsefladekomponent med kunde-ID'en
             InitializeComponent();
-            loggedInCustomerId = customerId; // Gem kunde-ID i en lokal variabel
-            label7.Text = customerId; // Opdater et label eller anden brugergrænsefladekomponent med kunde-ID'en
             InitializeYesNoComboBox();
             InitializeBagageWeightCombobox();
             flightRefreshTimer = new System.Windows.Forms.Timer();
             flightRefreshTimer.Interval = 10000; // 10 sekunder
             flightRefreshTimer.Tick += new EventHandler(flightRefreshTimer_Tick);
             LoadFlightsAsync();
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             LoadCustomersAsync();
-            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
             UpdateTotalPrice();
             comboBox1.DropDown += comboBox1_DropDown;
             comboBox2.DropDown += comboBox2_DropDown;
             comboBox3.DropDown += comboBox3_DropDown;
             comboBox4.DropDown += comboBox4_DropDown;
-
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
+            //   _customerId = customerId;
+            
         }
 
-    public MainMenu()
+        public MainMenu()
         {
         }
 
@@ -62,8 +65,6 @@ namespace MomentozClientApp
             comboBox2.SelectedIndex = -1;
         }
 
-
-
         private void InitializeBagageWeightCombobox()
         {
             comboBox3.Items.Clear();
@@ -73,7 +74,12 @@ namespace MomentozClientApp
             comboBox3.Items.Add("15kg");
             comboBox3.SelectedIndex = -1;
         }
-
+        private void UpdateTotalPrice(double additionalCosts)
+        {
+            // Antager at 'label12' er din prislabel.
+            double totalPrice = basePrice + additionalCosts;
+            label12.Text = $"Pris: {totalPrice:C}";
+        }
 
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
@@ -93,10 +99,7 @@ namespace MomentozClientApp
             }
         }
 
-        private void label7_Click(object sender, EventArgs e)
-        {
-            label7.Text = loggedInCustomerId;
-        }
+
         private async void Form1_Load(object sender, EventArgs e)
         {
             if (!isDataLoaded)
@@ -112,37 +115,6 @@ namespace MomentozClientApp
         }
 
 
-
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-        }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -184,34 +156,34 @@ namespace MomentozClientApp
         }
         private async Task LoadCustomersAsync()
         {
-            
-                using (var httpClient = new HttpClient())
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri("https://localhost:5114");
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await httpClient.GetAsync("api/customers"); // Opdater URL'en til kundernes API-endepunkt.
+
+                if (response.IsSuccessStatusCode)
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114");
-                    httpClient.DefaultRequestHeaders.Accept.Clear();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var customerData = await response.Content.ReadAsStringAsync();
+                    var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData);
 
-                    var response = await httpClient.GetAsync("api/customers"); // Opdater URL'en til kundernes API-endepunkt.
-
-                    if (response.IsSuccessStatusCode)
+                    if (customers != null && customers.Any())
                     {
-                        var customerData = await response.Content.ReadAsStringAsync();
-                        var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData);
-
-                        if (customers != null && customers.Any())
-                        {
-                            comboBox4.DisplayMember = "FullName"; // Erstat med den egenskab, du vil vise i dropdown for kunder.
-                            comboBox4.ValueMember = "Id"; // Antages at dit CustomerDto har en 'Id' egenskab.
-                            comboBox4.DataSource = customers;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen kunder blev fundet.");
-                        }
+                        comboBox4.DisplayMember = "FullName"; // Erstat med den egenskab, du vil vise i dropdown for kunder.
+                        comboBox4.ValueMember = "Id"; // Antages at dit CustomerDto har en 'Id' egenskab.
+                        comboBox4.DataSource = customers;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ingen kunder blev fundet.");
                     }
                 }
-            
-            
+            }
+
+
         }
         private async void comboBox1_DropDown(object sender, EventArgs e)
         {
@@ -346,12 +318,7 @@ namespace MomentozClientApp
             UpdateTotalPrice();
         }
 
-        private void UpdateTotalPrice(double additionalCosts)
-        {
-            // Antager at 'label12' er din prislabel.
-            double totalPrice = basePrice + additionalCosts;
-            label12.Text = $"Pris: {totalPrice:C}";
-        }
+
 
         // Metode, der skal kaldes, når en flyvning vælges for at sætte basisprisen
         private void SetBasePrice(double price)
@@ -360,15 +327,6 @@ namespace MomentozClientApp
             // Opdater prisen på UI med det samme for at reflektere basisprisen
             label12.Text = $"Pris: {basePrice:C}";
         }
-
-        
-
-        
-
-
-
-
-
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -435,7 +393,7 @@ namespace MomentozClientApp
         {
             // Beregn den nye pris baseret på valg af returbillet og andet.
             double additionalCosts = 0;
-          
+
 
             // Tjek om der er valgt en returbillet og læg den ekstra omkostning til.
             if (comboBox2.SelectedIndex != -1 && comboBox2.SelectedItem.ToString() == "Ja")
@@ -454,8 +412,8 @@ namespace MomentozClientApp
             label12.Text = $"Pris: {totalPrice:C}";
         }
 
-     //   private void button1_Click(object sender, EventArgs e)
-       // {
+        //   private void button1_Click(object sender, EventArgs e)
+        // {
         //}
         private async Task<bool> LockFlight()
         {
@@ -486,7 +444,7 @@ namespace MomentozClientApp
             }
             catch (Exception ex)
             {
-               return true;
+                return true;
             }
         }
 
@@ -596,14 +554,10 @@ namespace MomentozClientApp
             MessageBox.Show(message, caption, buttons, icon);
         }
 
-
-        private void label1_Click(object sender, EventArgs e)
+      
+        private void label7_Click(object sender, EventArgs e)
         {
-
-        }
-        private void label5_Click(object sender, EventArgs e)
-        {
-
+            label7.Text = loggedInCustomerId;
         }
 
         private void label10_Click(object sender, EventArgs e)
@@ -631,30 +585,32 @@ namespace MomentozClientApp
             }
         }
 
-        private void label12_Click(object sender, EventArgs e)
-        {
+        //private void label12_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
 
-        private void label14_Click(object sender, EventArgs e)
-        {
+        //private void label14_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
-        private void label19_Click(object sender, EventArgs e)
-        {
+        //private void label19_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
-        private void label20_Click(object sender, EventArgs e)
-        {
+        //private void label20_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
-        private void label21_Click(object sender, EventArgs e)
-        {
+        //private void label21_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
+
+
     }
-  }
+}

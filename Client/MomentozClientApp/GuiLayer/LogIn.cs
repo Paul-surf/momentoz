@@ -10,11 +10,11 @@ namespace MomentozClientApp.GuiLayer
         private Label label1;
         private TextBox textBox1;
 
-
-
         public LogIn()
         {
             InitializeComponent();
+
+            // Opret en instans af CustomerAccess-klassen, som bruges til at få adgang til kundeoplysninger.
             _customerAccess = new CustomerAccess();
         }
 
@@ -33,14 +33,14 @@ namespace MomentozClientApp.GuiLayer
             button1.TabIndex = 0;
             button1.Text = "Login";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += LoginKnap;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(30, 48);
             label1.Name = "label1";
-            label1.Size = new Size(71, 15);
+            label1.Size = new Size(55, 15);
             label1.TabIndex = 1;
             label1.Text = "KundeID:";
             // 
@@ -50,6 +50,7 @@ namespace MomentozClientApp.GuiLayer
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 4;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // LogIn
             // 
@@ -59,60 +60,69 @@ namespace MomentozClientApp.GuiLayer
             Controls.Add(button1);
             Name = "LogIn";
             Text = "Momentoz";
-            Load += LogIn_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
+        // Denne metode bliver kaldt, når brugeren klikker på login-knappen.
+        private async void LoginKnap(object sender, EventArgs e)
         {
-            var customerId = textBox1.Text; // Antager at brugeren indtaster kunde-ID her.
+            var customerId = textBox1.Text;
 
-            if (IsValidCustomerId(customerId))
+            try
             {
-                // Kunde-ID er gyldigt, og brugeren bliver logget ind.
-          //      MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Konverter customerId til en integer
+                if (int.TryParse(customerId, out int id) && await IsValidCustomerId(id))
+                {
+                    // Skjuler login-formularen.
+                    Hide();
 
-                Hide();
-
-                // Opret MainMenu formen og overfør kunde-ID'et.
-                var mainMenu = new MainMenu(customerId);
-                mainMenu.Closed += (s, args) => Close();
-                mainMenu.Show();
+                    // Opretter MainMenu-formularen og overfører den validerede kunde.
+                    var customer = await _customerAccess.GetCustomerById(id);
+                    if (customer != null) 
+                    {
+                        var mainMenu = new MainMenu(customer);
+                        mainMenu.Closed += (s, args) => Close(); // Lukker login-formularen, når MainMenu lukkes
+                        mainMenu.Show();
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Login mislykkedes. Kontroller venligst din kunde-ID.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (HttpRequestException)
             {
-                // Kunde-ID er ikke gyldigt, vis en fejlmeddelelse.
-                MessageBox.Show("Login failed. Please check your customer ID.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Der opstod en fejl ved forbindelsen til serveren. Tjek din internetforbindelse og prøv igen senere.", "Forbindelsesfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Der opstod en ukendt fejl: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private bool IsValidCustomerId(string customerId)
-        {
-            // Tjek først for tomme eller kun-whitespace værdier.
-            if (string.IsNullOrWhiteSpace(customerId))
-            {
-                return false;
-            }
 
-            int id;
-            if (!int.TryParse(customerId, out id))
+
+        // Denne metode validerer kunde-ID.
+        private async Task<bool> IsValidCustomerId(int customerId)
+        {
+            if (customerId <= 0)
             {
-                // Hvis ID'et ikke kan parses til en int, er det ugyldigt.
+                MessageBox.Show("Kunde-ID skal være et positivt heltal.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             try
             {
-                var customer = _customerAccess.GetCustomerById(id);
-                // Hvis kunden ikke findes, skal GetCustomerById returnere null.
+                // Forsøger at hente kundeoplysninger baseret på kunde-ID.
+                var customer = await _customerAccess.GetCustomerById(customerId);
                 return customer != null;
             }
             catch (Exception ex)
             {
-                // Log exception (i en reel applikation, log til en fil eller fejllogningssystem)
-                Debug.WriteLine("An error occurred: " + ex.Message);
+                MessageBox.Show("Der opstod en fejl under verifikation af kunde-ID. Prøv igen senere.", "Login-fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Der opstod en fejl under adgang til databasen: {ex.Message}");
                 return false;
             }
         }
@@ -120,11 +130,9 @@ namespace MomentozClientApp.GuiLayer
 
 
 
-
-        private void LogIn_Load(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
     }
 }
-
