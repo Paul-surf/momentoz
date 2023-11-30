@@ -8,5 +8,6 @@ namespace RESTfulService.BusinessLogicLayer
         int Add(OrderDto orderToAdd);
         bool Put(OrderDto orderToUpdate);
         bool Delete(int id);
+        OrderDto? GetOrderByTicketId(int ticketId);
     }
 }

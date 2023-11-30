@@ -11,5 +11,7 @@ namespace MomentozWebClient.Data
         {
         }
         public DbSet<MomentozWebClient.Models.Customer>? Customer { get; set; }
+        public DbSet<MomentozWebClient.Models.Flight>? Flight { get; set; }
+        public DbSet<MomentozWebClient.Models.Order>? Order { get; set; }
     }
 }

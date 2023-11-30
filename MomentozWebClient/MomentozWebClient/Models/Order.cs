@@ -8,13 +8,11 @@
         public int? CustomerID { get; set; }
         public int? TicketID { get; set; }
 
-        public Order(double totalPrice, DateTime dateOfBuy, int? TicketID, int? CustomerID)
+        public Order(int? TicketID, int? CustomerID)
         {
-            TotalPrice = totalPrice;
-            PurchaseDate = dateOfBuy;
             this.TicketID = TicketID;
             this.CustomerID = CustomerID;
-
         }
+        public Order() { }
     }
 }

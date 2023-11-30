@@ -46,11 +46,31 @@ namespace RESTfulService.Controllers
 
 
 
-        // URL: api/Orders/{id}
-        [HttpGet, Route("{id}")]
-        public ActionResult<OrderDto> Get(int id)
+        // URL: api/Orders/{ticketId}
+        [HttpGet, Route("{ticketId}")]
+        public ActionResult<OrderDto> Get(int ticketId)
         {
-            return null;
+            ActionResult<OrderDto> foundReturn;
+            // retrieve data - converted to DTO
+            OrderDto? foundOrder = _businessLogicCtrl.GetOrderByTicketId(ticketId);
+            // evaluate
+            if (foundOrder != null)
+            {
+                if (foundOrder.TicketID == ticketId)
+                {
+                    foundReturn = Ok(foundOrder);                 // Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    // Ok, but no content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        // Internal server error
+            }
+            // send response back to client
+            return foundReturn;
         }
 
         // URL: api/Orders

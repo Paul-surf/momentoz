@@ -98,5 +98,45 @@ namespace MomentozWebClient.ServiceLayer
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Order> getOrderByTicketId(int ticketId)
+        {
+            Order? orderFromService = null;
+
+            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
+            _orderServiceConnection.UseUrl += "orders/" + ticketId;
+
+
+            if (_orderServiceConnection != null)
+            {
+                try
+                {
+                    var serviceResponse = await _orderServiceConnection.CallServiceGet();
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var content = await serviceResponse.Content.ReadAsStringAsync();
+
+                        orderFromService = JsonConvert.DeserializeObject<Order>(content);
+
+                    }
+                    else
+                    {
+                        if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            orderFromService = new Order();
+                        }
+                        else
+                        {
+                            orderFromService = null;
+                        }
+                    }
+                }
+                catch
+                {
+                    orderFromService = null;
+                }
+            }
+            return orderFromService;
+        }
     }
 }

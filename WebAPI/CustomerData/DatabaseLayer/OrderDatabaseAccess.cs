@@ -116,6 +116,29 @@ namespace DatabaseData.DatabaseLayer
         {
             throw new NotImplementedException();
         }
+
+        Order? IOrderAccess.GetOrderByTicketId(int ticketId)
+        {
+            Order foundOrder;
+
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE TicketID = @id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", ticketId);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader orderReader = readCommand.ExecuteReader();
+                foundOrder = new Order();
+                while (orderReader.Read())
+                {
+                    foundOrder = GetOrderFromReader(orderReader);
+                }
+            }
+            return foundOrder;
+        }
     }
 }
 
