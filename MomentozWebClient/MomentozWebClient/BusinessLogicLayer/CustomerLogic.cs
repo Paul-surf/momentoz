@@ -49,7 +49,7 @@ namespace MomentozWebClient.BusinessLogicLayer
 
             return createdCust;
         }
-        public async Task<ActionResult> UpdateCustomer(Customer customer)
+        public async Task<Customer> UpdateCustomer(Customer customer)
         {
             return await _customerServiceAccess.UpdateCustomer(customer);
         }
