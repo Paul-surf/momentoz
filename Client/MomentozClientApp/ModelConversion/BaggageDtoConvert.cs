@@ -4,7 +4,6 @@ namespace MomentozClientApp.ModelConversion
 {
     public class BaggageDtoConvert
     {
-        // Convert from Baggage objects to BaggageDTO objects
         public static List<BaggageDto> FromBaggageCollection(List<Baggage> inBaggage)
         {
             var aBaggageReadDtoList = new List<BaggageDto>();
@@ -15,7 +14,6 @@ namespace MomentozClientApp.ModelConversion
             }
             return aBaggageReadDtoList;
         }
-        // Convert from Baggage object to BaggageDTO object
         public static BaggageDto FromBaggage(Baggage inBaggage)
         {
             return new BaggageDto
@@ -25,7 +23,6 @@ namespace MomentozClientApp.ModelConversion
                 Price = inBaggage.Price
             };
         }
-        // Convert from BaggageDTO object to Baggage object
         public static Baggage ToBaggage(BaggageDto inDto)
         {
             Baggage? aBaggage = null;

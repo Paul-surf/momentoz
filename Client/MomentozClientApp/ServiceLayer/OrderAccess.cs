@@ -1,8 +1,7 @@
 ﻿using System.Configuration;
 using Newtonsoft.Json;
-
-using global::MomentozClientApp.ModelLayer;
-using global::MomentozClientApp.Servicelayer;
+using MomentozClientApp.ModelLayer;
+using MomentozClientApp.Servicelayer;
 
 namespace MomentozClientApp.ServiceLayer
 {
@@ -102,5 +101,5 @@ namespace MomentozClientApp.ServiceLayer
         {
             throw new NotImplementedException();
         }
-     }
+    }
 }

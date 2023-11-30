@@ -9,4 +9,4 @@ namespace MomentozClientApp.Servicelayer
         Task<bool> UpdateBaggage(Baggage baggage);
         Task<bool> DeleteBaggageById(int id);
     }
-} 
+}

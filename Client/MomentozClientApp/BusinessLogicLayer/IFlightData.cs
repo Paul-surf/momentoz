@@ -8,7 +8,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         List<FlightDto>? Get();
         int Add(FlightDto flightToAdd);
         bool Put(FlightDto flightToUpdate);
-        bool Delete(int id); 
+        bool Delete(int id);
 
         FlightDto? GetFlightById(int id);
     }

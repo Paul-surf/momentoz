@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using MomentozClientApp.DTOs;
-using MomentozClientApp.ServiceLayer;
-using MomentozClientApp.ModelConversion;
+﻿using MomentozClientApp.DTOs;
 using MomentozClientApp.Servicelayer;
 
 namespace MomentozClientApp.BusinessLogicLayer
@@ -19,7 +16,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-             
+
                 var foundCustomer = _customerAccess.GetCustomerById(id).Result;
                 return ModelConversion.CustomerDtoConvert.FromCustomer(foundCustomer);
             }
@@ -33,7 +30,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                
+
                 var foundCustomers = _customerAccess.GetCustomerAll().Result;
                 return ModelConversion.CustomerDtoConvert.FromCustomerCollection(foundCustomers);
             }

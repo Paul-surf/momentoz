@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MomentozClientApp.DTOs
+﻿namespace MomentozClientApp.DTOs
 {
     public class FlightDto
     {

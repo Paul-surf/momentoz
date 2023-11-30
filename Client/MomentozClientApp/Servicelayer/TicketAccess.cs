@@ -26,7 +26,6 @@ namespace MomentozClientApp.Servicelayer
             }
             catch
             {
-                // Log the exception or handle it as needed
             }
             return listFromService;
         }
@@ -45,7 +44,6 @@ namespace MomentozClientApp.Servicelayer
             }
             catch
             {
-                // Log the exception or handle it as needed
             }
             return foundTicket;
         }
@@ -65,8 +63,5 @@ namespace MomentozClientApp.Servicelayer
         {
             throw new NotImplementedException();
         }
-        // ... Resten af dine metoder her ...
-        // Implementer de andre metoder baseret på interfacets krav, som du har gjort med GetTickets og GetTicketById
-        // Husk at implementere alle metoder fra interfacet, også dem du måske endnu ikke har brug for; du kan markere dem med NotImplementedException(), indtil du har deres implementering klar.
     }
 }

@@ -1,11 +1,5 @@
 ﻿using MomentozClientApp.DTOs;
-using MomentozClientApp.ModelLayer;
 using MomentozClientApp.Servicelayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace MomentozClientApp.BusinessLogicLayer
 {
     public class BaggageDataControl : IBaggagedata

@@ -1,4 +1,5 @@
 using MomentozClientApp.ServiceLayer;
+using System.Diagnostics;
 
 namespace MomentozClientApp.GuiLayer
 {
@@ -7,11 +8,8 @@ namespace MomentozClientApp.GuiLayer
         private readonly CustomerAccess _customerAccess;
         private Button button1;
         private Label label1;
-        private Label label2;
-        private MaskedTextBox maskedTextBox1;
-        // This might be in your Login.Designer.cs file
-        private System.Windows.Forms.TextBox textBoxUsername;
-        private System.Windows.Forms.TextBox textBoxPassword;
+        private TextBox textBox1;
+
 
 
         public LogIn()
@@ -24,10 +22,7 @@ namespace MomentozClientApp.GuiLayer
         {
             button1 = new Button();
             label1 = new Label();
-            label2 = new Label();
-            maskedTextBox1 = new MaskedTextBox();
             textBox1 = new TextBox();
-            button2 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -43,51 +38,23 @@ namespace MomentozClientApp.GuiLayer
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(53, 43);
+            label1.Location = new Point(30, 48);
             label1.Name = "label1";
             label1.Size = new Size(71, 15);
             label1.TabIndex = 1;
-            label1.Text = "Brugernavn:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(53, 84);
-            label2.Name = "label2";
-            label2.Size = new Size(55, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Kodeord:";
-            // 
-            // maskedTextBox1
-            // 
-            maskedTextBox1.Location = new Point(130, 81);
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(100, 23);
-            maskedTextBox1.TabIndex = 3;
+            label1.Text = "KundeID:";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(130, 40);
+            textBox1.Location = new Point(141, 48);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 4;
             // 
-            // button2
-            // 
-            button2.Location = new Point(37, 122);
-            button2.Name = "button2";
-            button2.Size = new Size(91, 23);
-            button2.TabIndex = 5;
-            button2.Text = "Opret bruger";
-            button2.UseVisualStyleBackColor = true;
-            // 
             // LogIn
             // 
             ClientSize = new Size(294, 166);
-            Controls.Add(button2);
             Controls.Add(textBox1);
-            Controls.Add(maskedTextBox1);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button1);
             Name = "LogIn";
@@ -97,40 +64,62 @@ namespace MomentozClientApp.GuiLayer
             PerformLayout();
         }
 
-        private TextBox textBox1;
-        private Button button2;
-
-
-
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var username = textBox1.Text;
-            var password = maskedTextBox1.Text;
+            var customerId = textBox1.Text; // Antager at brugeren indtaster kunde-ID her.
 
-            bool isValidUser = _customerAccess.ValidateLogin(username, password);
-
-            if (isValidUser)
+            if (IsValidCustomerId(customerId))
             {
+                // Kunde-ID er gyldigt, og brugeren bliver logget ind.
                 MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Hide();
 
-                var mainForm = new MainMenu(username);
-                mainForm.Closed += (s, args) => Close();
-                mainForm.Show();
+                // Opret MainMenu formen og overfør kunde-ID'et.
+                var mainMenu = new MainMenu(customerId);
+                mainMenu.Closed += (s, args) => Close();
+                mainMenu.Show();
             }
             else
             {
-                MessageBox.Show("Login failed. Please check your username and password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Kunde-ID er ikke gyldigt, vis en fejlmeddelelse.
+                MessageBox.Show("Login failed. Please check your customer ID.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private Task<bool> ValidateLogin(string username, string password)
+
+        private bool IsValidCustomerId(string customerId)
         {
-            throw new NotImplementedException();
+            // Tjek først for tomme eller kun-whitespace værdier.
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                return false;
+            }
+
+            int id;
+            if (!int.TryParse(customerId, out id))
+            {
+                // Hvis ID'et ikke kan parses til en int, er det ugyldigt.
+                return false;
+            }
+
+            try
+            {
+                var customer = _customerAccess.GetCustomerById(id);
+                // Hvis kunden ikke findes, skal GetCustomerById returnere null.
+                return customer != null;
+            }
+            catch (Exception ex)
+            {
+                // Log exception (i en reel applikation, log til en fil eller fejllogningssystem)
+                Debug.WriteLine("An error occurred: " + ex.Message);
+                return false;
+            }
         }
+
+
+
+
 
         private void LogIn_Load(object sender, EventArgs e)
         {

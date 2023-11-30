@@ -29,7 +29,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                var foundFlights =  _flightAccess.GetFlightAll().Result;
+                var foundFlights = _flightAccess.GetFlightAll().Result;
                 return ModelConversion.FlightDtoConvert.FromFlightCollection(foundFlights);
             }
             catch
@@ -79,5 +79,5 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
         }
     }
-    
+
 }
