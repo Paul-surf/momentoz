@@ -21,19 +21,14 @@ namespace DatabaseData.DatabaseLayer
         public int CreateOrder(Order aOrder)
         {
             int insertedId = -1;
-            string insertString = @"insert into Order(totalPrice, purchaseDate, customerID, ticketID) 
+            string insertString = @"insert into Orders(ticketID) 
                                     OUTPUT INSERTED.ID 
-                                    values(@totalPrice, @purchateDate, @customerID, @ticketID)";
+                                    values(@ticketID)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                SqlParameter TotalPriceParam = new("@TotalPrice", aOrder.TotalPrice);
-                CreateCommand.Parameters.Add(TotalPriceParam);
-                SqlParameter PurchaseDateParam = new("@PurchaseDate", aOrder.PurchaseDate);
-                CreateCommand.Parameters.Add(PurchaseDateParam);
-                SqlParameter CustomerIDParam = new("@CustomerID", aOrder.CustomerID);
-                CreateCommand.Parameters.Add(CustomerIDParam);
+                
                 SqlParameter TicketIDParam = new("@TicketID", aOrder.TicketID);
                 CreateCommand.Parameters.Add(TicketIDParam);
 
