@@ -21,17 +21,14 @@ namespace DatabaseData.DatabaseLayer
         public int CreateTicket(Ticket aTicket)
         {
             int insertedId = -1;
-            string insertString = @"insert into Ticket(TicketType, TicketNumber) 
+            string insertString = @"insert into Ticket(flightID) 
                                     OUTPUT INSERTED.ID 
-                                    values(@TicketType, @TicketNumber)";
+                                    values(@Flight)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
-            {
-                CreateCommand.Parameters.Add(new SqlParameter("@TicketType", aTicket.Type));
-                CreateCommand.Parameters.Add(new SqlParameter("@TicketNumber", aTicket.TicketNumber));
-/*              CreateCommand.Parameters.Add(new SqlParameter("@Baggage", aTicket.Baggage));
-                CreateCommand.Parameters.Add(new SqlParameter("@Flight", aTicket.Flight));*/
+            { 
+                CreateCommand.Parameters.Add(new SqlParameter("@Flight", aTicket.FlightID));
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();

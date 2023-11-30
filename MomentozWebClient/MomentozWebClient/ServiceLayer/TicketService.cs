@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MomentozWebClient.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace MomentozWebClient.ServiceLayer
 {
@@ -77,6 +78,35 @@ namespace MomentozWebClient.ServiceLayer
         public Task<bool> UpdateTicket(Ticket ticket)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Ticket?> SaveTicket(Ticket ticketToSave)
+        {
+            Ticket ticketFromService = null;
+
+            _ticketServiceConnection.UseUrl = _ticketServiceConnection.BaseUrl;
+            _ticketServiceConnection.UseUrl += "tickets/" + ticketToSave.FlightID;
+            if (_ticketServiceConnection != null)
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(ticketToSave);
+                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _ticketServiceConnection.CallServicePost(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
+                        ticketFromService = JsonConvert.DeserializeObject<Ticket>(resultContent);
+                    }
+                }
+                catch
+                {
+                    ticketFromService = null;
+                }
+            }
+
+            return ticketFromService;
         }
     }
 }
