@@ -8,7 +8,7 @@ namespace RESTfulService.BusinessLogicLayer
 
         CustomerDtoo? Get(int id);
         List<CustomerDtoo>? Get();
-        bool Put(CustomerDtoo customerToUpdate);
+        CustomerDtoo Put(CustomerDtoo customerToUpdate);
         bool Delete(int id);
         CustomerDtoo? GetByUserId(string loginid);
         CustomerDtoo? Add(CustomerDtoo customerToAdd);
