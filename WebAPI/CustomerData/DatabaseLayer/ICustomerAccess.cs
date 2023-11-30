@@ -9,7 +9,7 @@ namespace DatabaseData.DatabaseLayer
         Customer GetCustomerById(int id);
         List<Customer> GetCustomerAll();
         int CreateCustomer(Customer customerToAdd);
-        bool UpdateCustomer(Customer customerToUpdate);
+        Customer UpdateCustomer(Customer customerToUpdate);
         bool DeleteCustomerById(int id);
         Customer? GetCustomerByUserId(string loginUserId);
         Customer CreateCustomerMinimal(Customer aMinimalCustomer);

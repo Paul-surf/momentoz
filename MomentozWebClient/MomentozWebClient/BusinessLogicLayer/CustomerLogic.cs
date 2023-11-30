@@ -1,4 +1,5 @@
-﻿using MomentozWebClient.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MomentozWebClient.Models;
 using MomentozWebClient.ServiceLayer;
 
 namespace MomentozWebClient.BusinessLogicLayer
@@ -47,6 +48,10 @@ namespace MomentozWebClient.BusinessLogicLayer
             }
 
             return createdCust;
+        }
+        public async Task<Customer> UpdateCustomer(Customer customer)
+        {
+            return await _customerServiceAccess.UpdateCustomer(customer);
         }
     }
 }

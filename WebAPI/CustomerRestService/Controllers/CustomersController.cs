@@ -105,7 +105,32 @@ namespace RESTfulService.Controllers
             return foundReturn;
         }
 
-
+        // URL: api/customers/{loginid}
+        [HttpPut("{loginid}")]
+        public ActionResult<CustomerDtoo> updateCustomer([FromBody] CustomerDtoo customer)
+        {
+            ActionResult<CustomerDtoo> updatedReturn = new CustomerDtoo();
+            // retrieve and convert data
+            CustomerDtoo? updatedCustomer = _businessLogicCtrl.Put(customer);
+            // evaluate
+            if (updatedCustomer != null)
+            {
+                if (!String.IsNullOrEmpty(updatedCustomer.LoginUserId))
+                {
+                    updatedReturn = Ok(updatedCustomer);                 // Statuscode 200
+                }
+                else
+                {
+                    updatedReturn = new StatusCodeResult(204);    // Ok, but no content
+                }
+            }
+            else
+            {
+                updatedReturn = new StatusCodeResult(500);        // Internal server error
+            }
+            // send response back to client
+            return updatedReturn;
+        }
 
 
     }

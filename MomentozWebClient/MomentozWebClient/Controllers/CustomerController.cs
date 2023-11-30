@@ -79,20 +79,30 @@ namespace MomentozWebClient.Controllers
             }
         }
 
-        // GET: CustomerController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: CustomerController/Edit/{id}
+        public ActionResult Edit(string id)
         {
-            return View();
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!userId.Equals(id)) { /* throw error */ }
+
+            string? email = User.Identity is not null ? User.Identity.Name : null;
+            Customer loggedCustomer = new Customer(userId, email);
+            return View(loggedCustomer);
         }
 
-        // POST: CustomerController/Edit/5
-        [HttpPost]
+        // POST: CustomerController/Edit/{id}
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Customer formCustomer)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Customer customerUpdated = await _customerLogic.UpdateCustomer(formCustomer);
+
+                if (customerUpdated == null) {/* handle error */}
+                    
+                return RedirectToAction("Profile");
             }
             catch
             {
