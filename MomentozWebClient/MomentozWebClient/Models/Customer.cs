@@ -32,6 +32,13 @@
         public Customer()
         {
         }
+        public Customer(IFormCollection form)
+        {
+            FirstName = form["FirstName"];
+            LastName = form["LastName"];
+            MobilePhone = form["MobilePhone"];
+            LoginUserId = form["LoginUserId"];
+        }
 
 
         public Customer(string? inEmail, string? inLoginUserId)

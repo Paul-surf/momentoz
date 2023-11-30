@@ -92,13 +92,16 @@ namespace MomentozWebClient.Controllers
         }
 
         // POST: CustomerController/Edit/{id}
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Customer formCustomer)
+        public async Task<ActionResult> Edit(IFormCollection formCustomer)
         {
             try
             {
-                Customer customerUpdated = await _customerLogic.UpdateCustomer(formCustomer);
+                Customer reOrientedCustomer = new Customer(formCustomer);
+                string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                reOrientedCustomer.LoginUserId = userId;
+                Customer customerUpdated = await _customerLogic.UpdateCustomer(reOrientedCustomer);
 
                 if (customerUpdated == null) {/* handle error */}
                     
