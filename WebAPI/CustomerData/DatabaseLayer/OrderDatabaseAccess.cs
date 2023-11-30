@@ -21,19 +21,14 @@ namespace DatabaseData.DatabaseLayer
         public int CreateOrder(Order aOrder)
         {
             int insertedId = -1;
-            string insertString = @"insert into Order(totalPrice, purchaseDate, customerID, ticketID) 
+            string insertString = @"insert into Orders(ticketID) 
                                     OUTPUT INSERTED.ID 
-                                    values(@totalPrice, @purchateDate, @customerID, @ticketID)";
+                                    values(@ticketID)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                SqlParameter TotalPriceParam = new("@TotalPrice", aOrder.TotalPrice);
-                CreateCommand.Parameters.Add(TotalPriceParam);
-                SqlParameter PurchaseDateParam = new("@PurchaseDate", aOrder.PurchaseDate);
-                CreateCommand.Parameters.Add(PurchaseDateParam);
-                SqlParameter CustomerIDParam = new("@CustomerID", aOrder.CustomerID);
-                CreateCommand.Parameters.Add(CustomerIDParam);
+                
                 SqlParameter TicketIDParam = new("@TicketID", aOrder.TicketID);
                 CreateCommand.Parameters.Add(TicketIDParam);
 
@@ -115,6 +110,29 @@ namespace DatabaseData.DatabaseLayer
         public bool UpdateOrder(Order orderToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        Order? IOrderAccess.GetOrderByTicketId(int ticketId)
+        {
+            Order foundOrder;
+
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE TicketID = @id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", ticketId);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader orderReader = readCommand.ExecuteReader();
+                foundOrder = new Order();
+                while (orderReader.Read())
+                {
+                    foundOrder = GetOrderFromReader(orderReader);
+                }
+            }
+            return foundOrder;
         }
     }
 }

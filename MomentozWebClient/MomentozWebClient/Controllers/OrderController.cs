@@ -25,12 +25,10 @@ namespace MomentozWebClient.Controllers
             _ordersLogic = new OrderLogic(inConfiguration);
         }
 
-        public async Task<ActionResult> GetAllOrders()
+        public async Task<ActionResult> Orders(int ticketId)
         {
-
-            List<Order>? foundOrders = await _ordersLogic.GetAllOrders();
+            Order foundOrders = await _ordersLogic.GetOrderByTicketId(ticketId);
             return View(foundOrders);
-
 
         }
 

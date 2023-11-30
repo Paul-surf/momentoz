@@ -72,5 +72,19 @@ namespace RESTfulService.BusinessLogicLayer
         {
             throw new NotImplementedException();
         }
+        public OrderDto? GetOrderByTicketId(int ticketId)
+        {
+            OrderDto? foundOrderDto;
+            try
+            {
+                Order? foundOrder = _orderAccess.GetOrderByTicketId(ticketId);
+                foundOrderDto = ModelConversion.OrderDtoConvert.FromOrder(foundOrder);
+            }
+            catch
+            {
+                foundOrderDto = null;
+            }
+            return foundOrderDto;
+        }
     }
 }

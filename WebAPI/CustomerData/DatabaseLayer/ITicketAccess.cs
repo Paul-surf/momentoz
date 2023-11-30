@@ -13,6 +13,6 @@ namespace DatabaseData.DatabaseLayer
         int CreateTicket(Ticket ticketToAdd);
         bool UpdateTicket(Ticket ticketToUpdate);
         bool DeleteTicketById(int id);
-
+        Ticket? GetTicketByFlightId(int flightId);
     }
 }

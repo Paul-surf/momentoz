@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MomentozWebClient.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace MomentozWebClient.ServiceLayer
 {
@@ -97,6 +98,75 @@ namespace MomentozWebClient.ServiceLayer
         Task<bool> IOrderAccess.DeleteOrder(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Order> getOrderByTicketId(int ticketId)
+        {
+            Order? orderFromService = null;
+
+            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
+            _orderServiceConnection.UseUrl += "orders/" + ticketId;
+
+
+            if (_orderServiceConnection != null)
+            {
+                try
+                {
+                    var serviceResponse = await _orderServiceConnection.CallServiceGet();
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var content = await serviceResponse.Content.ReadAsStringAsync();
+
+                        orderFromService = JsonConvert.DeserializeObject<Order>(content);
+
+                    }
+                    else
+                    {
+                        if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            orderFromService = new Order();
+                        }
+                        else
+                        {
+                            orderFromService = null;
+                        }
+                    }
+                }
+                catch
+                {
+                    orderFromService = null;
+                }
+            }
+            return orderFromService;
+        }
+
+        public async Task<Order?> SaveOrder(Order orderToSave)
+        {
+            Order orderFromService = null;
+
+            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
+            _orderServiceConnection.UseUrl += "orders/" + orderToSave.TicketID;
+            if (_orderServiceConnection != null)
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(orderToSave);
+                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _orderServiceConnection.CallServicePost(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
+                        orderFromService = JsonConvert.DeserializeObject<Order>(resultContent);
+                    }
+                }
+                catch
+                {
+                    orderFromService = null;
+                }
+            }
+
+            return orderFromService;
         }
     }
 }

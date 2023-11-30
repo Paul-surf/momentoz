@@ -18,13 +18,10 @@ namespace MomentozWebClient.Controllers
             _flightsLogic = new FlightLogic(inConfiguration);
         }
 
-        public async Task<ActionResult> GetAllFlights()
+        public async Task<ActionResult> Flights()
         {
-           
             List<Flight>? foundFlights = await _flightsLogic.GetAllFlights();
             return View(foundFlights);
-
-
         }
 
         // GET: DestinationController/Details/5

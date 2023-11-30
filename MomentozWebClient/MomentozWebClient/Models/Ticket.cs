@@ -29,5 +29,10 @@
         public int TicketNumber { get; set; }
         public int? BaggageID { get; set; }
         public int? FlightID { get; set; }
+        public Ticket() { }
+        public Ticket(int flightId) 
+        {
+            this.FlightID = flightId;
+        }
     }
 }
