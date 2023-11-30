@@ -72,5 +72,20 @@ namespace RESTfulService.BusinesslogicLayer
         {
             throw new NotImplementedException();
         }
+
+        public TicketDto? GetTicketByFlightId(int flightId)
+        {
+            TicketDto? foundTicketDto;
+            try
+            {
+                Ticket? foundTicket = _ticketAccess.GetTicketByFlightId(flightId);
+                foundTicketDto = ModelConversion.TicketDtoConvert.FromTicket(foundTicket);
+            }
+            catch
+            {
+                foundTicketDto = null;
+            }
+            return foundTicketDto;
+        }
     }
 }

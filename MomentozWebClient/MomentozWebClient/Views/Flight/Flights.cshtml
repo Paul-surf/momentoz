@@ -4,8 +4,12 @@
     ViewData["Title"] = "Flights";
 }
 
-<h1>Flights</h1>
-
+<h1>Rejser</h1>
+@if (Model == null)
+{
+    <h4> Der er i øjeblikket ingen rejser.</h4>
+} else
+{
 <table class="table">
     <thead>
         <tr>
@@ -53,3 +57,4 @@
 }
     </tbody>
 </table>
+}

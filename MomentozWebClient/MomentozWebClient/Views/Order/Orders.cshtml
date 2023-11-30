@@ -7,7 +7,7 @@
 <h1>Orders</h1>
 @if (Model == null)
 {
-    <p> No order found.</p>
+    <h4> No order found.</h4>
 } else
 {
 
@@ -44,10 +44,6 @@
         </div>
     </div>
 }
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

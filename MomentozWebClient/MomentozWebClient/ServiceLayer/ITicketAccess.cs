@@ -1,6 +1,17 @@
-﻿namespace MomentozWebClient.ServiceLayer
+﻿using MomentozWebClient.Models;
+namespace MomentozWebClient.ServiceLayer
 {
     public interface ITicketAccess
     {
+        Task<List<Ticket>>? GetAllTickets();
+
+        Task<Ticket> GetTicket(int id);
+        Task<Ticket> GetTicketByFlightId(int flightId);
+
+        Task<bool> AddTicket(Ticket ticket);
+
+        Task<bool> UpdateTicket(Ticket ticket);
+
+        Task<bool> DeleteTicket(int id);
     }
 }

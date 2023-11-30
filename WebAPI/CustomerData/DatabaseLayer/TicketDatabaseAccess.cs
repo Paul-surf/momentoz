@@ -73,6 +73,29 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
+        public Ticket? GetTicketByFlightId(int flightId)
+        {
+            Ticket foundTicket;
+
+            string queryString = "SELECT id, type, ticketNumber, baggageId, flightId FROM Tickets WHERE flightId = @id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", flightId);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader TicketReader = readCommand.ExecuteReader();
+                foundTicket = new Ticket();
+                while (TicketReader.Read())
+                {
+                    foundTicket = GetTicketFromReader(TicketReader);
+                }
+            }
+            return foundTicket;
+        }
+
         private Ticket GetTicketFromReader(SqlDataReader ticketReader)
         {
             int tempId = ticketReader.GetInt32(ticketReader.GetOrdinal("Id"));

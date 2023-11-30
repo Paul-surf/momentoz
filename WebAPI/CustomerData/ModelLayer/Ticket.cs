@@ -17,6 +17,7 @@ namespace DatabaseData.ModelLayer
             this.BaggageID = tempBaggageID;
             this.FlightID = tempFlightID;
         }
+        public Ticket() { }
         public int Id { get; set; }
         public string Type { get; set; }
         public int TicketNumber { get; set; }
