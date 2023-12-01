@@ -84,7 +84,6 @@ namespace MomentozClientApp.GuiLayer
                 }
                 else
                 {
-                    MessageBox.Show("Forkert email. Indtast en gyldig email for at logge ind.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
             }
