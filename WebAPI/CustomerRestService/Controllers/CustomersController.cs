@@ -80,6 +80,6 @@ namespace RESTfulService.Controllers
             }
         }
 
-        // ... yderligere metoder, såsom Delete, hvis de er implementeret ...
+        // ... yderligere metoder, såsom Delete, hvis de er implementeret ....
     }
 }
