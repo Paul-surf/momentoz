@@ -28,9 +28,9 @@ namespace MomentozClientApp.GuiLayer
             // 
             // button1
             // 
-            button1.Location = new Point(155, 122);
+            button1.Location = new Point(202, 140);
             button1.Name = "button1";
-            button1.Size = new Size(86, 23);
+            button1.Size = new Size(109, 62);
             button1.TabIndex = 0;
             button1.Text = "Login";
             button1.UseVisualStyleBackColor = true;
@@ -39,23 +39,22 @@ namespace MomentozClientApp.GuiLayer
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(30, 48);
+            label1.Location = new Point(46, 51);
             label1.Name = "label1";
-            label1.Size = new Size(55, 15);
+            label1.Size = new Size(58, 25);
             label1.TabIndex = 1;
-            label1.Text = "KundeID:";
+            label1.Text = "Email:";
             // 
             // textBox1
             // 
             textBox1.Location = new Point(141, 48);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(170, 31);
             textBox1.TabIndex = 4;
-           // textBox1.TextChanged += textBox1_TextChanged;
             // 
             // LogIn
             // 
-            ClientSize = new Size(294, 166);
+            ClientSize = new Size(344, 230);
             Controls.Add(textBox1);
             Controls.Add(label1);
             Controls.Add(button1);
@@ -114,7 +113,7 @@ namespace MomentozClientApp.GuiLayer
                 if (customer != null && customer.Email != null)
                 {
                     // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
-                    MessageBox.Show($"{customer.FirstName} {customer.LastName} {customer.MobilePhone}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"{customer.FullName}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Opret en ny instans af MainMenu
                     var mainMenu = new MainMenu(customer);
@@ -171,7 +170,7 @@ namespace MomentozClientApp.GuiLayer
             catch (Exception ex)
             {
                 MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
+                
                 return false;
             }
         }

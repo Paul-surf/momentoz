@@ -1,4 +1,3 @@
-
 using MomentozClientApp.Model;
 using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
@@ -11,9 +10,7 @@ namespace MomentozClientApp
 {
     public partial class MainMenu : Form
     {
-
         private readonly CustomerAccess _customerAccess;
-
         private Timer flightRefreshTimer;
         private List<Flight> flightsData;
         private bool isDataLoaded = false;
@@ -26,11 +23,11 @@ namespace MomentozClientApp
         private readonly string _customerId;
         private Customer loggedInCustomer;
         private Customer _customer;
+        string departure = "Afgang: Aalborg";
+        string returnTicket = "Returbillet: ";
+        double price = 0; // Initialiser prisen
         public MainMenu(Customer customer)
         {
-           
-            //   loggedInCustomerId = customerId; // Gem kunde-ID i en lokal variabel
-            //  label7.Text = customerId; // Opdater et label eller anden brugergrænsefladekomponent med kunde-ID'en
             InitializeComponent();
             InitializeYesNoComboBox();
             InitializeBagageWeightCombobox();
@@ -43,12 +40,8 @@ namespace MomentozClientApp
             comboBox1.DropDown += comboBox1_DropDown;
             comboBox2.DropDown += comboBox2_DropDown;
             comboBox3.DropDown += comboBox3_DropDown;
-            
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            UpdateCustomerName(customer.FirstName);
-
-            //   _customerId = customerId;
-
+            UpdateCustomerInfo(customer.FirstName, customer.LastName, customer.MobilePhone, customer.Email);
         }
 
         public MainMenu()
@@ -78,12 +71,15 @@ namespace MomentozClientApp
             comboBox3.SelectedIndex = -1;
         }
 
-        public void UpdateCustomerName(string firstName)
+        public void UpdateCustomerInfo(string firstName, string lastName, string mobilePhone, string email)
         {
-            customerNameLabel.Text = firstName; // Antager du har en Label med navnet customerNameLabel
+            customerNameLabel.Text = firstName;
+            lastNameLabel.Text = lastName;
+            mobilePhoneLabel.Text = mobilePhone;
+            EmailLabel.Text = email;
         }
-    
-    private void UpdateTotalPrice(double additionalCosts)
+
+        private void UpdateTotalPrice(double additionalCosts)
         {
             // Antager at 'label12' er din prislabel.
             double totalPrice = basePrice + additionalCosts;
@@ -108,7 +104,6 @@ namespace MomentozClientApp
             }
         }
 
-
         private async void Form1_Load(object sender, EventArgs e)
         {
             if (!isDataLoaded)
@@ -122,7 +117,6 @@ namespace MomentozClientApp
         {
             InitializeBagageWeightCombobox();
         }
-
 
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -191,8 +185,6 @@ namespace MomentozClientApp
                     }
                 }
             }
-
-
         }
         private async void comboBox1_DropDown(object sender, EventArgs e)
         {
@@ -285,15 +277,8 @@ namespace MomentozClientApp
             }
             catch (Exception ex)
             {
-
             }
         }
-
-
-
-
-
-
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -327,8 +312,6 @@ namespace MomentozClientApp
             UpdateTotalPrice();
         }
 
-
-
         // Metode, der skal kaldes, når en flyvning vælges for at sætte basisprisen
         private void SetBasePrice(double price)
         {
@@ -336,7 +319,6 @@ namespace MomentozClientApp
             // Opdater prisen på UI med det samme for at reflektere basisprisen
             label12.Text = $"Pris: {basePrice:C}";
         }
-
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -377,8 +359,6 @@ namespace MomentozClientApp
 
             UpdateTotalPrice();
         }
-
-
         private void UpdatePriceBasedOnSelections()
         {
             // Beregn den nye pris baseret på valg af returbillet og andet.
@@ -438,7 +418,6 @@ namespace MomentozClientApp
             }
         }
 
-
         private async void button1_Click_1(object sender, EventArgs e)
         {
             var isFlightLocked = await LockFlight();
@@ -450,26 +429,14 @@ namespace MomentozClientApp
             }
 
             // Saml kvitteringsoplysningerne
-            string customerInfo = "Kundeoplysninger:\n";
+            string customerInfo = "Kundeoplysninger:\n" +
+                              "Fornavn: " + customerNameLabel.Text + "\n" +
+                              "Efternavn: " + lastNameLabel.Text + "\n" +
+                              "Mobil: " + mobilePhoneLabel.Text + "\n" +
+                              "Email: " + EmailLabel.Text + "\n";
 
-            //if (comboBox4.SelectedItem != null)
-            //{
-            //    var selectedCustomer = (Customer)comboBox4.SelectedItem;
-            //    customerInfo += $"Fornavn: {selectedCustomer.FirstName}\n";
-            //    customerInfo += $"Efternavn: {selectedCustomer.LastName}\n";
-            //    customerInfo += $"Mobiltelefon: {selectedCustomer.MobilePhone}\n";
-            //    customerInfo += $"Email: {selectedCustomer.Email}\n";
-            //}
-            //else
-            //{
-            //    customerInfo += "Ingen kunde valgt\n";
-            //}
 
-            string departure = "Afgang: Aalborg";
-            string returnTicket = "Returbillet: ";
-            double price = 0; // Initialiser prisen
 
-            // Hent flyoplysninger og basispris
             if (comboBox1.SelectedItem != null)
             {
                 var selectedFlight = (Flight)comboBox1.SelectedItem;
@@ -532,8 +499,6 @@ namespace MomentozClientApp
             MessageBox.Show(receiptText, "Kvittering", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
-
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string message = "MomentoZ er et mindre svæveflyudlejningsselskab med afgangslokationer fra Aalborg, der tilbydes rejsedestinationer til alle klodens kontinenter, med mulighed for at flyve retur efter behov, virksomheden er stiftet 11.november 2023";
@@ -543,12 +508,6 @@ namespace MomentozClientApp
 
             MessageBox.Show(message, caption, buttons, icon);
         }
-
-
-        //private void label7_Click(object sender, EventArgs e)
-        //{
-        //    label7.Text = loggedInCustomerId;
-        //}
 
         private void label10_Click(object sender, EventArgs e)
         {
@@ -582,11 +541,6 @@ namespace MomentozClientApp
                 // Antag at du har en label med navnet 'customerNameLabel', hvor du ønsker at vise kundens fornavn
                 customerNameLabel.Text = loggedInCustomer.FirstName;
             }
-           
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -595,32 +549,27 @@ namespace MomentozClientApp
 
         }
 
-        //private void label12_Click(object sender, EventArgs e)
-        //{
+        private void lastNameLabel_Click(object sender, EventArgs e)
+        {
+            if (loggedInCustomer != null)
+            {
+                lastNameLabel.Text = loggedInCustomer.LastName;
+            }
+        }
+        private void mobilePhoneLabel_Click(object sender, EventArgs e)
+        {
+            if (loggedInCustomer != null)
+            {
+                mobilePhoneLabel.Text = loggedInCustomer.MobilePhone;
+            }
+        }
 
-        //}
-
-
-        //private void label14_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void label19_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void label20_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void label21_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-
+        private void EmailLabel_Click(object sender, EventArgs e)
+        {
+            if (loggedInCustomer != null)
+            {
+                EmailLabel.Text = loggedInCustomer.Email;
+            }
+        }
     }
 }
