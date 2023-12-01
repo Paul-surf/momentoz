@@ -126,6 +126,7 @@ namespace MomentozClientApp.GuiLayer
 
                     // Skjul den nuværende form (LogIn) og vis MainMenu-formen
                     mainMenu.Show();
+                    Hide();
                 }
                 else
                 {
@@ -137,7 +138,7 @@ namespace MomentozClientApp.GuiLayer
                 MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
             }
-            Hide();
+           
             
         }
 

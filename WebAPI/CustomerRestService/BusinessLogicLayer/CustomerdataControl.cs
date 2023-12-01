@@ -40,9 +40,9 @@ namespace RESTfulService.BusinesslogicLayer
                  foundCustomers = _customerAccess.GetCustomerAll();
                 } else
                 {
-
                   Customer c = _customerAccess.GetByEmail(email);
-                    foundCustomers = new List<Customer> { c };
+                    foundCustomers = new List<Customer>();
+                    foundCustomers.Add(c);
                 }
                 foundDtos = ModelConversion.CustomerDtoConvert.FromCustomerCollection(foundCustomers);
             }
@@ -114,11 +114,6 @@ namespace RESTfulService.BusinesslogicLayer
                 foundCustomerDto = null;
             }
             return foundCustomerDto;
-        }
-
-        public CustomerDtoo? GetByEmail(string email)
-        {
-            throw new NotImplementedException();
         }
     }
 }

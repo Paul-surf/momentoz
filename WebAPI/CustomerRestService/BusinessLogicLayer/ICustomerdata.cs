@@ -12,6 +12,5 @@ namespace RESTfulService.BusinessLogicLayer
         bool Delete(int id);
         CustomerDtoo? GetByUserId(string loginid);
         CustomerDtoo? Add(CustomerDtoo customerToAdd);
-        CustomerDtoo? GetByEmail(string email);
     }
 }

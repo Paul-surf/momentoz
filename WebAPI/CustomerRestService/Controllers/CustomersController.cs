@@ -18,9 +18,9 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers?email=value
         [HttpGet]
-        public ActionResult<List<CustomerDtoo>> Get()
+        public ActionResult<List<CustomerDtoo>> Get([FromQuery] string? email)
         {
-            List<CustomerDtoo> foundCustomerDtos = _businessLogicCtrl.Get();
+            List<CustomerDtoo> foundCustomerDtos = _businessLogicCtrl.Get(email);
             if (foundCustomerDtos != null && foundCustomerDtos.Count > 0)
             {
                 return Ok(foundCustomerDtos); // Statuscode 200
@@ -40,21 +40,6 @@ namespace RESTfulService.Controllers
         public ActionResult<CustomerDtoo?> GetByLoginId(string loginid)
         {
             CustomerDtoo foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
-            if (foundCustomer != null)
-            {
-                return Ok(foundCustomer); // Statuscode 200
-            }
-            else
-            {
-                return StatusCode(500); // Internal server error
-            }
-        }
-
-        // URL: api/customers/email/{email}
-        [HttpGet("email/{email}")]
-        public ActionResult<CustomerDtoo?> GetByEmail([FromQuery] string? email)
-        {
-            CustomerDtoo foundCustomer = _businessLogicCtrl.GetByEmail(email);
             if (foundCustomer != null)
             {
                 return Ok(foundCustomer); // Statuscode 200

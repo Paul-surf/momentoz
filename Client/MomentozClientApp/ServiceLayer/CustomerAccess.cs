@@ -52,7 +52,8 @@ namespace MomentozClientApp.ServiceLayer
         // Asynkron metode til at hente en kunde baseret på dens id.
         public async Task<Customer> GetCustomerByEmail(string email)
         {
-            Customer  foundCustomers = null;
+            Customer  foundCustomer = null;
+            List<Customer> foundCustomers = null;
             // Assuming that the base URL ends with "/", if not you might need to adjust this line.
             _customerServiceConnection.UseUrl = $"{_customerServiceConnection.BaseUrl}customers?email={Uri.EscapeDataString(email)}";
 
@@ -62,7 +63,8 @@ namespace MomentozClientApp.ServiceLayer
                 if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                 {
                     var content = await serviceResponse.Content.ReadAsStringAsync();
-                    foundCustomers = JsonConvert.DeserializeObject<Customer>(content);
+                    foundCustomers = JsonConvert.DeserializeObject<List<Customer>>(content);
+                    foundCustomer = foundCustomers.First();
                 }
             }
             catch (Exception ex)
@@ -72,7 +74,7 @@ namespace MomentozClientApp.ServiceLayer
                 // Depending on the policy, you might want to rethrow, return null, or handle the exception differently
             }
 
-            return foundCustomers;
+            return foundCustomer;
         }
 
 
