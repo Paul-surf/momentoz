@@ -69,7 +69,6 @@ namespace MomentozClientApp.GuiLayer
         {
             if (string.IsNullOrEmpty(email))
             {
-                MessageBox.Show("E-mailfeltet må ikke være tomt.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
 
