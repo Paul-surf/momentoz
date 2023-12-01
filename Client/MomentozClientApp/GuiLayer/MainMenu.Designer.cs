@@ -29,329 +29,296 @@
         private void InitializeComponent()
         {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            linkLabel2 = new LinkLabel();
+            LinkLabel = new LinkLabel();
             backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            label1 = new Label();
-            label2 = new Label();
-            label4 = new Label();
-            label5 = new Label();
+            BaggageLabel = new Label();
+            AfgangLabel = new Label();
+            PrisLabel = new Label();
+            Destinationer = new Label();
             label6 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
-            comboBox3 = new ComboBox();
-            label10 = new Label();
-            label11 = new Label();
-            label3 = new Label();
-            label12 = new Label();
-            button1 = new Button();
-            label13 = new Label();
-            customerNameLabel = new Label();
-            label15 = new Label();
-            label16 = new Label();
-            label17 = new Label();
-            lastNameLabel = new Label();
-            mobilePhoneLabel = new Label();
-            EmailLabel = new Label();
-            label7 = new Label();
+            ReturLabel = new Label();
+            DestinationLabel = new Label();
+            DestinationDropDown = new ComboBox();
+            ReturValgDropDown = new ComboBox();
+            BaggageDropDown = new ComboBox();
+            AfgangsDestination = new Label();
+            Destination = new Label();
+            OrdreInfo = new Label();
+            SamletPris = new Label();
+            BestilKnap = new Button();
+            ForNavnLabel = new Label();
+            Fornavn = new Label();
+            efterNavnLabel = new Label();
+            MobileLabel = new Label();
+            MailLabel = new Label();
+            lastName = new Label();
+            mobilePhone = new Label();
+            Email = new Label();
+            KundeInfo = new Label();
             SuspendLayout();
             // 
-            // linkLabel2
+            // LinkLabel
             // 
-            linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(17, 545);
-            linkLabel2.Margin = new Padding(4, 0, 4, 0);
-            linkLabel2.Name = "linkLabel2";
-            linkLabel2.Size = new Size(134, 25);
-            linkLabel2.TabIndex = 9;
-            linkLabel2.TabStop = true;
-            linkLabel2.Text = "Om Momentoz";
-            linkLabel2.LinkClicked += linkLabel2_LinkClicked;
+            LinkLabel.AutoSize = true;
+            LinkLabel.Location = new Point(12, 327);
+            LinkLabel.Name = "LinkLabel";
+            LinkLabel.Size = new Size(88, 15);
+            LinkLabel.TabIndex = 9;
+            LinkLabel.TabStop = true;
+            LinkLabel.Text = "Om Momentoz";
+            LinkLabel.LinkClicked += linkLabel2_LinkClicked;
             // 
-            // label1
+            // BaggageLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(853, 274);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(86, 25);
-            label1.TabIndex = 10;
-            label1.Text = "Baggage:";
+            BaggageLabel.AutoSize = true;
+            BaggageLabel.Location = new Point(597, 164);
+            BaggageLabel.Name = "BaggageLabel";
+            BaggageLabel.Size = new Size(56, 15);
+            BaggageLabel.TabIndex = 10;
+            BaggageLabel.Text = "Baggage:";
             // 
-            // label2
+            // AfgangLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(853, 165);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(75, 25);
-            label2.TabIndex = 11;
-            label2.Text = "Afgang:";
+            AfgangLabel.AutoSize = true;
+            AfgangLabel.Location = new Point(597, 99);
+            AfgangLabel.Name = "AfgangLabel";
+            AfgangLabel.Size = new Size(49, 15);
+            AfgangLabel.TabIndex = 11;
+            AfgangLabel.Text = "Afgang:";
             // 
-            // label4
+            // PrisLabel
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(853, 342);
-            label4.Margin = new Padding(4, 0, 4, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(44, 25);
-            label4.TabIndex = 13;
-            label4.Text = "Pris:";
+            PrisLabel.AutoSize = true;
+            PrisLabel.Location = new Point(597, 205);
+            PrisLabel.Name = "PrisLabel";
+            PrisLabel.Size = new Size(29, 15);
+            PrisLabel.TabIndex = 13;
+            PrisLabel.Text = "Pris:";
             // 
-            // label5
+            // Destinationer
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(17, 28);
-            label5.Margin = new Padding(4, 0, 4, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(270, 54);
-            label5.TabIndex = 15;
-            label5.Text = "Destinationer:";
+            Destinationer.AutoSize = true;
+            Destinationer.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            Destinationer.Location = new Point(12, 17);
+            Destinationer.Name = "Destinationer";
+            Destinationer.Size = new Size(182, 37);
+            Destinationer.TabIndex = 15;
+            Destinationer.Text = "Destinationer:";
+           
+      
+            // ReturLabel
             // 
-            // label6
+            ReturLabel.AutoSize = true;
+            ReturLabel.Location = new Point(597, 131);
+            ReturLabel.Name = "ReturLabel";
+            ReturLabel.Size = new Size(67, 15);
+            ReturLabel.TabIndex = 24;
+            ReturLabel.Text = "Retur billet:";
             // 
-            label6.Location = new Point(0, 0);
-            label6.Margin = new Padding(4, 0, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(143, 38);
-            label6.TabIndex = 49;
+            // DestinationLabel
             // 
-            // label8
+            DestinationLabel.AutoSize = true;
+            DestinationLabel.Location = new Point(314, 247);
+            DestinationLabel.Name = "DestinationLabel";
+            DestinationLabel.Size = new Size(98, 15);
+            DestinationLabel.TabIndex = 27;
+            DestinationLabel.Text = "Valgt destination:";
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(853, 219);
-            label8.Margin = new Padding(4, 0, 4, 0);
-            label8.Name = "label8";
-            label8.Size = new Size(100, 25);
-            label8.TabIndex = 24;
-            label8.Text = "Retur billet:";
+            // DestinationDropDown
             // 
-            // label9
+            DestinationDropDown.Location = new Point(12, 69);
+            DestinationDropDown.Name = "DestinationDropDown";
+            DestinationDropDown.Size = new Size(182, 23);
+            DestinationDropDown.TabIndex = 30;
+            DestinationDropDown.SelectedIndexChanged += comboBox1_DropDown;
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(448, 412);
-            label9.Margin = new Padding(4, 0, 4, 0);
-            label9.Name = "label9";
-            label9.Size = new Size(149, 25);
-            label9.TabIndex = 27;
-            label9.Text = "Valgt destination:";
+            // ReturValgDropDown
             // 
-            // comboBox1
+            ReturValgDropDown.FormattingEnabled = true;
+            ReturValgDropDown.Location = new Point(685, 128);
+            ReturValgDropDown.Name = "ReturValgDropDown";
+            ReturValgDropDown.Size = new Size(100, 23);
+            ReturValgDropDown.TabIndex = 25;
+            ReturValgDropDown.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
-            comboBox1.Location = new Point(17, 115);
-            comboBox1.Margin = new Padding(4, 5, 4, 5);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(258, 33);
-            comboBox1.TabIndex = 30;
-            comboBox1.SelectedIndexChanged += comboBox1_DropDown;
+            // BaggageDropDown
             // 
-            // comboBox2
+            BaggageDropDown.FormattingEnabled = true;
+            BaggageDropDown.Location = new Point(685, 164);
+            BaggageDropDown.Name = "BaggageDropDown";
+            BaggageDropDown.Size = new Size(100, 23);
+            BaggageDropDown.TabIndex = 20;
+            BaggageDropDown.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(978, 214);
-            comboBox2.Margin = new Padding(4, 5, 4, 5);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(141, 33);
-            comboBox2.TabIndex = 25;
-            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // AfgangsDestination
             // 
-            // comboBox3
+            AfgangsDestination.AutoSize = true;
+            AfgangsDestination.Location = new Point(704, 99);
+            AfgangsDestination.Name = "AfgangsDestination";
+            AfgangsDestination.Size = new Size(49, 15);
+            AfgangsDestination.TabIndex = 31;
+            AfgangsDestination.Text = "Aalborg";
+            AfgangsDestination.Click += label10_Click;
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(978, 274);
-            comboBox3.Margin = new Padding(4, 5, 4, 5);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(141, 33);
-            comboBox3.TabIndex = 20;
-            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+            // Destination
             // 
-            // label10
+            Destination.AutoSize = true;
+            Destination.Location = new Point(418, 247);
+            Destination.Name = "Destination";
+            Destination.Size = new Size(67, 15);
+            Destination.TabIndex = 33;
+            Destination.Text = "Destination";
+            Destination.Click += label11_Click;
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(1005, 165);
-            label10.Margin = new Padding(4, 0, 4, 0);
-            label10.Name = "label10";
-            label10.Size = new Size(76, 25);
-            label10.TabIndex = 31;
-            label10.Text = "Aalborg";
-            label10.Click += label10_Click;
+            // OrdreInfo
             // 
-            // label11
+            OrdreInfo.AutoSize = true;
+            OrdreInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            OrdreInfo.Location = new Point(642, 24);
+            OrdreInfo.Name = "OrdreInfo";
+            OrdreInfo.Size = new Size(76, 30);
+            OrdreInfo.TabIndex = 34;
+            OrdreInfo.Text = "Ordre:";
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(597, 412);
-            label11.Margin = new Padding(4, 0, 4, 0);
-            label11.Name = "label11";
-            label11.Size = new Size(102, 25);
-            label11.TabIndex = 33;
-            label11.Text = "Destination";
-            label11.Click += label11_Click;
+            // SamletPris
             // 
-            // label3
+            SamletPris.AutoSize = true;
+            SamletPris.Location = new Point(704, 205);
+            SamletPris.Name = "SamletPris";
+            SamletPris.Size = new Size(65, 15);
+            SamletPris.TabIndex = 35;
+            SamletPris.Text = "Samlet pris";
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(917, 40);
-            label3.Margin = new Padding(4, 0, 4, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(109, 45);
-            label3.TabIndex = 34;
-            label3.Text = "Ordre:";
+            // BestilKnap
             // 
-            // label12
+            BestilKnap.Location = new Point(685, 300);
+            BestilKnap.Name = "BestilKnap";
+            BestilKnap.Size = new Size(99, 42);
+            BestilKnap.TabIndex = 36;
+            BestilKnap.Text = "Bestil";
+            BestilKnap.UseVisualStyleBackColor = true;
+            BestilKnap.Click += button1_Click_1;
             // 
-            label12.AutoSize = true;
-            label12.Location = new Point(1005, 342);
-            label12.Margin = new Padding(4, 0, 4, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(23, 25);
-            label12.TabIndex = 35;
-            label12.Text = "X";
-            label12.Click += label12_Click;
+            // ForNavnLabel
             // 
-            // button1
+            ForNavnLabel.AutoSize = true;
+            ForNavnLabel.Location = new Point(314, 99);
+            ForNavnLabel.Name = "ForNavnLabel";
+            ForNavnLabel.Size = new Size(53, 15);
+            ForNavnLabel.TabIndex = 37;
+            ForNavnLabel.Text = "Fornavn:";
+            ForNavnLabel.TextAlign = ContentAlignment.TopCenter;
             // 
-            button1.Location = new Point(978, 500);
-            button1.Margin = new Padding(4, 5, 4, 5);
-            button1.Name = "button1";
-            button1.Size = new Size(141, 70);
-            button1.TabIndex = 36;
-            button1.Text = "Godkend";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            // Fornavn
             // 
-            // label13
+            Fornavn.AutoSize = true;
+            Fornavn.Location = new Point(391, 99);
+            Fornavn.Name = "Fornavn";
+            Fornavn.Size = new Size(50, 15);
+            Fornavn.TabIndex = 38;
+            Fornavn.Text = "Fornavn";
+            Fornavn.Click += forNavn;
             // 
-            label13.AutoSize = true;
-            label13.Location = new Point(448, 165);
-            label13.Margin = new Padding(4, 0, 4, 0);
-            label13.Name = "label13";
-            label13.Size = new Size(80, 25);
-            label13.TabIndex = 37;
-            label13.Text = "Fornavn:";
-            label13.TextAlign = ContentAlignment.TopCenter;
+            // efterNavnLabel
             // 
-            // customerNameLabel
+            efterNavnLabel.AutoSize = true;
+            efterNavnLabel.Location = new Point(316, 135);
+            efterNavnLabel.Name = "efterNavnLabel";
+            efterNavnLabel.Size = new Size(60, 15);
+            efterNavnLabel.TabIndex = 39;
+            efterNavnLabel.Text = "Efternavn:";
+            efterNavnLabel.TextAlign = ContentAlignment.TopCenter;
             // 
-            customerNameLabel.AutoSize = true;
-            customerNameLabel.Location = new Point(558, 165);
-            customerNameLabel.Margin = new Padding(4, 0, 4, 0);
-            customerNameLabel.Name = "customerNameLabel";
-            customerNameLabel.Size = new Size(174, 25);
-            customerNameLabel.TabIndex = 38;
-            customerNameLabel.Text = "customerNameLabel";
-            customerNameLabel.Click += label14_Click;
+            // MobileLabel
             // 
-            // label15
+            MobileLabel.AutoSize = true;
+            MobileLabel.Location = new Point(316, 168);
+            MobileLabel.Name = "MobileLabel";
+            MobileLabel.Size = new Size(41, 15);
+            MobileLabel.TabIndex = 40;
+            MobileLabel.Text = "Mobil:";
+            MobileLabel.TextAlign = ContentAlignment.TopCenter;
             // 
-            label15.AutoSize = true;
-            label15.Location = new Point(451, 225);
-            label15.Margin = new Padding(4, 0, 4, 0);
-            label15.Name = "label15";
-            label15.Size = new Size(90, 25);
-            label15.TabIndex = 39;
-            label15.Text = "Efternavn:";
-            label15.TextAlign = ContentAlignment.TopCenter;
+            // MailLabel
             // 
-            // label16
+            MailLabel.AutoSize = true;
+            MailLabel.Location = new Point(316, 203);
+            MailLabel.Name = "MailLabel";
+            MailLabel.Size = new Size(39, 15);
+            MailLabel.TabIndex = 41;
+            MailLabel.Text = "Email:";
+            MailLabel.TextAlign = ContentAlignment.TopCenter;
             // 
-            label16.AutoSize = true;
-            label16.Location = new Point(451, 280);
-            label16.Margin = new Padding(4, 0, 4, 0);
-            label16.Name = "label16";
-            label16.Size = new Size(62, 25);
-            label16.TabIndex = 40;
-            label16.Text = "Mobil:";
-            label16.TextAlign = ContentAlignment.TopCenter;
+            // lastName
             // 
-            // label17
+            lastName.AutoSize = true;
+            lastName.Location = new Point(391, 135);
+            lastName.Name = "lastName";
+            lastName.Size = new Size(57, 15);
+            lastName.TabIndex = 43;
+            lastName.Text = "Efternavn";
+            lastName.Click += lastNameLabel_Click;
             // 
-            label17.AutoSize = true;
-            label17.Location = new Point(451, 338);
-            label17.Margin = new Padding(4, 0, 4, 0);
-            label17.Name = "label17";
-            label17.Size = new Size(58, 25);
-            label17.TabIndex = 41;
-            label17.Text = "Email:";
-            label17.TextAlign = ContentAlignment.TopCenter;
+            // mobilePhone
             // 
-            // lastNameLabel
+            mobilePhone.AutoSize = true;
+            mobilePhone.Location = new Point(391, 168);
+            mobilePhone.Name = "mobilePhone";
+            mobilePhone.Size = new Size(50, 15);
+            mobilePhone.TabIndex = 44;
+            mobilePhone.Text = "Mobiloz";
+            mobilePhone.Click += mobilePhoneLabel_Click;
             // 
-            lastNameLabel.AutoSize = true;
-            lastNameLabel.Location = new Point(558, 225);
-            lastNameLabel.Margin = new Padding(4, 0, 4, 0);
-            lastNameLabel.Name = "lastNameLabel";
-            lastNameLabel.Size = new Size(86, 25);
-            lastNameLabel.TabIndex = 43;
-            lastNameLabel.Text = "Efternavn";
-            lastNameLabel.Click += lastNameLabel_Click;
+            // Email
             // 
-            // mobilePhoneLabel
+            Email.AutoSize = true;
+            Email.Location = new Point(391, 203);
+            Email.Name = "Email";
+            Email.Size = new Size(36, 15);
+            Email.TabIndex = 45;
+            Email.Text = "Email";
+            Email.Click += EmailLabel_Click;
             // 
-            mobilePhoneLabel.AutoSize = true;
-            mobilePhoneLabel.Location = new Point(558, 280);
-            mobilePhoneLabel.Margin = new Padding(4, 0, 4, 0);
-            mobilePhoneLabel.Name = "mobilePhoneLabel";
-            mobilePhoneLabel.Size = new Size(77, 25);
-            mobilePhoneLabel.TabIndex = 44;
-            mobilePhoneLabel.Text = "Mobiloz";
-            mobilePhoneLabel.Click += mobilePhoneLabel_Click;
+            // KundeInfo
             // 
-            // EmailLabel
-            // 
-            EmailLabel.AutoSize = true;
-            EmailLabel.Location = new Point(558, 338);
-            EmailLabel.Margin = new Padding(4, 0, 4, 0);
-            EmailLabel.Name = "EmailLabel";
-            EmailLabel.Size = new Size(54, 25);
-            EmailLabel.TabIndex = 45;
-            EmailLabel.Text = "Email";
-            EmailLabel.Click += EmailLabel_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(480, 40);
-            label7.Margin = new Padding(4, 0, 4, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(118, 45);
-            label7.TabIndex = 50;
-            label7.Text = "Kunde:";
+            KundeInfo.AutoSize = true;
+            KundeInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            KundeInfo.Location = new Point(336, 24);
+            KundeInfo.Name = "KundeInfo";
+            KundeInfo.Size = new Size(80, 30);
+            KundeInfo.TabIndex = 50;
+            KundeInfo.Text = "Kunde:";
             // 
             // MainMenu
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1170, 627);
-            Controls.Add(label7);
-            Controls.Add(EmailLabel);
-            Controls.Add(mobilePhoneLabel);
-            Controls.Add(lastNameLabel);
-            Controls.Add(label17);
-            Controls.Add(label16);
-            Controls.Add(label15);
-            Controls.Add(customerNameLabel);
-            Controls.Add(label13);
-            Controls.Add(button1);
-            Controls.Add(label12);
-            Controls.Add(label3);
-            Controls.Add(label11);
-            Controls.Add(label10);
-            Controls.Add(comboBox1);
-            Controls.Add(label9);
-            Controls.Add(comboBox2);
-            Controls.Add(label8);
+            ClientSize = new Size(819, 376);
+            Controls.Add(KundeInfo);
+            Controls.Add(Email);
+            Controls.Add(mobilePhone);
+            Controls.Add(lastName);
+            Controls.Add(MailLabel);
+            Controls.Add(MobileLabel);
+            Controls.Add(efterNavnLabel);
+            Controls.Add(Fornavn);
+            Controls.Add(ForNavnLabel);
+            Controls.Add(BestilKnap);
+            Controls.Add(SamletPris);
+            Controls.Add(OrdreInfo);
+            Controls.Add(Destination);
+            Controls.Add(AfgangsDestination);
+            Controls.Add(DestinationDropDown);
+            Controls.Add(DestinationLabel);
+            Controls.Add(ReturValgDropDown);
+            Controls.Add(ReturLabel);
             Controls.Add(label6);
-            Controls.Add(comboBox3);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(linkLabel2);
-            Margin = new Padding(4, 5, 4, 5);
+            Controls.Add(BaggageDropDown);
+            Controls.Add(Destinationer);
+            Controls.Add(PrisLabel);
+            Controls.Add(AfgangLabel);
+            Controls.Add(BaggageLabel);
+            Controls.Add(LinkLabel);
             Name = "MainMenu";
             Text = "Momentoz";
             ResumeLayout(false);
@@ -361,40 +328,40 @@
         #endregion
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
-        private LinkLabel linkLabel2;
-        private Label label1;
-        private Label label2;
-        private Label label4;
-        private Label label5;
+        private LinkLabel LinkLabel;
+        private Label BaggageLabel;
+        private Label AfgangLabel;
+        private Label PrisLabel;
+        private Label Destinationer;
         private Label label6;
-        private Label label7;
-        private Label label8;
-        private Label label9;
+        private Label KundeInfo;
+        private Label ReturLabel;
+        private Label DestinationLabel;
         private TextBox textBox2;
         private TextBox textBox3;
         private TextBox textBox4;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
-        private ComboBox comboBox3;
-        private Label label10;
-        private Label label11;
-        private Label label3;
-        private Label label12;
+        private ComboBox DestinationDropDown;
+        private ComboBox ReturValgDropDown;
+        private ComboBox BaggageDropDown;
+        private Label AfgangsDestination;
+        private Label Destination;
+        private Label OrdreInfo;
+        private Label SamletPris;
         private Label label14;
-        private Button button1;
-        private Label label13;
-        private Label customerNameLabel;
-        private Label lastNameLabel;
-        private Label label15;
-        private Label label16;
-        private Label label17;
+        private Button BestilKnap;
+        private Label ForNavnLabel;
+        private Label Fornavn;
+        private Label lastName;
+        private Label efterNavnLabel;
+        private Label MobileLabel;
+        private Label MailLabel;
         private Label label19;
         private Label label20;
         private Label label21;
         private Label label23;
         private ComboBox comboBox4;
         private Label label18;
-        private Label mobilePhoneLabel;
-        private Label EmailLabel;
+        private Label mobilePhone;
+        private Label Email;
     }
 }

@@ -113,7 +113,7 @@ namespace MomentozClientApp.GuiLayer
                 if (customer != null && customer.Email != null)
                 {
                     // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
-                    MessageBox.Show($"{customer.FullName}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  //  MessageBox.Show($"{customer.FullName}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Opret en ny instans af MainMenu
                     var mainMenu = new MainMenu(customer);

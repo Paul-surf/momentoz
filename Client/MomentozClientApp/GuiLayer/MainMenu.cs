@@ -22,7 +22,7 @@ namespace MomentozClientApp
         private bool flightsLoaded = false;
         private readonly string _customerId;
         private Customer loggedInCustomer;
-        private Customer _customer;
+        //   private Customer _customer;
         string departure = "Afgang: Aalborg";
         string returnTicket = "Returbillet: ";
         double price = 0; // Initialiser prisen
@@ -37,10 +37,10 @@ namespace MomentozClientApp
             LoadFlightsAsync();
             LoadCustomersAsync();
             UpdateTotalPrice();
-            comboBox1.DropDown += comboBox1_DropDown;
-            comboBox2.DropDown += comboBox2_DropDown;
-            comboBox3.DropDown += comboBox3_DropDown;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            DestinationDropDown.DropDown += comboBox1_DropDown;
+            ReturValgDropDown.DropDown += comboBox2_DropDown;
+            BaggageDropDown.DropDown += comboBox3_DropDown;
+            DestinationDropDown.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             UpdateCustomerInfo(customer.FirstName, customer.LastName, customer.MobilePhone, customer.Email);
         }
 
@@ -55,44 +55,46 @@ namespace MomentozClientApp
 
         private void InitializeYesNoComboBox()
         {
-            comboBox2.Items.Clear();
-            comboBox2.Items.Add("Ja");
-            comboBox2.Items.Add("Nej");
-            comboBox2.SelectedIndex = -1;
+            ReturValgDropDown.Items.Clear();
+            ReturValgDropDown.Items.Add("Ja");
+            ReturValgDropDown.Items.Add("Nej");
+            ReturValgDropDown.SelectedIndex = -1;
         }
 
         private void InitializeBagageWeightCombobox()
         {
-            comboBox3.Items.Clear();
-            comboBox3.Items.Add("2kg");
-            comboBox3.Items.Add("5kg");
-            comboBox3.Items.Add("10kg");
-            comboBox3.Items.Add("15kg");
-            comboBox3.SelectedIndex = -1;
+            BaggageDropDown.Items.Clear();
+            BaggageDropDown.Items.Add("0kg");
+            BaggageDropDown.Items.Add("1kg");
+            BaggageDropDown.Items.Add("2kg");
+            BaggageDropDown.Items.Add("5kg");
+            BaggageDropDown.Items.Add("10kg");
+            BaggageDropDown.Items.Add("15kg");
+            BaggageDropDown.SelectedIndex = -1;
         }
 
         public void UpdateCustomerInfo(string firstName, string lastName, string mobilePhone, string email)
         {
-            customerNameLabel.Text = firstName;
-            lastNameLabel.Text = lastName;
-            mobilePhoneLabel.Text = mobilePhone;
-            EmailLabel.Text = email;
+            Fornavn.Text = firstName;
+            this.lastName.Text = lastName;
+            this.mobilePhone.Text = mobilePhone;
+            Email.Text = email;
         }
 
         private void UpdateTotalPrice(double additionalCosts)
         {
             // Antager at 'label12' er din prislabel.
             double totalPrice = basePrice + additionalCosts;
-            label12.Text = $"Pris: {totalPrice:C}";
+            SamletPris.Text = $"Pris: {totalPrice:C}";
         }
 
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
 
-            comboBox1.Enabled = false;
+            DestinationDropDown.Enabled = false;
             await LoadFlightsAsync();
 
-            comboBox1.Enabled = true;
+            DestinationDropDown.Enabled = true;
         }
         private async void MainMenu_Load(object sender, EventArgs e)
         {
@@ -146,9 +148,9 @@ namespace MomentozClientApp
 
                     if (flightsData != null && flightsData.Any())
                     {
-                        comboBox1.DisplayMember = "CustomDisplay";
-                        comboBox1.ValueMember = "Id";
-                        comboBox1.DataSource = flightsData;
+                        DestinationDropDown.DisplayMember = "CustomDisplay";
+                        DestinationDropDown.ValueMember = "Id";
+                        DestinationDropDown.DataSource = flightsData;
                     }
                     else
                     {
@@ -207,9 +209,9 @@ namespace MomentozClientApp
                         if (flightsData != null && flightsData.Any())
                         {
                             // Ændr 'CustomDisplay' til det faktiske navn på egenskaben for destinationens adresse.
-                            comboBox1.DisplayMember = "DestinationAddress";
-                            comboBox1.ValueMember = "Id";
-                            comboBox1.DataSource = flightsData;
+                            DestinationDropDown.DisplayMember = "DestinationAddress";
+                            DestinationDropDown.ValueMember = "Id";
+                            DestinationDropDown.DataSource = flightsData;
                             flightsLoaded = true;
                         }
                         else
@@ -240,53 +242,77 @@ namespace MomentozClientApp
             UpdateTotalPrice(baggageCost);
         }
 
-        private async void comboBox4_DropDown(object sender, EventArgs e)
+
+
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadCustomersAsync();
-            // For at undgå at hente data flere gange, kan du have en boolsk flag til at kontrollere dette.
-            if (customersLoaded) return;
-
-            try
+            if (DestinationDropDown.SelectedItem != null)
             {
-                using (var httpClient = new HttpClient())
+                var selectedFlight = (Flight)DestinationDropDown.SelectedItem;
+                // Tjek for null eller tom DestinationAddress
+                if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
-                    var response = await httpClient.GetAsync("api/customers"); // Opdater URL'en til din customers API
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var customerData = await response.Content.ReadAsStringAsync();
-                        var customers = JsonConvert.DeserializeObject<List<Customer>>(customerData); // Erstat 'CustomerDto' med din faktiske customer DTO klasse
-
-                        if (customers != null && customers.Any())
-                        {
-                            comboBox4.DisplayMember = "FullName"; // Erstat 'FullName' med den egenskab du vil vise i dropdown
-                            comboBox4.ValueMember = "Id"; // Antager at dit CustomerDto har en 'Id' egenskab
-                            comboBox4.DataSource = customers;
-                            customersLoaded = true; // Sæt din boolske flag til true, så data ikke genindlæses
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen kunder blev fundet.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fejl i hentning af kundeinformation fra API.");
-                    }
+                    Destination.Text = selectedFlight.DestinationAddress;
                 }
+                else
+                {
+                    Destination.Text = "Ingen adresse tilgængelig";
+                }
+
+                // Opdater også prisen, når en anden flyvning vælges
+                basePrice = selectedFlight.Price;
+                UpdateTotalPrice();
             }
-            catch (Exception ex)
+            else
             {
+                Destination.Text = "Ingen flyvning er valgt.";
             }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ReturValgDropDown.SelectedItem != null)
+            {
+                string choice = ReturValgDropDown.SelectedItem.ToString();
+                returnTicketCost = choice == "Ja" ? 150 : 0;
+            }
+            else
+            {
+                returnTicketCost = 0;
+            }
+
+            UpdateTotalPrice();
+        }
+        private void UpdatePriceBasedOnSelections()
+        {
+            // Beregn den nye pris baseret på valg af returbillet og andet.
+            double additionalCosts = 0;
+
+
+            // Tjek om der er valgt en returbillet og læg den ekstra omkostning til.
+            if (ReturValgDropDown.SelectedIndex != -1 && ReturValgDropDown.SelectedItem.ToString() == "Ja")
+            {
+                additionalCosts += 150; // Ekstra omkostning for returbillet.
+            }
+
+            // Opdater label med den nye pris.
+            SamletPris.Text = $"Pris: {originalPrice + additionalCosts:C}";
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedItem != null)
+            if (BaggageDropDown.SelectedItem != null)
             {
-                string choice = comboBox3.SelectedItem.ToString();
+                string choice = BaggageDropDown.SelectedItem.ToString();
                 switch (choice)
                 {
+                    case "0kg":
+                        baggageCost = 0;
+                        break;
+                    case "1kg":
+                        baggageCost = 10;
+                        break;
                     case "2kg":
                         baggageCost = 20;
                         break;
@@ -316,75 +342,17 @@ namespace MomentozClientApp
         private void SetBasePrice(double price)
         {
             basePrice = price;
-            // Opdater prisen på UI med det samme for at reflektere basisprisen
-            label12.Text = $"Pris: {basePrice:C}";
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedItem != null)
-            {
-                var selectedFlight = (Flight)comboBox1.SelectedItem;
-                // Tjek for null eller tom DestinationAddress
-                if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
-                {
-                    label11.Text = selectedFlight.DestinationAddress;
-                }
-                else
-                {
-                    label11.Text = "Ingen adresse tilgængelig";
-                }
-
-                // Opdater også prisen, når en anden flyvning vælges
-                basePrice = selectedFlight.Price;
-                UpdateTotalPrice();
-            }
-            else
-            {
-                label11.Text = "Ingen flyvning er valgt.";
-            }
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox2.SelectedItem != null)
-            {
-                string choice = comboBox2.SelectedItem.ToString();
-                returnTicketCost = choice == "Ja" ? 150 : 0;
-            }
-            else
-            {
-                returnTicketCost = 0;
-            }
-
-            UpdateTotalPrice();
-        }
-        private void UpdatePriceBasedOnSelections()
-        {
-            // Beregn den nye pris baseret på valg af returbillet og andet.
-            double additionalCosts = 0;
-
-
-            // Tjek om der er valgt en returbillet og læg den ekstra omkostning til.
-            if (comboBox2.SelectedIndex != -1 && comboBox2.SelectedItem.ToString() == "Ja")
-            {
-                additionalCosts += 150; // Ekstra omkostning for returbillet.
-            }
-
-            // Opdater label med den nye pris.
-            label12.Text = $"Pris: {originalPrice + additionalCosts:C}";
+            // Opdater prisen på GUI med det samme for at reflektere basisprisen
+            SamletPris.Text = $"Pris: {basePrice:C}";
         }
 
         private void UpdateTotalPrice()
         {
             // Samlede pris er summen af basisprisen, returbilletten og bagageomkostningerne
             double totalPrice = basePrice + returnTicketCost + baggageCost;
-            label12.Text = $"Pris: {totalPrice:C}";
+            SamletPris.Text = $"Pris: {totalPrice:C}";
         }
 
-        //   private void button1_Click(object sender, EventArgs e)
-        // {
-        //}
         private async Task<bool> LockFlight()
         {
             try
@@ -419,7 +387,10 @@ namespace MomentozClientApp
         }
 
         private async void button1_Click_1(object sender, EventArgs e)
+
         {
+            price = 0;
+            returnTicket = "";
             var isFlightLocked = await LockFlight();
 
             if (!isFlightLocked)
@@ -430,43 +401,41 @@ namespace MomentozClientApp
 
             // Saml kvitteringsoplysningerne
             string customerInfo = "Kundeoplysninger:\n" +
-                              "Fornavn: " + customerNameLabel.Text + "\n" +
-                              "Efternavn: " + lastNameLabel.Text + "\n" +
-                              "Mobil: " + mobilePhoneLabel.Text + "\n" +
-                              "Email: " + EmailLabel.Text + "\n";
+                              "Fornavn: " + Fornavn.Text + "\n" +
+                              "Efternavn: " + lastName.Text + "\n" +
+                              "Mobil: " + mobilePhone.Text + "\n" +
+                              "Email: " + Email.Text + "\n";
 
-
-
-            if (comboBox1.SelectedItem != null)
+            if (DestinationDropDown.SelectedItem != null)
             {
-                var selectedFlight = (Flight)comboBox1.SelectedItem;
+                var selectedFlight = (Flight)DestinationDropDown.SelectedItem;
                 price += selectedFlight.Price; // Start med basisprisen for den valgte flyvning.
             }
             else
             {
-                label12.Text = "Ingen flyvning valgt";
+                SamletPris.Text = "Ingen flyvning valgt";
                 return; // Hvis ingen flyvning er valgt, afbryd og vis besked.
             }
 
-            string destination = "Valgt destination: " + (comboBox1.SelectedItem as Flight)?.DestinationAddress ?? "Ingen";
+            string destination = "Valgt destination: " + (DestinationDropDown.SelectedItem as Flight)?.DestinationAddress ?? "Ingen";
 
             // Tjek for returbillet og opdater pris
-            if (comboBox2.SelectedIndex != -1 && comboBox2.SelectedItem.ToString() == "Ja")
+            if (ReturValgDropDown.SelectedIndex != -1 && ReturValgDropDown.SelectedItem.ToString() == "Ja")
             {
                 returnTicket += "Ja";
                 price += 150; // Tilføj ekstra omkostninger for returbillet.
             }
             else
             {
-                returnTicket += comboBox2.SelectedIndex != -1 ? comboBox2.SelectedItem.ToString() : "Ingen valgt";
+                returnTicket += ReturValgDropDown.SelectedIndex != -1 ? ReturValgDropDown.SelectedItem.ToString() : "Ingen valgt";
             }
 
             string baggage = "Bagage: ";
             double baggageCost = 0;
 
-            if (comboBox3.SelectedIndex != -1)
+            if (BaggageDropDown.SelectedIndex != -1)
             {
-                string selectedBaggage = comboBox3.SelectedItem.ToString();
+                string selectedBaggage = BaggageDropDown.SelectedItem.ToString();
                 switch (selectedBaggage)
                 {
                     case "2kg":
@@ -487,7 +456,7 @@ namespace MomentozClientApp
             }
 
             price += baggageCost;
-            baggage += baggageCost > 0 ? comboBox3.SelectedItem.ToString() : "Ingen valgt";
+            baggage += baggageCost > 0 ? BaggageDropDown.SelectedItem.ToString() : "Ingen valgt";
 
             // Formatér den opdaterede pris som en valuta
             string formattedPrice = string.Format("{0:C}", price);
@@ -511,21 +480,21 @@ namespace MomentozClientApp
 
         private void label10_Click(object sender, EventArgs e)
         {
-            label10.Text = "Aalborg";
+            AfgangsDestination.Text = "Aalborg";
         }
         private void label11_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem != null)
+            if (DestinationDropDown.SelectedItem != null)
             {
-                var selectedFlight = (Flight)comboBox1.SelectedItem;
+                var selectedFlight = (Flight)DestinationDropDown.SelectedItem;
                 // Tjek for null eller tom DestinationAddress
                 if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
                 {
-                    label11.Text = selectedFlight.DestinationAddress;
+                    Destination.Text = selectedFlight.DestinationAddress;
                 }
                 else
                 {
-                    label11.Text = "Ingen adresse tilgængelig";
+                    Destination.Text = "Ingen adresse tilgængelig";
                 }
             }
             else
@@ -534,18 +503,12 @@ namespace MomentozClientApp
             }
         }
 
-        public void label14_Click(object sender, EventArgs e)
+        public void forNavn(object sender, EventArgs e)
         {
             if (loggedInCustomer != null)
             {
-                // Antag at du har en label med navnet 'customerNameLabel', hvor du ønsker at vise kundens fornavn
-                customerNameLabel.Text = loggedInCustomer.FirstName;
+                Fornavn.Text = loggedInCustomer.FirstName;
             }
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -553,14 +516,14 @@ namespace MomentozClientApp
         {
             if (loggedInCustomer != null)
             {
-                lastNameLabel.Text = loggedInCustomer.LastName;
+                lastName.Text = loggedInCustomer.LastName;
             }
         }
         private void mobilePhoneLabel_Click(object sender, EventArgs e)
         {
             if (loggedInCustomer != null)
             {
-                mobilePhoneLabel.Text = loggedInCustomer.MobilePhone;
+                mobilePhone.Text = loggedInCustomer.MobilePhone;
             }
         }
 
@@ -568,8 +531,10 @@ namespace MomentozClientApp
         {
             if (loggedInCustomer != null)
             {
-                EmailLabel.Text = loggedInCustomer.Email;
+                Email.Text = loggedInCustomer.Email;
             }
         }
+
+    
     }
 }
