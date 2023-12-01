@@ -228,7 +228,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "select ID, FirstName, LastName, Email, MobilePhone from Customers where email = @email";
+            string queryString = "select ID, FirstName, LastName, Email, MobilePhone, loginUserId from Customers where email = @email";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
