@@ -223,6 +223,30 @@ namespace DatabaseData.DatabaseLayer
             }
             return createdCustomer;
         }
+
+        public Customer? GetByEmail(string findEmail)
+        {
+            Customer foundCustomer;
+            //
+            string queryString = "select ID, FirstName, LastName, Email, MobilePhone, loginUserId from Customers where email = @email";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                // Prepace SQL
+                SqlParameter idParam = new SqlParameter("@email", findEmail);
+                readCommand.Parameters.Add(idParam);
+                //
+                con.Open();
+                // Execute read
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                foundCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    foundCustomer = GetCustomerFromReader(customerReader);
+                }
+            }
+            return foundCustomer;
+        }
     }
 
 

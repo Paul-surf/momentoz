@@ -1,5 +1,5 @@
 ﻿// Inkluderer navneområdet for DTOs (Data Transfer Objects).
-using MomentozClientApp.DTOs;
+using MomentozClientApp.Model;
 
 // Definerer navneområdet for forretningslogiklaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.BusinessLogicLayer
@@ -8,22 +8,22 @@ namespace MomentozClientApp.BusinessLogicLayer
     public interface IFlightdata
     {
         // Metode til at hente en specifik flyvning baseret på dens id og returnere den som en FlightDto.
-        FlightDto Get(int id);
+        Flight Get(int id);
 
         // Metode til at hente en liste af alle flyvninger og returnere dem som FlightDto'er.
-        List<FlightDto>? Get();
+        List<Flight>? Get();
 
         // Metode til at tilføje en ny flyvning. Modtager en FlightDto og returnerer et id for den tilføjede flyvning.
-        int Add(FlightDto flightToAdd);
+        int Add(Flight flightToAdd);
 
         // Metode til at opdatere en eksisterende flyvning. Modtager en FlightDto og returnerer en boolsk værdi, der indikerer, om opdateringen var succesfuld.
-        bool Put(FlightDto flightToUpdate);
+        bool Put(Flight flightToUpdate);
 
         // Metode til at slette en flyvning baseret på dens id. Returnerer en boolsk værdi, der indikerer, om sletningen var succesfuld.
         bool Delete(int id);
 
         // Metode til at hente en flyvning baseret på dens id og returnere den som en FlightDto. 
         // Det er en ekstra metode, der ligner den første Get-metode og kan føre til forvirring.
-        FlightDto? GetFlightById(int id);
+        Flight? GetFlightById(int id);
     }
 }

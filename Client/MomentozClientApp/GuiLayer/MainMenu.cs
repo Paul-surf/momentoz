@@ -1,4 +1,5 @@
-using MomentozClientApp.DTOs;
+
+using MomentozClientApp.Model;
 using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace MomentozClientApp
         private readonly CustomerAccess _customerAccess;
 
         private Timer flightRefreshTimer;
-        private List<FlightDto> flightsData;
+        private List<Flight> flightsData;
         private bool isDataLoaded = false;
         private double originalPrice;
         private double basePrice; // Basispris for flyvningen
@@ -139,7 +140,7 @@ namespace MomentozClientApp
                 if (response.IsSuccessStatusCode)
                 {
                     var flightData = await response.Content.ReadAsStringAsync();
-                    flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
+                    flightsData = JsonConvert.DeserializeObject<List<Flight>>(flightData);
 
                     if (flightsData != null && flightsData.Any())
                     {
@@ -168,7 +169,7 @@ namespace MomentozClientApp
                 if (response.IsSuccessStatusCode)
                 {
                     var customerData = await response.Content.ReadAsStringAsync();
-                    var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData);
+                    var customers = JsonConvert.DeserializeObject<List<Customer>>(customerData);
 
                     if (customers != null && customers.Any())
                     {
@@ -201,7 +202,7 @@ namespace MomentozClientApp
                     if (response.IsSuccessStatusCode)
                     {
                         var flightData = await response.Content.ReadAsStringAsync();
-                        flightsData = JsonConvert.DeserializeObject<List<FlightDto>>(flightData);
+                        flightsData = JsonConvert.DeserializeObject<List<Flight>>(flightData);
 
                         if (flightsData != null && flightsData.Any())
                         {
@@ -254,7 +255,7 @@ namespace MomentozClientApp
                     if (response.IsSuccessStatusCode)
                     {
                         var customerData = await response.Content.ReadAsStringAsync();
-                        var customers = JsonConvert.DeserializeObject<List<CustomerDto>>(customerData); // Erstat 'CustomerDto' med din faktiske customer DTO klasse
+                        var customers = JsonConvert.DeserializeObject<List<Customer>>(customerData); // Erstat 'CustomerDto' med din faktiske customer DTO klasse
 
                         if (customers != null && customers.Any())
                         {
@@ -333,7 +334,7 @@ namespace MomentozClientApp
         {
             if (comboBox1.SelectedItem != null)
             {
-                var selectedFlight = (FlightDto)comboBox1.SelectedItem;
+                var selectedFlight = (Flight)comboBox1.SelectedItem;
                 // Tjek for null eller tom DestinationAddress
                 if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
                 {
@@ -372,7 +373,7 @@ namespace MomentozClientApp
         {
             if (comboBox4.SelectedItem != null)
             {
-                var selectedCustomer = (CustomerDto)comboBox4.SelectedItem;
+                var selectedCustomer = (Customer)comboBox4.SelectedItem;
                 label14.Text = $"{selectedCustomer.FirstName}";
                 label19.Text = $" {selectedCustomer.LastName}";
                 label20.Text = $" {selectedCustomer.MobilePhone}";
@@ -464,7 +465,7 @@ namespace MomentozClientApp
 
             if (comboBox4.SelectedItem != null)
             {
-                var selectedCustomer = (CustomerDto)comboBox4.SelectedItem;
+                var selectedCustomer = (Customer)comboBox4.SelectedItem;
                 customerInfo += $"Fornavn: {selectedCustomer.FirstName}\n";
                 customerInfo += $"Efternavn: {selectedCustomer.LastName}\n";
                 customerInfo += $"Mobiltelefon: {selectedCustomer.MobilePhone}\n";
@@ -482,7 +483,7 @@ namespace MomentozClientApp
             // Hent flyoplysninger og basispris
             if (comboBox1.SelectedItem != null)
             {
-                var selectedFlight = (FlightDto)comboBox1.SelectedItem;
+                var selectedFlight = (Flight)comboBox1.SelectedItem;
                 price += selectedFlight.Price; // Start med basisprisen for den valgte flyvning.
             }
             else
@@ -491,7 +492,7 @@ namespace MomentozClientApp
                 return; // Hvis ingen flyvning er valgt, afbryd og vis besked.
             }
 
-            string destination = "Valgt destination: " + (comboBox1.SelectedItem as FlightDto)?.DestinationAddress ?? "Ingen";
+            string destination = "Valgt destination: " + (comboBox1.SelectedItem as Flight)?.DestinationAddress ?? "Ingen";
 
             // Tjek for returbillet og opdater pris
             if (comboBox2.SelectedIndex != -1 && comboBox2.SelectedItem.ToString() == "Ja")
@@ -568,7 +569,7 @@ namespace MomentozClientApp
         {
             if (comboBox1.SelectedItem != null)
             {
-                var selectedFlight = (FlightDto)comboBox1.SelectedItem;
+                var selectedFlight = (Flight)comboBox1.SelectedItem;
                 // Tjek for null eller tom DestinationAddress
                 if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
                 {

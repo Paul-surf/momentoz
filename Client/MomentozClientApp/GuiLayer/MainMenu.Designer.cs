@@ -107,7 +107,6 @@
             label5.Size = new Size(182, 37);
             label5.TabIndex = 15;
             label5.Text = "Destinationer:";
-         //   label5.Click += label5_Click;
             // 
             // label6
             // 
@@ -208,7 +207,6 @@
             label12.Size = new Size(14, 15);
             label12.TabIndex = 35;
             label12.Text = "X";
-//            label12.Click += label12_Click;
             // 
             // button1
             // 
@@ -238,7 +236,6 @@
             label14.Size = new Size(30, 15);
             label14.TabIndex = 38;
             label14.Text = "Tom";
-        //    label14.Click += label14_Click;
             // 
             // label15
             // 
@@ -278,7 +275,6 @@
             label19.Size = new Size(30, 15);
             label19.TabIndex = 43;
             label19.Text = "Tom";
-       //     label19.Click += label19_Click;
             // 
             // label20
             // 
@@ -288,7 +284,6 @@
             label20.Size = new Size(30, 15);
             label20.TabIndex = 44;
             label20.Text = "Tom";
-         //   label20.Click += label20_Click;
             // 
             // label21
             // 
@@ -298,7 +293,6 @@
             label21.Size = new Size(30, 15);
             label21.TabIndex = 45;
             label21.Text = "Tom";
-           // label21.Click += label21_Click;
             // 
             // label23
             // 
@@ -327,6 +321,7 @@
             label18.TabIndex = 50;
             label18.Text = "KundeID:";
             label18.TextAlign = ContentAlignment.TopCenter;
+        //    label18.Click += label18_Click;
             // 
             // MainMenu
             // 

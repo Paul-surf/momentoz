@@ -50,10 +50,11 @@ namespace MomentozClientApp.ServiceLayer
         }
 
         // Asynkron metode til at hente en kunde baseret på dens id.
-        public async Task<Customer> GetCustomerById(int id)
+        public async Task<Customer> GetCustomerByEmail(string email)
         {
-            Customer foundCustomer = null;
-            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl + "customers/" + id;
+            Customer  foundCustomers = null;
+            // Assuming that the base URL ends with "/", if not you might need to adjust this line.
+            _customerServiceConnection.UseUrl = $"{_customerServiceConnection.BaseUrl}customers?email={Uri.EscapeDataString(email)}";
 
             try
             {
@@ -61,18 +62,20 @@ namespace MomentozClientApp.ServiceLayer
                 if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                 {
                     var content = await serviceResponse.Content.ReadAsStringAsync();
-                    foundCustomer = JsonConvert.DeserializeObject<Customer>(content);
+                    foundCustomers = JsonConvert.DeserializeObject<Customer>(content);
                 }
             }
             catch (Exception ex)
             {
                 // Log the exception and handle it as per your error handling policy
-                Debug.WriteLine($"An error occurred while fetching customer by ID: {ex.Message}");
+                Debug.WriteLine($"An error occurred while fetching customer by email: {ex.Message}");
                 // Depending on the policy, you might want to rethrow, return null, or handle the exception differently
             }
 
-            return foundCustomer;
+            return foundCustomers;
         }
+
+
 
         // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
         public Task<int> CreateCustomer(string newUsername, Customer customer)

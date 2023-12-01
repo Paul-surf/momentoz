@@ -1,141 +1,100 @@
 ﻿using RESTfulService.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
 using RESTfulService.DTOs;
+using DatabaseData.ModelLayer;
 
 namespace RESTfulService.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
-
         private readonly ICustomerdata _businessLogicCtrl;
 
-        // Constructor with Dependency Injection
         public CustomersController(ICustomerdata inBusinessLogicCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
         }
 
-
-        // URL: api/customers
+        // URL: api/customers?email=value
         [HttpGet]
         public ActionResult<List<CustomerDtoo>> Get()
         {
-            ActionResult<List<CustomerDtoo>> foundReturn;
-            // retrieve data - converted to DTO
-            List<CustomerDtoo>? foundCustomers = _businessLogicCtrl.Get();
-            // evaluate
-            if (foundCustomers != null)
+            List<CustomerDtoo> foundCustomerDtos = _businessLogicCtrl.Get();
+            if (foundCustomerDtos != null && foundCustomerDtos.Count > 0)
             {
-                if (foundCustomers.Count > 0)
-                {
-                    foundReturn = Ok(foundCustomers);                 // Statuscode 200
-                }
-                else
-                {
-                    foundReturn = new StatusCodeResult(204);    // Ok, but no content
-                }
+                return Ok(foundCustomerDtos); // Statuscode 200
+            }
+            else if (foundCustomerDtos != null)
+            {
+                return NoContent(); // Statuscode 204 - Ok, but no content
             }
             else
             {
-                foundReturn = new StatusCodeResult(500);        // Internal server error
+                return StatusCode(500); // Internal server error
             }
-            // send response back to client
-            return foundReturn;
         }
 
-
-
-        /*// URL: api/customers/{id}
-        [HttpGet, Route("{id}")]
-        public ActionResult<CustomerDtoo> Get(int id)
+        // URL: api/customers/login/{loginid}
+        [HttpGet("login/{loginid}")]
+        public ActionResult<CustomerDtoo?> GetByLoginId(string loginid)
         {
-            return null;
-        }*/
+            CustomerDtoo foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
+            if (foundCustomer != null)
+            {
+                return Ok(foundCustomer); // Statuscode 200
+            }
+            else
+            {
+                return StatusCode(500); // Internal server error
+            }
+        }
+
+        // URL: api/customers/email/{email}
+        [HttpGet("email/{email}")]
+        public ActionResult<CustomerDtoo?> GetByEmail([FromQuery] string? email)
+        {
+            CustomerDtoo foundCustomer = _businessLogicCtrl.GetByEmail(email);
+            if (foundCustomer != null)
+            {
+                return Ok(foundCustomer); // Statuscode 200
+            }
+            else
+            {
+                return StatusCode(500); // Internal server error
+            }
+        }
 
         // URL: api/customers
         [HttpPost]
         public ActionResult<CustomerDtoo> CreateNewCustomer(CustomerDtoo inCustomer)
         {
-            ActionResult<CustomerDtoo> foundReturn;
-            CustomerDtoo? createdCustomer = null;
-            if (inCustomer != null)
+            var createdCustomer = _businessLogicCtrl.Add(inCustomer);
+            if (createdCustomer != null)
             {
-                createdCustomer = _businessLogicCtrl.Add(inCustomer);
-            }
-            // Evaluate
-            if (createdCustomer is not null)
-            {
-                foundReturn = Ok(createdCustomer);
+                return Ok(createdCustomer);
             }
             else
             {
-                foundReturn = new StatusCodeResult(500);    // Internal server error
+                return StatusCode(500); // Internal server error
             }
-            return foundReturn;
-        }
-
-
-        // URL: api/customers/{loginid}
-        [HttpGet, Route("{loginid}")]
-        public ActionResult<CustomerDtoo?> Get(string loginid)
-        {
-            ActionResult<CustomerDtoo> foundReturn = new CustomerDtoo();
-            // retrieve and convert data
-            CustomerDtoo? foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
-            // evaluate
-            if (foundCustomer != null)
-            {
-                if (!String.IsNullOrEmpty(foundCustomer.LoginUserId))
-                {
-                    foundReturn = Ok(foundCustomer);                 // Statuscode 200
-                }
-                else
-                {
-                    foundReturn = new StatusCodeResult(204);    // Ok, but no content
-                }
-            }
-            else
-            {
-                foundReturn = new StatusCodeResult(500);        // Internal server error
-            }
-            // send response back to client
-            return foundReturn;
         }
 
         // URL: api/customers/{loginid}
         [HttpPut("{loginid}")]
-        public ActionResult<CustomerDtoo> updateCustomer([FromBody] CustomerDtoo customer)
+        public ActionResult<CustomerDtoo> UpdateCustomer([FromBody] CustomerDtoo customer)
         {
-            ActionResult<CustomerDtoo> updatedReturn = new CustomerDtoo();
-            // retrieve and convert data
-            CustomerDtoo? updatedCustomer = _businessLogicCtrl.Put(customer);
-            // evaluate
+            var updatedCustomer = _businessLogicCtrl.Put(customer);
             if (updatedCustomer != null)
             {
-                if (!String.IsNullOrEmpty(updatedCustomer.LoginUserId))
-                {
-                    updatedReturn = Ok(updatedCustomer);                 // Statuscode 200
-                }
-                else
-                {
-                    updatedReturn = new StatusCodeResult(204);    // Ok, but no content
-                }
+                return Ok(updatedCustomer); // Statuscode 200
             }
             else
             {
-                updatedReturn = new StatusCodeResult(500);        // Internal server error
+                return StatusCode(500); // Internal server error
             }
-            // send response back to client
-            return updatedReturn;
         }
 
-
+        // ... yderligere metoder, såsom Delete, hvis de er implementeret ...
     }
-
-
-
 }
-

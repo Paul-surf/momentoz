@@ -13,5 +13,6 @@ namespace DatabaseData.DatabaseLayer
         bool DeleteCustomerById(int id);
         Customer? GetCustomerByUserId(string loginUserId);
         Customer CreateCustomerMinimal(Customer aMinimalCustomer);
+        Customer? GetByEmail(string email);
     }
 }

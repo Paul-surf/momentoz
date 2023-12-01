@@ -1,3 +1,4 @@
+using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 using System.Diagnostics;
 
@@ -10,7 +11,7 @@ namespace MomentozClientApp.GuiLayer
         private Label label1;
         private TextBox textBox1;
 
-        public LogIn()
+        public LogIn(CustomerAccess customerAccess)
         {
             InitializeComponent();
 
@@ -50,7 +51,7 @@ namespace MomentozClientApp.GuiLayer
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 4;
-            textBox1.TextChanged += textBox1_TextChanged;
+           // textBox1.TextChanged += textBox1_TextChanged;
             // 
             // LogIn
             // 
@@ -64,75 +65,147 @@ namespace MomentozClientApp.GuiLayer
             PerformLayout();
         }
 
-        // Denne metode bliver kaldt, når brugeren klikker på login-knappen.
-        private async void LoginKnap(object sender, EventArgs e)
+        private async Task<Customer> GetCustomerByEmailAsync(string email)
         {
-            var customerId = textBox1.Text;
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("E-mailfeltet må ikke være tomt.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
 
             try
             {
-                // Konverter customerId til en integer
-                if (int.TryParse(customerId, out int id) && await IsValidCustomerId(id))
-                {
-                    // Skjuler login-formularen.
-                    Hide();
+                Customer customers = await _customerAccess.GetCustomerByEmail(email);
 
-                    // Opretter MainMenu-formularen og overfører den validerede kunde.
-                    var customer = await _customerAccess.GetCustomerById(id);
-                    if (customer != null) 
-                    {
-                        var mainMenu = new MainMenu(customer);
-                        mainMenu.Closed += (s, args) => Close(); // Lukker login-formularen, når MainMenu lukkes
-                        mainMenu.Show();
-                    }
-                    
+                if (customers != null)  // Tjek om der er nogen kunder i listen
+                {
+                    // Hent den første kunde fra listen
+                  
+                    return customers;
                 }
                 else
                 {
-                    MessageBox.Show("Login mislykkedes. Kontroller venligst din kunde-ID.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Forkert email. Indtast en gyldig email for at logge ind.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
                 }
-            }
-            catch (HttpRequestException)
-            {
-                MessageBox.Show("Der opstod en fejl ved forbindelsen til serveren. Tjek din internetforbindelse og prøv igen senere.", "Forbindelsesfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Der opstod en ukendt fejl: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
+                return null;
             }
         }
 
 
-
-        // Denne metode validerer kunde-ID.
-        private async Task<bool> IsValidCustomerId(int customerId)
+        // Denne metode bliver kaldt, når brugeren klikker på login-knappen.
+        private async void LoginKnap(object sender, EventArgs e)
         {
-            if (customerId <= 0)
+            var userEmail = textBox1.Text.Trim();
+
+            if (string.IsNullOrEmpty(userEmail))
             {
-                MessageBox.Show("Kunde-ID skal være et positivt heltal.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("E-mailfeltet må ikke være tomt.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var customer = await GetCustomerByEmailAsync(userEmail);
+
+                if (customer != null)
+                {
+                    // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
+                    MessageBox.Show($"{customer.FirstName} {customer.LastName} {customer.MobilePhone}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Opret en ny instans af MainMenu
+                    var mainMenu = new MainMenu(customer);
+
+                    // Abonner på lukningsbegivenheden for MainMenu
+                    mainMenu.Closed += (s, args) => Close();
+
+                    // Skjul den nuværende form (LogIn) og vis MainMenu-formen
+                    mainMenu.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Forkert email. Indtast en gyldig email for at logge ind.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
+            }
+            Hide();
+            
+        }
+
+
+
+
+        private async Task<bool> LoginWithEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("E-mailfeltet må ikke være tomt.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             try
             {
-                // Forsøger at hente kundeoplysninger baseret på kunde-ID.
-                var customer = await _customerAccess.GetCustomerById(customerId);
+                var customer = await GetCustomerByEmailAsync(email);
+
+                if (customer != null)
+                {
+                    // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
+                    MessageBox.Show($"Velkommen, {customer.FullName}!", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Tilføj din log ind logik her, f.eks. navigering til hovedmenuen.
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Forkert email. Indtast en gyldig email for at logge ind.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
+        private async Task<bool> IsValidEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("E-mailfeltet må ikke være tomt.", "Ugyldig indtastning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            try
+            {
+                var customer = await _customerAccess.GetCustomerByEmail(email);
                 return customer != null;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Der opstod en fejl under verifikation af kunde-ID. Prøv igen senere.", "Login-fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Der opstod en fejl under verifikation af e-mail. Prøv igen senere.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Debug.WriteLine($"Der opstod en fejl under adgang til databasen: {ex.Message}");
                 return false;
             }
+
+
+
+
+            void textBox1_TextChanged(object sender, EventArgs e)
+            {
+
+            }
+
         }
-
-
-
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-    }
-}
+    } }

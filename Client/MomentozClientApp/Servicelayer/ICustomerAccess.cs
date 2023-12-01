@@ -10,7 +10,7 @@ namespace MomentozClientApp.Servicelayer
     {
         // Asynkron metode til at hente en kunde baseret på dets id.
         // Returnerer et Customer-objekt eller null, hvis kunden ikke findes.
-        Task<Customer> GetCustomerById(int id);
+        Task<Customer> GetCustomerByEmail(string email);
 
         // Asynkron metode til at hente alle tilgængelige kunder.
         // Returnerer en liste af Customer-objekter.
