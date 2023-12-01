@@ -36,7 +36,6 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
-            label7 = new Label();
             label8 = new Label();
             label9 = new Label();
             comboBox1 = new ComboBox();
@@ -48,16 +47,14 @@
             label12 = new Label();
             button1 = new Button();
             label13 = new Label();
-            label14 = new Label();
+            customerNameLabel = new Label();
             label15 = new Label();
             label16 = new Label();
             label17 = new Label();
             label19 = new Label();
             label20 = new Label();
             label21 = new Label();
-            label23 = new Label();
-            comboBox4 = new ComboBox();
-            label18 = new Label();
+            label7 = new Label();
             SuspendLayout();
             // 
             // linkLabel2
@@ -114,16 +111,6 @@
             label6.Name = "label6";
             label6.Size = new Size(100, 23);
             label6.TabIndex = 49;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(393, 107);
-            label7.Name = "label7";
-            label7.Size = new Size(59, 15);
-            label7.TabIndex = 23;
-            label7.Text = "Customer";
-            label7.Click += label7_Click;
             // 
             // label8
             // 
@@ -207,6 +194,7 @@
             label12.Size = new Size(14, 15);
             label12.TabIndex = 35;
             label12.Text = "X";
+            label12.Click += label12_Click;
             // 
             // button1
             // 
@@ -228,14 +216,15 @@
             label13.Text = "Fornavn:";
             label13.TextAlign = ContentAlignment.TopCenter;
             // 
-            // label14
+            // customerNameLabel
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(393, 144);
-            label14.Name = "label14";
-            label14.Size = new Size(30, 15);
-            label14.TabIndex = 38;
-            label14.Text = "Tom";
+            customerNameLabel.AutoSize = true;
+            customerNameLabel.Location = new Point(393, 144);
+            customerNameLabel.Name = "customerNameLabel";
+            customerNameLabel.Size = new Size(117, 15);
+            customerNameLabel.TabIndex = 38;
+            customerNameLabel.Text = "customerNameLabel";
+            customerNameLabel.Click += label14_Click;
             // 
             // label15
             // 
@@ -284,6 +273,7 @@
             label20.Size = new Size(30, 15);
             label20.TabIndex = 44;
             label20.Text = "Tom";
+            label20.Click += label20_Click;
             // 
             // label21
             // 
@@ -294,50 +284,29 @@
             label21.TabIndex = 45;
             label21.Text = "Tom";
             // 
-            // label23
+            // label7
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label23.Location = new Point(333, 23);
-            label23.Name = "label23";
-            label23.Size = new Size(134, 30);
-            label23.TabIndex = 47;
-            label23.Text = "Vælg Kunde:";
-            // 
-            // comboBox4
-            // 
-            comboBox4.Location = new Point(305, 69);
-            comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(182, 23);
-            comboBox4.TabIndex = 48;
-            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(318, 107);
-            label18.Name = "label18";
-            label18.Size = new Size(55, 15);
-            label18.TabIndex = 50;
-            label18.Text = "KundeID:";
-            label18.TextAlign = ContentAlignment.TopCenter;
-        //    label18.Click += label18_Click;
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(338, 69);
+            label7.Name = "label7";
+            label7.Size = new Size(80, 30);
+            label7.TabIndex = 50;
+            label7.Text = "Kunde:";
             // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(819, 376);
-            Controls.Add(label18);
-            Controls.Add(comboBox4);
-            Controls.Add(label23);
+            Controls.Add(label7);
             Controls.Add(label21);
             Controls.Add(label20);
             Controls.Add(label19);
             Controls.Add(label17);
             Controls.Add(label16);
             Controls.Add(label15);
-            Controls.Add(label14);
+            Controls.Add(customerNameLabel);
             Controls.Add(label13);
             Controls.Add(button1);
             Controls.Add(label12);
@@ -348,7 +317,6 @@
             Controls.Add(label9);
             Controls.Add(comboBox2);
             Controls.Add(label8);
-            Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(comboBox3);
             Controls.Add(label5);
@@ -384,9 +352,10 @@
         private Label label11;
         private Label label3;
         private Label label12;
+        private Label label14;
         private Button button1;
         private Label label13;
-        private Label label14;
+        private Label customerNameLabel;
         private Label label15;
         private Label label16;
         private Label label17;

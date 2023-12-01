@@ -10,6 +10,7 @@ namespace MomentozClientApp.GuiLayer
         private Button button1;
         private Label label1;
         private TextBox textBox1;
+        private string label14_Click;
 
         public LogIn(CustomerAccess customerAccess)
         {
@@ -82,9 +83,12 @@ namespace MomentozClientApp.GuiLayer
                     // Hent den første kunde fra listen
                   
                     return customers;
+
                 }
                 else
                 {
+                    
+
                     MessageBox.Show("Forkert email. Indtast en gyldig email for at logge ind.", "Login mislykkedes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
@@ -99,7 +103,7 @@ namespace MomentozClientApp.GuiLayer
 
 
         // Denne metode bliver kaldt, når brugeren klikker på login-knappen.
-        private async void LoginKnap(object sender, EventArgs e)
+        public async void LoginKnap(object sender, EventArgs e)
         {
             var userEmail = textBox1.Text.Trim();
 
@@ -117,7 +121,9 @@ namespace MomentozClientApp.GuiLayer
                 {
                     // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
                     MessageBox.Show($"{customer.FirstName} {customer.LastName} {customer.MobilePhone}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
 
+                   
                     // Opret en ny instans af MainMenu
                     var mainMenu = new MainMenu(customer);
 
@@ -136,7 +142,7 @@ namespace MomentozClientApp.GuiLayer
             catch (Exception ex)
             {
                 MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
+                
             }
            
             

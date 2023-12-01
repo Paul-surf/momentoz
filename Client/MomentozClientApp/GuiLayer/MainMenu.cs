@@ -22,13 +22,13 @@ namespace MomentozClientApp
         private double returnTicketCost; // Ekstra omkostning for returbillet
         private double baggageCost; // Ekstra omkostning for bagage
         private bool customersLoaded = false; // Denne variable holder styr på, om kunde-data er blevet indlæst
-        private string loggedInCustomerId;
         private bool flightsLoaded = false;
         private readonly string _customerId;
+        private Customer loggedInCustomer;
         private Customer _customer;
         public MainMenu(Customer customer)
         {
-            _customer = customer;
+           
             //   loggedInCustomerId = customerId; // Gem kunde-ID i en lokal variabel
             //  label7.Text = customerId; // Opdater et label eller anden brugergrænsefladekomponent med kunde-ID'en
             InitializeComponent();
@@ -43,21 +43,23 @@ namespace MomentozClientApp
             comboBox1.DropDown += comboBox1_DropDown;
             comboBox2.DropDown += comboBox2_DropDown;
             comboBox3.DropDown += comboBox3_DropDown;
-            comboBox4.DropDown += comboBox4_DropDown;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
-            //   _customerId = customerId;
             
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            UpdateCustomerName(customer.FirstName);
+
+            //   _customerId = customerId;
+
         }
 
         public MainMenu()
         {
         }
-
-        private void UpdateUI()
+        public void SetLoggedInCustomer(Customer customer)
         {
-            label1.Text = loggedInCustomerId;
+            loggedInCustomer = customer;
         }
+
+
         private void InitializeYesNoComboBox()
         {
             comboBox2.Items.Clear();
@@ -75,7 +77,13 @@ namespace MomentozClientApp
             comboBox3.Items.Add("15kg");
             comboBox3.SelectedIndex = -1;
         }
-        private void UpdateTotalPrice(double additionalCosts)
+
+        public void UpdateCustomerName(string firstName)
+        {
+            customerNameLabel.Text = firstName; // Antager du har en Label med navnet customerNameLabel
+        }
+    
+    private void UpdateTotalPrice(double additionalCosts)
         {
             // Antager at 'label12' er din prislabel.
             double totalPrice = basePrice + additionalCosts;
@@ -173,9 +181,9 @@ namespace MomentozClientApp
 
                     if (customers != null && customers.Any())
                     {
-                        comboBox4.DisplayMember = "FullName"; // Erstat med den egenskab, du vil vise i dropdown for kunder.
-                        comboBox4.ValueMember = "Id"; // Antages at dit CustomerDto har en 'Id' egenskab.
-                        comboBox4.DataSource = customers;
+                        //    // label14_Click.DisplayMember = "FullName"; // Erstat med den egenskab, du vil vise i dropdown for kunder.
+                        //      comboBox4.ValueMember = "Id"; // Antages at dit CustomerDto har en 'Id' egenskab.
+                        //    comboBox4.DataSource = customers;
                     }
                     else
                     {
@@ -369,26 +377,7 @@ namespace MomentozClientApp
 
             UpdateTotalPrice();
         }
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox4.SelectedItem != null)
-            {
-                var selectedCustomer = (Customer)comboBox4.SelectedItem;
-                label14.Text = $"{selectedCustomer.FirstName}";
-                label19.Text = $" {selectedCustomer.LastName}";
-                label20.Text = $" {selectedCustomer.MobilePhone}";
-                label21.Text = $" {selectedCustomer.Email}";
 
-
-            }
-            else
-            {
-                label14.Text = "Ingen kunde valgt";
-                label19.Text = "Ingen kunde valgt";
-                label20.Text = "Ingen kunde valgt";
-                label21.Text = "Ingen kunde valgt";
-            }
-        }
 
         private void UpdatePriceBasedOnSelections()
         {
@@ -463,18 +452,18 @@ namespace MomentozClientApp
             // Saml kvitteringsoplysningerne
             string customerInfo = "Kundeoplysninger:\n";
 
-            if (comboBox4.SelectedItem != null)
-            {
-                var selectedCustomer = (Customer)comboBox4.SelectedItem;
-                customerInfo += $"Fornavn: {selectedCustomer.FirstName}\n";
-                customerInfo += $"Efternavn: {selectedCustomer.LastName}\n";
-                customerInfo += $"Mobiltelefon: {selectedCustomer.MobilePhone}\n";
-                customerInfo += $"Email: {selectedCustomer.Email}\n";
-            }
-            else
-            {
-                customerInfo += "Ingen kunde valgt\n";
-            }
+            //if (comboBox4.SelectedItem != null)
+            //{
+            //    var selectedCustomer = (Customer)comboBox4.SelectedItem;
+            //    customerInfo += $"Fornavn: {selectedCustomer.FirstName}\n";
+            //    customerInfo += $"Efternavn: {selectedCustomer.LastName}\n";
+            //    customerInfo += $"Mobiltelefon: {selectedCustomer.MobilePhone}\n";
+            //    customerInfo += $"Email: {selectedCustomer.Email}\n";
+            //}
+            //else
+            //{
+            //    customerInfo += "Ingen kunde valgt\n";
+            //}
 
             string departure = "Afgang: Aalborg";
             string returnTicket = "Returbillet: ";
@@ -555,11 +544,11 @@ namespace MomentozClientApp
             MessageBox.Show(message, caption, buttons, icon);
         }
 
-      
-        private void label7_Click(object sender, EventArgs e)
-        {
-            label7.Text = loggedInCustomerId;
-        }
+
+        //private void label7_Click(object sender, EventArgs e)
+        //{
+        //    label7.Text = loggedInCustomerId;
+        //}
 
         private void label10_Click(object sender, EventArgs e)
         {
@@ -584,6 +573,26 @@ namespace MomentozClientApp
             {
                 MessageBox.Show("Ingen flyvning er valgt.");
             }
+        }
+
+        public void label14_Click(object sender, EventArgs e)
+        {
+            if (loggedInCustomer != null)
+            {
+                // Antag at du har en label med navnet 'customerNameLabel', hvor du ønsker at vise kundens fornavn
+                customerNameLabel.Text = loggedInCustomer.FirstName;
+            }
+           
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
         }
 
         //private void label12_Click(object sender, EventArgs e)
