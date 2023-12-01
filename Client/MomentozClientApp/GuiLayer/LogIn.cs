@@ -111,9 +111,9 @@ namespace MomentozClientApp.GuiLayer
 
             try
             {
-                var customer = await GetCustomerByEmailAsync(userEmail);
+                Customer customer = await GetCustomerByEmailAsync(userEmail);
 
-                if (customer != null)
+                if (customer != null && customer.Email != null)
                 {
                     // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
                     MessageBox.Show($"{customer.FirstName} {customer.LastName} {customer.MobilePhone}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
