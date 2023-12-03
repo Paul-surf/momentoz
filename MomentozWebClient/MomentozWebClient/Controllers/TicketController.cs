@@ -12,9 +12,10 @@ namespace MomentozWebClient.Controllers
         {
             _ticketsLogic = new TicketLogic(inConfiguration);
         }
-        public async Task<ActionResult> Tickets(int flightId)
+        // api/tickets/ticket/{id}
+        public async Task<ActionResult> Tickets(int Id)
         {
-            Ticket foundOrders = await _ticketsLogic.GetTicketByFlightId(flightId);
+            Ticket foundOrders = await _ticketsLogic.GetTicketByFlightId(Id);
             return View(foundOrders);
 
         }
