@@ -10,7 +10,7 @@ namespace MomentozWebClient.ServiceLayer
 
         Task<bool> AddTicket(Ticket ticket);
 
-        Task<bool> UpdateTicket(Ticket ticket);
+        Task UpdateTicket(Ticket ticket);
 
         Task<bool> DeleteTicket(int id);
     }

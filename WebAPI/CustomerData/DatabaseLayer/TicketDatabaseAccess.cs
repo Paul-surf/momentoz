@@ -65,9 +65,35 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
-        public bool UpdateTicket(Ticket ticketToUpdate)
+        public Ticket UpdateTicket(Ticket ticketToUpdate)
         {
-            throw new NotImplementedException();
+            Ticket updatedTicket;
+
+            string setVariables = "SET Type = @typ, TicketNumber = @num;";
+            string condition = "WHERE FlightID = @id";
+
+            string queryString = "UPDATE Tickets " + setVariables + " " + condition;
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                // Prepare SQL
+                SqlParameter flightParam = new SqlParameter("@id", ticketToUpdate.FlightID);
+                SqlParameter typeParam = new SqlParameter("@typ", "test");
+                SqlParameter numParam = new SqlParameter("@num", 1069);
+                readCommand.Parameters.Add(typeParam);
+                readCommand.Parameters.Add(numParam);
+                //
+                con.Open(); 
+                // Execute read
+                SqlDataReader ticketReader = readCommand.ExecuteReader();
+                updatedTicket = new Ticket();
+                while (ticketReader.Read())
+                {
+                    updatedTicket = GetTicketByFlightId((int)ticketToUpdate.FlightID);
+                }
+            }
+            return updatedTicket;
         }
 
         public Ticket? GetTicketByFlightId(int flightId)

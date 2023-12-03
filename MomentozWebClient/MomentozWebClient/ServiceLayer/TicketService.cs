@@ -75,9 +75,45 @@ namespace MomentozWebClient.ServiceLayer
             return ticketFromService;
         }
 
-        public Task<bool> UpdateTicket(Ticket ticket)
+        public async Task UpdateTicket(Ticket ticket)
         {
-            throw new NotImplementedException();
+            Ticket? ticketFromService = null;
+
+            _ticketServiceConnection.UseUrl = _ticketServiceConnection.BaseUrl;
+            _ticketServiceConnection.UseUrl += "Tickets/";
+
+
+            if (_ticketServiceConnection != null)
+            {
+                var json = JsonConvert.SerializeObject(ticket);
+                var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+                try
+                {
+                    var serviceResponse = await _ticketServiceConnection.CallServicePut(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var content = await serviceResponse.Content.ReadAsStringAsync();
+
+                        ticketFromService = JsonConvert.DeserializeObject<Ticket>(content);
+
+                    }
+                    else
+                    {
+                        if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            ticketFromService = new Ticket();
+                        }
+                        else
+                        {
+                            ticketFromService = null;
+                        }
+                    }
+                }
+                catch
+                {
+                    ticketFromService = null;
+                }
+            }
         }
 
         public async Task<Ticket?> SaveTicket(Ticket ticketToSave)

@@ -43,7 +43,8 @@
     </div>
 </div>
 }
-<a asp-action="Index">Gå tilbage (Til Rejser)</a>
+<a asp-controller="Ticket" asp-action="updateTicket" asp-route-id="@Model" asp-controller="Order" asp-action="Orders" asp-route-id="@Model.Id">Gå til kassen </a>
+<a asp-controller="Flight" asp-action="Flights">Gå tilbage (Til Rejser)</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

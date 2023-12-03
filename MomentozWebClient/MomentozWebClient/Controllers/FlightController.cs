@@ -92,5 +92,10 @@ namespace MomentozWebClient.Controllers
                 return View();
             }
         }
+        // GET: DestinationController/Select/{id}
+        public ActionResult Select(int id)
+        {
+            return View();
+        }
     }
 }

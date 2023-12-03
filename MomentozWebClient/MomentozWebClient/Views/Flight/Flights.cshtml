@@ -50,8 +50,10 @@
                 @Html.DisplayFor(modelItem => item.DestinationCountry)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Select" asp-route-id="@item.Id">Vælg</a>
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                @*<a asp-action="Select" asp-route-id="@item.Id">Vælg</a>*@
+                <a asp-controller="Ticket" asp-action="newTicket" asp-route-id="@item.Id">Vælg</a>
+                
             </td>
         </tr>
 }

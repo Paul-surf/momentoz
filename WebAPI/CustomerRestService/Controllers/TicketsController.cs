@@ -99,5 +99,23 @@ namespace RESTfulService.Controllers
             }
             return foundReturn;
         }
+
+        [HttpPut]
+        public ActionResult<TicketDto> updateTicket(TicketDto ticket)
+        {
+            ActionResult<TicketDto> updatedTicket = null;
+
+            updatedTicket = _businessLogicCtrl.Put(ticket);
+
+            if (updatedTicket != null)
+            {
+                updatedTicket = Ok();
+            }
+            else
+            {
+                updatedTicket = new StatusCodeResult(500);    // Internal server error
+            }
+            return updatedTicket;
+        }
     }
 }

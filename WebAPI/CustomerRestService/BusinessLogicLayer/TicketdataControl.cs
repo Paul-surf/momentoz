@@ -63,9 +63,24 @@ namespace RESTfulService.BusinesslogicLayer
         }
 
 
-        public bool Put(TicketDto ticketToUpdate)
+        public TicketDto Put(TicketDto ticketToUpdate)
         {
-            throw new NotImplementedException();
+            TicketDto? createdTicket = null;
+            try
+            {
+                Ticket? dbTicket = ModelConversion.TicketDtoConvert.ToTicket(ticketToUpdate);
+                if (dbTicket is not null)
+                {
+                    Ticket createdDbTicket = _ticketAccess.UpdateTicket(dbTicket);
+                    createdTicket = ModelConversion.TicketDtoConvert.FromTicket(createdDbTicket);
+                }
+            }
+            catch
+            {
+
+                createdTicket = null;
+            }
+            return createdTicket;
         }
 
         public bool Delete(int id)

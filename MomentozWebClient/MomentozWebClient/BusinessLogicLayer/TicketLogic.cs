@@ -22,5 +22,31 @@ namespace MomentozWebClient.BusinessLogicLayer
             }
             return foundTicket;
         }
+        public async Task<Ticket> createTicketWithFlightId(Ticket newTicket)
+        {
+            Ticket createdTicket = null;
+
+            try
+            {
+                createdTicket = await _ticketServiceAccess.SaveTicket(newTicket);
+            } catch
+            {
+                createdTicket = null;
+            }
+            return createdTicket;
+        }
+        public async Task updateTicket(Ticket ticket)
+        {
+            Ticket createdTicket = null;
+
+            try
+            {
+                await _ticketServiceAccess.UpdateTicket(ticket);
+            }
+            catch
+            {
+                createdTicket = null;
+            }
+        }
     }
 }
