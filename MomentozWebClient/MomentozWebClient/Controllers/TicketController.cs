@@ -18,12 +18,12 @@ namespace MomentozWebClient.Controllers
             return View(foundOrders);
 
         }
-        public async Task<ActionResult> newTicket(int flightId)
+/*        public async Task<ActionResult> newTicket(int flightId)
         {
             Ticket newTicket = new Ticket(flightId);
             newTicket = await _ticketsLogic.createTicketWithFlightId(newTicket);
             return View(newTicket);
-        }
+        }*/
         public void updateTicket(Ticket ticket)
         {
              _ticketsLogic.updateTicket(ticket);
