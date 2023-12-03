@@ -5,15 +5,16 @@
 
         public FlightDto() { }
 
-        public FlightDto(string? inAddress, string? inCity, double inPrice, string? inDestinationAddress, string? inDestinationCountry)
+        public FlightDto(int id, string? inAddress, string? inCity, double inPrice, string? inDestinationAddress, string? inDestinationCountry)
         {
+            Id = id;
             Address = inAddress;
             City = inCity;
             Price = inPrice;
             DestinationAddress = inDestinationAddress;
             DestinationCountry = inDestinationCountry;
         }
-        public bool IsLocked { get; set; }
+        public int Id { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
         public double Price { get; set; }
