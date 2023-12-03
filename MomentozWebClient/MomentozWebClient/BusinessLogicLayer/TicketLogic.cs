@@ -35,17 +35,16 @@ namespace MomentozWebClient.BusinessLogicLayer
             }
             return createdTicket;
         }
-        public async Task updateTicket(Ticket ticket)
+        public void updateTicket(Ticket ticket)
         {
-            Ticket createdTicket = null;
 
             try
             {
-                await _ticketServiceAccess.UpdateTicket(ticket);
+                _ticketServiceAccess.UpdateTicket(ticket);
             }
-            catch
+            catch (Exception ex)
             {
-                createdTicket = null;
+               Console.WriteLine(ex + " was caught");
             }
         }
     }
