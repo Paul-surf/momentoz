@@ -10,6 +10,9 @@ namespace RESTfulService.BusinessLogicLayer
         bool Put(FlightDto flightToUpdate);
         bool Delete(int id);
 
+        bool TryLockFlight(int flightId);
+        bool ReleaseFlightLock(int flightId);
+
     }
 }
 

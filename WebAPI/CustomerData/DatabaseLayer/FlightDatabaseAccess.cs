@@ -118,5 +118,47 @@ namespace DatabaseData.DatabaseLayer
         {
             throw new NotImplementedException();
         }
+
+        public bool TryLockFlight(int flightId)
+        {
+            const string lockFlightQuery = @"
+            UPDATE Flights 
+            SET LockOwnerId = @LockOwnerId, LockExpiration = DATEADD(MINUTE, 15, GETUTCDATE()) 
+            WHERE Id = @Id AND (LockOwnerId IS NULL OR LockExpiration < GETUTCDATE())";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand lockCommand = new SqlCommand(lockFlightQuery, con))
+            {
+              //  lockCommand.Parameters.AddWithValue("@LockOwnerId");
+                lockCommand.Parameters.AddWithValue("@Id", flightId);
+
+                con.Open();
+                int rowsAffected = lockCommand.ExecuteNonQuery();
+
+                // If one row was affected, the lock was successfully obtained
+                return rowsAffected == 1;
+            }
+        }
+
+        public bool ReleaseLockFlight(int flightId)
+        {
+            const string releaseLockQuery = @"
+            UPDATE Flights 
+            SET LockOwnerId = NULL, LockExpiration = NULL 
+            WHERE Id = @Id AND LockOwnerId = @LockOwnerId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand releaseLockCommand = new SqlCommand(releaseLockQuery, con))
+            {
+            //    releaseLockCommand.Parameters.AddWithValue("@LockOwnerId", userId);
+                releaseLockCommand.Parameters.AddWithValue("@Id", flightId);
+
+                con.Open();
+                int rowsAffected = releaseLockCommand.ExecuteNonQuery();
+
+                // If one row was affected, the lock was successfully released
+                return rowsAffected == 1;
+            }
+        }
     }
 }

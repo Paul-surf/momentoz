@@ -72,6 +72,31 @@ namespace RESTfulService.BusinesslogicLayer
         public bool Delete(int id)
         {
             throw new NotImplementedException();
-        }      
+        }
+        public bool TryLockFlight(int flightId)
+        {
+            try
+            {
+                return _flightAccess.TryLockFlight(flightId);
+            }
+            catch (Exception es)
+            {
+                Console.WriteLine("Caught exception:" + es);
+                return false;
+            }
+        }
+
+        public bool ReleaseFlightLock(int flightId)
+        {
+            try
+            {
+                return _flightAccess.ReleaseLockFlight(flightId);
+            }
+            catch (Exception es)
+            {
+                Console.WriteLine("Caught exception:" + es);
+                return false;
+            }
+        }
     }
 }

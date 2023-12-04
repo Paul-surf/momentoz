@@ -11,6 +11,8 @@ namespace DatabaseData.DatabaseLayer
         int CreateFlight(Flight flightToAdd);
         bool UpdateFlight(Flight flightToUpdate);
         bool DeleteFlightById(int id);
+        bool TryLockFlight(int flightId);
+        bool ReleaseLockFlight(int flightId);
 
     }
 }

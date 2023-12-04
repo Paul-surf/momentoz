@@ -77,9 +77,39 @@ namespace RESTfulService.Controllers
             }
             return foundReturn;
         }
-       
+        [HttpPost("{id}/lock")]
+        public ActionResult LockFlight(int id, [FromBody] string userId)
+        {
+            var success = _businessLogicCtrl.TryLockFlight(id, userId);
+            if (success)
+            {
+                return Ok(); // Status code 200
+            }
+            else
+            {
+                return BadRequest(); // Status code 400
+            }
+        }
 
+        // URL: api/Flights/{id}/unlock
+        [HttpPost("{id}/unlock")]
+        public ActionResult UnlockFlight(int id, [FromBody] string userId)
+        {
+            var success = _businessLogicCtrl.ReleaseFlightLock(id, userId);
+            if (success)
+            {
+                return Ok(); // Status code 200
+            }
+            else
+            {
+                return BadRequest(); // Status code 400
+            }
+        }
+
+        // ... Other methods ...
     }
+
+}
 }
 
 
