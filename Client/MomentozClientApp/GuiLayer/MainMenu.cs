@@ -205,7 +205,7 @@ namespace MomentozClientApp
                     {
                         var flightData = await response.Content.ReadAsStringAsync();
                         flightsData = JsonConvert.DeserializeObject<List<Flight>>(flightData);
-
+                        
                         if (flightsData != null && flightsData.Any())
                         {
                             // Ændr 'CustomDisplay' til det faktiske navn på egenskaben for destinationens adresse.
@@ -213,6 +213,7 @@ namespace MomentozClientApp
                             DestinationDropDown.ValueMember = "Id";
                             DestinationDropDown.DataSource = flightsData;
                             flightsLoaded = true;
+                            DestinationDropDown.SelectedIndex = -1;
                         }
                         else
                         {
