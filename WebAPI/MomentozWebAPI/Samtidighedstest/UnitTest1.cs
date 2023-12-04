@@ -1,4 +1,5 @@
 using DatabaseData.DatabaseLayer;
+using Moq;
 using RESTfulService.BusinesslogicLayer;
 
 namespace Samtidighedstest
@@ -10,14 +11,14 @@ namespace Samtidighedstest
         {
             // Arrange
             var mockFlightAccess = new Mock<IFlightAccess>();
-            mockFlightAccess.Setup(m => m.TryLockFlight(It.IsAny<int>(), It.IsAny<string>())).Returns(true);
+            mockFlightAccess.Setup(m => m.TryLockFlight(It.IsAny<int>())).Returns(true);
             var flightdataControl = new FlightdataControl(mockFlightAccess.Object);
 
             // Act
-            var result = flightdataControl.TryLockFlight(1, "testUser");
+            var result = flightdataControl.TryLockFlight(1);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
     }
 }
