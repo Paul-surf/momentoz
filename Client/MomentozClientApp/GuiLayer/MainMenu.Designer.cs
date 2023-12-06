@@ -47,7 +47,7 @@
             SamletPris = new Label();
             BestilKnap = new Button();
             ForNavnLabel = new Label();
-            firstName = new Label();
+            labelCustomerName = new Label();
             efterNavnLabel = new Label();
             MobileLabel = new Label();
             MailLabel = new Label();
@@ -217,13 +217,13 @@
             // 
             // Fornavn
             // 
-            firstName.AutoSize = true;
-            firstName.Location = new Point(391, 99);
-            firstName.Name = "Fornavn";
-            firstName.Size = new Size(50, 15);
-            firstName.TabIndex = 38;
-            firstName.Text = "Fornavn";
-            firstName.Click += forNavn;
+            labelCustomerName.AutoSize = true;
+            labelCustomerName.Location = new Point(391, 99);
+            labelCustomerName.Name = "Fornavn";
+            labelCustomerName.Size = new Size(50, 15);
+            labelCustomerName.TabIndex = 38;
+            labelCustomerName.Text = "Fornavn";
+            labelCustomerName.Click += forNavn;
             // 
             // efterNavnLabel
             // 
@@ -307,7 +307,7 @@
             Controls.Add(MailLabel);
             Controls.Add(MobileLabel);
             Controls.Add(efterNavnLabel);
-            Controls.Add(firstName);
+            Controls.Add(labelCustomerName);
             Controls.Add(ForNavnLabel);
             Controls.Add(BestilKnap);
             Controls.Add(SamletPris);
@@ -356,7 +356,7 @@
         private Label label14;
         private Button BestilKnap;
         private Label ForNavnLabel;
-        private Label firstName;
+        private Label labelCustomerName;
         private Label lastName;
         private Label efterNavnLabel;
         private Label MobileLabel;

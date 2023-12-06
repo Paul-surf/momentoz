@@ -38,12 +38,16 @@ namespace MomentozClientApp
             flightRefreshTimer.Interval = 10000; // 10 sekunder
             flightRefreshTimer.Tick += new EventHandler(flightRefreshTimer_Tick);
             _orderServiceConnection = orderServiceConnection;
-          
             UpdateTotalPrice();
             DestinationDropDown.DropDown += flightsDropDown;
             ReturValgDropDown.DropDown += comboBox2_DropDown;
             BaggageDropDown.DropDown += comboBox3_DropDown;
             DestinationDropDown.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            loggedInCustomer = customer;
+            labelCustomerName.Text = loggedInCustomer.FirstName;
+            lastName.Text = loggedInCustomer.LastName;
+            mobilePhone.Text = loggedInCustomer.MobilePhone;
+            email.Text = loggedInCustomer.Email;
 
             this.Shown += new System.EventHandler(this.MainMenu_Shown);
 
@@ -89,7 +93,7 @@ namespace MomentozClientApp
         public void UpdateCustomerInfo(string firstName, string lastName, string mobilePhone, string email)
         {
             if (firstName == null)
-                this.firstName.Text = firstName;
+                this.labelCustomerName.Text = firstName;
             this.lastName.Text = lastName;
             this.mobilePhone.Text = mobilePhone;
             this.email.Text = email;
@@ -254,23 +258,12 @@ namespace MomentozClientApp
         }
 
 
-
-
         private async Task<List<Flight>> GetUpdatedFlightsAsync()
         {
             // Implement this method to retrieve updated flights from the database
             // This is a placeholder for the actual database call
             return new List<Flight>();
         }
-
-
-
-
-
-
-
-
-
 
         private void comboBox2_DropDown(object sender, EventArgs e)
         {
@@ -283,7 +276,6 @@ namespace MomentozClientApp
             // Opdater bagageomkostningerne ved dropdown
             UpdateTotalPrice(baggageCost);
         }
-
 
 
 
@@ -317,7 +309,7 @@ namespace MomentozClientApp
             if (ReturValgDropDown.SelectedItem != null)
             {
                 string choice = ReturValgDropDown.SelectedItem.ToString();
-                returnTicketCost = choice == "Ja" ? 150 : 0;
+                returnTicketCost = choice == "Ja" ? +basePrice*1 : 0;
             }
             else
             {
@@ -335,7 +327,7 @@ namespace MomentozClientApp
             // Tjek om der er valgt en returbillet og læg den ekstra omkostning til.
             if (ReturValgDropDown.SelectedIndex != -1 && ReturValgDropDown.SelectedItem.ToString() == "Ja")
             {
-                additionalCosts += 150; // Ekstra omkostning for returbillet.
+                additionalCosts += basePrice; // Ekstra omkostning for returbillet.
             }
 
             // Opdater label med den nye pris.
@@ -497,7 +489,7 @@ namespace MomentozClientApp
         {
             if (loggedInCustomer != null)
             {
-                firstName.Text = loggedInCustomer.FirstName;
+                labelCustomerName.Text = loggedInCustomer.FirstName;
             }
 
         }
