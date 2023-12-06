@@ -1,5 +1,6 @@
 ﻿// Inkluderer nødvendige navneområder for DTOs (Data Transfer Objects).
-using MomentozClientApp.ModelLayer;
+using MomentozClientApp.Model;
+
 
 // Definerer navneområdet for business logic laget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.BusinessLogicLayer

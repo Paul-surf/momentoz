@@ -15,12 +15,12 @@ namespace RESTfulService.BusinesslogicLayer
         }
 
 
-        public FlightDto? Get(int idToMatch)
+        public FlightDto? Get(int flightId)
         {
             FlightDto? foundFlightDto;
             try
             {
-                Flight? foundFlight = _flightAccess.GetFlightById(idToMatch);
+                Flight? foundFlight = _flightAccess.GetFlightById(flightId);
                 foundFlightDto = ModelConversion.FlightDtoConvert.FromFlight(foundFlight);
             }
             catch
@@ -73,30 +73,10 @@ namespace RESTfulService.BusinesslogicLayer
         {
             throw new NotImplementedException();
         }
-        public bool TryLockFlight(int flightId)
-        {
-            try
-            {
-                return _flightAccess.TryLockFlight(flightId);
-            }
-            catch (Exception es)
-            {
-                Console.WriteLine("Caught exception:" + es);
-                return false;
-            }
-        }
 
-        public bool ReleaseFlightLock(int flightId)
+        public FlightDto? GetFlightById(int flightId)
         {
-            try
-            {
-                return _flightAccess.ReleaseLockFlight(flightId);
-            }
-            catch (Exception es)
-            {
-                Console.WriteLine("Caught exception:" + es);
-                return false;
-            }
+            throw new NotImplementedException();
         }
     }
 }

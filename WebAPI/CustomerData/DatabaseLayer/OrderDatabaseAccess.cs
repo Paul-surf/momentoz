@@ -29,8 +29,8 @@ namespace DatabaseData.DatabaseLayer
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
                 
-                SqlParameter TicketIDParam = new("@TicketID", aOrder.TicketID);
-                CreateCommand.Parameters.Add(TicketIDParam);
+                SqlParameter FlightIDParam = new("@FlightID", aOrder.FlightID);
+                CreateCommand.Parameters.Add(FlightIDParam);
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
@@ -47,7 +47,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Order> foundOrders = new List<Order>();
             Order readOrder;
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders";
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, FlightID FROM orders";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -71,16 +71,16 @@ namespace DatabaseData.DatabaseLayer
             double tempTotalPrice;
             DateTime tempPurchaseDate;
             int tempCustomerID;
-            int tempTicketID;
+            int tempFlightID;
 
             tempId = orderReader.GetInt32(orderReader.GetOrdinal("id"));
             tempTotalPrice = orderReader.GetDouble(orderReader.GetOrdinal("totalprice"));
             tempPurchaseDate = orderReader.GetDateTime(orderReader.GetOrdinal("purchasedate"));
             tempCustomerID = orderReader.GetInt32(orderReader.GetOrdinal("customerID"));
-            tempTicketID = orderReader.GetInt32(orderReader.GetOrdinal("TicketID"));
+            tempFlightID = orderReader.GetInt32(orderReader.GetOrdinal("flightID"));
 
 
-            foundOrder = new Order(tempId, tempTotalPrice, tempPurchaseDate, tempCustomerID, tempTicketID);
+            foundOrder = new Order(tempId, tempTotalPrice, tempPurchaseDate, tempCustomerID, tempFlightID);
             return foundOrder;
         }
 
@@ -88,7 +88,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Order foundOrder;
          
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE id = @id";
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE id = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -112,15 +112,15 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
-        Order? IOrderAccess.GetOrderByTicketId(int ticketId)
+        Order? IOrderAccess.GetOrderByCustomerId(int customerId)
         {
             Order foundOrder;
 
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, ticketid FROM orders WHERE TicketID = @id";
+            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE CustomerID = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@Id", ticketId);
+                SqlParameter idParam = new SqlParameter("@Id", "@Id");
                 readCommand.Parameters.Add(idParam);
 
                 con.Open();

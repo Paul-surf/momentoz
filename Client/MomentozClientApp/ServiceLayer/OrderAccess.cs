@@ -1,121 +1,116 @@
-﻿// Inkluderer nødvendige navneområder for konfiguration, JSON-håndtering og model- samt servicelag.
-using System.Configuration;
+﻿using System.Configuration;
+using System.Text;
 using Newtonsoft.Json;
-using MomentozClientApp.ModelLayer;
+using MomentozClientApp.Model;
 using MomentozClientApp.Servicelayer;
 
-// Definerer navneområdet for servicelaget.
 namespace MomentozClientApp.ServiceLayer
 {
-    // OrderAccess-klassen implementerer IOrderAccess-grænsefladen.
     public class OrderAccess : IOrderAccess
     {
-        // Skrivebeskyttet felt der holder på en serviceforbindelse.
         readonly IServiceConnection _orderServiceConnection;
-        // Felt der holder basis-URL'en til ordreservicen, hentet fra konfigurationsindstillingerne.
         readonly string? _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
 
-        // Konstruktøren initialiserer OrderAccess-klassen.
         public OrderAccess()
         {
-            // Initialiserer serviceforbindelsen med basis-URL'en.
             _orderServiceConnection = new ServiceConnection(_serviceBaseUrl);
         }
 
-        // Asynkront henter alle ordrer fra servicen.
         public async Task<List<Order>> GetOrderAll()
         {
-            // Liste til at holde de hentede ordrer.
             List<Order> listFromService = new List<Order>();
-            // Sætter den specifikke URL til ordre-endepunktet.
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl + "orders";
 
             try
             {
-                // Forsøger at foretage et GET-kald til servicen.
                 var serviceResponse = await _orderServiceConnection.CallServiceGet();
-                // Hvis kaldet er succesfuldt, og svaret er positivt, deserialiseres indholdet til en liste af ordrer.
                 if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                 {
                     var content = await serviceResponse.Content.ReadAsStringAsync();
                     listFromService = JsonConvert.DeserializeObject<List<Order>>(content) ?? listFromService;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Håndtering af fejl mangler her.
+                // Håndter fejl på en mere specifik måde
+                Console.WriteLine("Fejl ved hentning af ordrer: " + ex.Message);
             }
 
-            // Returnerer listen af ordrer.
             return listFromService;
         }
 
-        // Asynkront henter en ordre baseret på dens id.
         public async Task<Order> GetOrderById(int id)
         {
-            // Variabel til at holde den fundne ordre.
             Order foundOrder = null;
-            // Sætter den specifikke URL for at hente en ordre ved hjælp af dens id.
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl + "orders/" + id;
 
             try
             {
-                // Forsøger at foretage et GET-kald til servicen.
                 var serviceResponse = await _orderServiceConnection.CallServiceGet();
-                // Hvis kaldet er succesfuldt, og svaret er positivt, deserialiseres indholdet til en ordre.
                 if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                 {
                     var content = await serviceResponse.Content.ReadAsStringAsync();
                     foundOrder = JsonConvert.DeserializeObject<Order>(content);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Håndtering af fejl mangler her.
+                // Håndter fejl på en mere specifik måde
+                Console.WriteLine("Fejl ved hentning af ordre: " + ex.Message);
             }
 
-            // Returnerer den fundne ordre.
             return foundOrder;
         }
 
-        // De følgende metoder er stubbe og skal implementeres.
-        // De kaster en NotImplementedException, hvis de bliver kaldt.
-        public Task<int> CreateOrder(string newUsername, Order order)
+        public async Task<bool> CreateOrder(Order order)
+        {
+            var json = JsonConvert.SerializeObject(order);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var serviceConnection = _orderServiceConnection as ServiceConnection;
+
+            if (serviceConnection != null)
+            {
+                try
+                {
+                    var response = await serviceConnection.HttpClient.PostAsync(serviceConnection.UseUrl, content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Logik for behandling af succesfuldt svar
+                        return true;
+                    }
+                    else
+                    {
+                        // Logik for behandling af fejlsvar
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Logik for fejlhåndtering
+                    // Du kan logge fejlen eller vise en fejlmeddelelse til brugeren
+                    return false;
+                }
+            }
+            else
+            {
+                // Håndter situationen, hvor serviceConnection er null
+                // Det kan betyde, at _orderServiceConnection ikke er af typen ServiceConnection
+                return false;
+            }
+        }
+
+        Task<int> IOrderAccess.CreateOrder(Order order)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateOrder(Order order)
+        public Task<Order> GetOrderByUserId(string loginUserId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteOrderById(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Customer> GetOrderByUserId(string loginUserId)
-        {
-            throw new NotImplementedException();
-        }
 
-        // Stubbe for at oprette en ordre.
-        public Task<int> CreateOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Stubbe for at hente en ordre ved id.
-        public Task<Order> GeOrderById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Stubbe for at hente en ordre baseret på bruger-id.
-        Task<Order> IOrderAccess.GetOrderByUserId(string loginUserId)
-        {
-            throw new NotImplementedException();
-        }
+        // Resten af dine metoder...
     }
 }

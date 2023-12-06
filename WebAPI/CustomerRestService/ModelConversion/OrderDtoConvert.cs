@@ -22,7 +22,6 @@
                 ID = inOrder.ID,
                 TotalPrice = inOrder.TotalPrice,
                 PurchaseDate = inOrder.PurchaseDate,
-                TicketID = inOrder.TicketID,
                 CustomerID = inOrder.CustomerID
             };
         }

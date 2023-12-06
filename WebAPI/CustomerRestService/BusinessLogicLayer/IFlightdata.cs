@@ -2,17 +2,13 @@
 
 namespace RESTfulService.BusinessLogicLayer
 {
-
     public interface IFlightdata
     {
         List<FlightDto>? Get();
+        FlightDto? GetFlightById(int flightId); 
         int Add(FlightDto flightToAdd);
         bool Put(FlightDto flightToUpdate);
+     //   bool UpdateFlight(FlightDto flight);
         bool Delete(int id);
-
-        bool TryLockFlight(int flightId);
-        bool ReleaseFlightLock(int flightId);
-
     }
 }
-

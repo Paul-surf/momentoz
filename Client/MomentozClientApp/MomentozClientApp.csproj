@@ -11,10 +11,13 @@
   <ItemGroup>
     <Compile Remove="DTOs\**" />
     <Compile Remove="ModelConversion\**" />
+    <Compile Remove="ModelLayer\**" />
     <EmbeddedResource Remove="DTOs\**" />
     <EmbeddedResource Remove="ModelConversion\**" />
+    <EmbeddedResource Remove="ModelLayer\**" />
     <None Remove="DTOs\**" />
     <None Remove="ModelConversion\**" />
+    <None Remove="ModelLayer\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Windows.Extensions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

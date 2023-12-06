@@ -47,13 +47,13 @@
             SamletPris = new Label();
             BestilKnap = new Button();
             ForNavnLabel = new Label();
-            Fornavn = new Label();
+            firstName = new Label();
             efterNavnLabel = new Label();
             MobileLabel = new Label();
             MailLabel = new Label();
             lastName = new Label();
             mobilePhone = new Label();
-            Email = new Label();
+            email = new Label();
             KundeInfo = new Label();
             SuspendLayout();
             // 
@@ -104,8 +104,14 @@
             Destinationer.Size = new Size(182, 37);
             Destinationer.TabIndex = 15;
             Destinationer.Text = "Destinationer:";
-           
-      
+            // 
+            // label6
+            // 
+            label6.Location = new Point(0, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(100, 23);
+            label6.TabIndex = 51;
+            // 
             // ReturLabel
             // 
             ReturLabel.AutoSize = true;
@@ -130,7 +136,7 @@
             DestinationDropDown.Name = "DestinationDropDown";
             DestinationDropDown.Size = new Size(182, 23);
             DestinationDropDown.TabIndex = 30;
-            DestinationDropDown.SelectedIndexChanged += comboBox1_DropDown;
+            DestinationDropDown.SelectedIndexChanged += flightsDropDown;
             // 
             // ReturValgDropDown
             // 
@@ -197,7 +203,7 @@
             BestilKnap.TabIndex = 36;
             BestilKnap.Text = "Bestil";
             BestilKnap.UseVisualStyleBackColor = true;
-            BestilKnap.Click += button1_Click_1;
+            BestilKnap.Click += GodkendOrdreKnap;
             // 
             // ForNavnLabel
             // 
@@ -211,13 +217,13 @@
             // 
             // Fornavn
             // 
-            Fornavn.AutoSize = true;
-            Fornavn.Location = new Point(391, 99);
-            Fornavn.Name = "Fornavn";
-            Fornavn.Size = new Size(50, 15);
-            Fornavn.TabIndex = 38;
-            Fornavn.Text = "Fornavn";
-            Fornavn.Click += forNavn;
+            firstName.AutoSize = true;
+            firstName.Location = new Point(391, 99);
+            firstName.Name = "Fornavn";
+            firstName.Size = new Size(50, 15);
+            firstName.TabIndex = 38;
+            firstName.Text = "Fornavn";
+            firstName.Click += forNavn;
             // 
             // efterNavnLabel
             // 
@@ -271,13 +277,13 @@
             // 
             // Email
             // 
-            Email.AutoSize = true;
-            Email.Location = new Point(391, 203);
-            Email.Name = "Email";
-            Email.Size = new Size(36, 15);
-            Email.TabIndex = 45;
-            Email.Text = "Email";
-            Email.Click += EmailLabel_Click;
+            email.AutoSize = true;
+            email.Location = new Point(391, 203);
+            email.Name = "Email";
+            email.Size = new Size(36, 15);
+            email.TabIndex = 45;
+            email.Text = "Email";
+            email.Click += EmailLabel_Click;
             // 
             // KundeInfo
             // 
@@ -295,13 +301,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(819, 376);
             Controls.Add(KundeInfo);
-            Controls.Add(Email);
+            Controls.Add(email);
             Controls.Add(mobilePhone);
             Controls.Add(lastName);
             Controls.Add(MailLabel);
             Controls.Add(MobileLabel);
             Controls.Add(efterNavnLabel);
-            Controls.Add(Fornavn);
+            Controls.Add(firstName);
             Controls.Add(ForNavnLabel);
             Controls.Add(BestilKnap);
             Controls.Add(SamletPris);
@@ -350,7 +356,7 @@
         private Label label14;
         private Button BestilKnap;
         private Label ForNavnLabel;
-        private Label Fornavn;
+        private Label firstName;
         private Label lastName;
         private Label efterNavnLabel;
         private Label MobileLabel;
@@ -362,6 +368,6 @@
         private ComboBox comboBox4;
         private Label label18;
         private Label mobilePhone;
-        private Label Email;
+        private Label email;
     }
 }

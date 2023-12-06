@@ -1,4 +1,4 @@
-﻿using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.Model;
 using MomentozClientApp.Servicelayer;
 using System;
 using System.Collections.Generic;

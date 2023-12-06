@@ -1,21 +1,27 @@
-﻿// Inkluderer Model-navneområdet, som indeholder data-modellerne, herunder Flight-modellen.
+﻿using System.Configuration;
+using Newtonsoft.Json;
 using MomentozClientApp.Model;
 
 // Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.Servicelayer
 {
+
     // FlightAccess-klassen implementerer IFlightAccess-interface og håndterer adgang til flyoplysninger.
     public class FlightAccess : IFlightAccess
     {
-        // En privat readonly instans af IFlightAccess, anvendt til at delegere ansvaret for flyoplysninger.
-        private readonly IFlightAccess _flightServiceAccess;
+        // En privat readonly instans af IServiceConnection til at oprette forbindelse til flyservicen.
+        private readonly IServiceConnection _serviceConnection;
 
+        // Felt der holder basis-URL'en til flyservicen, hentet fra konfigurationsindstillingerne.
+        private readonly string _serviceBaseUrl;
         // Konstruktøren initialiserer FlightAccess-klassen.
         public FlightAccess()
         {
-            // Initialiserer _flightServiceAccess med en ny instans af FlightAccess.
-            // Bemærk: Dette kan føre til en stack overflow-fejl, da det er en rekursiv initialisering.
-            _flightServiceAccess = new FlightAccess();
+            // Hent basis-URL fra konfigurationsindstillingerne.
+            _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
+            // Initialiser serviceforbindelsen med basis-URL'en.
+            _serviceConnection = new ServiceConnection(_serviceBaseUrl);
+       
         }
 
         // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
@@ -33,20 +39,30 @@ namespace MomentozClientApp.Servicelayer
         // Fanger og håndterer eventuelle undtagelser, der opstår under hentningen.
         public async Task<List<Flight>?> GetAllFlights()
         {
-            List<Flight>? foundFlights;
+            List<Flight>? foundFlights = null;
             try
             {
-                // Forsøger at hente alle flyvninger gennem _flightServiceAccess.
-                foundFlights = await _flightServiceAccess.GetFlightAll();
+                // Sætter den specifikke URL til flyvningers endepunkt.
+                _serviceConnection.UseUrl = _serviceBaseUrl + "flights";
+
+                // Forsøger at foretage et GET-kald til servicen.
+                var serviceResponse = await _serviceConnection.CallServiceGet();
+
+                // Hvis kaldet er succesfuldt, og svaret er positivt, deserialiseres indholdet til en liste af flyvninger.
+                if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                {
+                    var content = await serviceResponse.Content.ReadAsStringAsync();
+                    foundFlights = JsonConvert.DeserializeObject<List<Flight>>(content);
+                }
             }
             catch
             {
-                // Sætter foundFlights til null, hvis der opstår en fejl under hentningen.
-                foundFlights = null;
+                // Håndter fejl her, hvis det er nødvendigt.
             }
 
             return foundFlights;
         }
+
 
         // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
         public Task<List<Flight>> GetFlightAll()

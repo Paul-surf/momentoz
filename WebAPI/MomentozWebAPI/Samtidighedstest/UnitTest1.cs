@@ -11,11 +11,11 @@ namespace Samtidighedstest
         {
             // Arrange
             var mockFlightAccess = new Mock<IFlightAccess>();
-            mockFlightAccess.Setup(m => m.TryLockFlight(It.IsAny<int>())).Returns(true);
+            mockFlightAccess.Setup(m => m.TryLockFlight(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
             var flightdataControl = new FlightdataControl(mockFlightAccess.Object);
 
             // Act
-            var result = flightdataControl.TryLockFlight(1);
+            var result = flightdataControl.TryLockFlight(1, 1);
 
             // Assert
             Assert.True(result);

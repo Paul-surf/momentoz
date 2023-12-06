@@ -1,4 +1,4 @@
-﻿using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.Model;
 
 namespace MomentozClientApp.BusinessLogicLayer
 {

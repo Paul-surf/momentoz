@@ -1,9 +1,6 @@
-
-
-
-using MomentozClientApp.ServiceLayer;
 using MomentozClientApp.GuiLayer;
 using System.Windows.Forms;
+using MomentozClientApp.Servicelayer;
 
 static class Program
 {

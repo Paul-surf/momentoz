@@ -1,6 +1,5 @@
 using MomentozClientApp.Model;
-using MomentozClientApp.ModelLayer;
-using MomentozClientApp.ServiceLayer;
+using MomentozClientApp.Servicelayer;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using Timer = System.Windows.Forms.Timer;
@@ -10,6 +9,7 @@ namespace MomentozClientApp
 {
     public partial class MainMenu : Form
     {
+        private IServiceConnection _orderServiceConnection;
         private readonly CustomerAccess _customerAccess;
         private Timer flightRefreshTimer;
         private List<Flight> flightsData;
@@ -26,6 +26,9 @@ namespace MomentozClientApp
         string departure = "Afgang: Aalborg";
         string returnTicket = "Returbillet: ";
         double price = 0; // Initialiser prisen
+        private IServiceConnection? orderServiceConnection;
+
+        //  public MainMenu(Customer customer)
         public MainMenu(Customer customer)
         {
             InitializeComponent();
@@ -34,22 +37,32 @@ namespace MomentozClientApp
             flightRefreshTimer = new System.Windows.Forms.Timer();
             flightRefreshTimer.Interval = 10000; // 10 sekunder
             flightRefreshTimer.Tick += new EventHandler(flightRefreshTimer_Tick);
-            LoadFlightsAsync();
-            LoadCustomersAsync();
+            _orderServiceConnection = orderServiceConnection;
+          
             UpdateTotalPrice();
-            DestinationDropDown.DropDown += comboBox1_DropDown;
+            DestinationDropDown.DropDown += flightsDropDown;
             ReturValgDropDown.DropDown += comboBox2_DropDown;
             BaggageDropDown.DropDown += comboBox3_DropDown;
             DestinationDropDown.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            UpdateCustomerInfo(customer.FirstName, customer.LastName, customer.MobilePhone, customer.Email);
+
+            this.Shown += new System.EventHandler(this.MainMenu_Shown);
+
+
+            //_flightAccess = new FlightAccess();
         }
 
-        public MainMenu()
+        private async void MainMenu_Shown(object sender, EventArgs e)
         {
+            await LoadFlightsAsync();
+            await LoadCustomersAsync();
+            // Eventuelt yderligere initialisering...
         }
+
         public void SetLoggedInCustomer(Customer customer)
         {
             loggedInCustomer = customer;
+            UpdateCustomerInfo(customer.FirstName, customer.LastName, customer.MobilePhone, customer.Email);
+
         }
 
 
@@ -75,11 +88,16 @@ namespace MomentozClientApp
 
         public void UpdateCustomerInfo(string firstName, string lastName, string mobilePhone, string email)
         {
-            Fornavn.Text = firstName;
+            if (firstName == null)
+                this.firstName.Text = firstName;
             this.lastName.Text = lastName;
             this.mobilePhone.Text = mobilePhone;
-            Email.Text = email;
+            this.email.Text = email;
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
         }
+
 
         private void UpdateTotalPrice(double additionalCosts)
         {
@@ -87,7 +105,15 @@ namespace MomentozClientApp
             double totalPrice = basePrice + additionalCosts;
             SamletPris.Text = $"Pris: {totalPrice:C}";
         }
+        private async void PopulateDestinationDropDown()
+        {
+            // Forudsat at GetFlightAll er en statisk metode i klassen 'FlightService',
+            // og at den returnerer en liste af Flight objekter eller en tilsvarende type.
+         //   var flightList = await FlightAccess.GetFlightAll();
 
+            // Her tilføjer du flyvningerne til din dropdown.
+            // Resten af din kode...
+        }
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
 
@@ -130,6 +156,7 @@ namespace MomentozClientApp
                 flightRefreshTimer.Dispose();
             }
         }
+
         private async Task LoadFlightsAsync()
         {
 
@@ -188,49 +215,63 @@ namespace MomentozClientApp
                 }
             }
         }
-        private async void comboBox1_DropDown(object sender, EventArgs e)
+
+
+        private async void flightsDropDown(object sender, EventArgs e)
         {
+            var comboBox = (ComboBox)sender;
 
-            //   LoadFlightsAsync();
-
-            if (flightsLoaded) return;
+            // Disable the combobox to prevent multiple clicks during data loading
+            comboBox.Enabled = false;
 
             try
             {
-                using (var httpClient = new HttpClient())
+                // Get updated flights data from the database asynchronously
+                List<Flight> updatedFlights = await GetUpdatedFlightsAsync();
+
+                // Create a list of anonymous objects with just the destination address and country
+                var flightDisplayItems = updatedFlights.Select(flight => new
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
-                    var response = await httpClient.GetAsync("api/flights");
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var flightData = await response.Content.ReadAsStringAsync();
-                        flightsData = JsonConvert.DeserializeObject<List<Flight>>(flightData);
-                        
-                        if (flightsData != null && flightsData.Any())
-                        {
-                            // Ændr 'CustomDisplay' til det faktiske navn på egenskaben for destinationens adresse.
-                            DestinationDropDown.DisplayMember = "DestinationAddress";
-                            DestinationDropDown.ValueMember = "Id";
-                            DestinationDropDown.DataSource = flightsData;
-                            flightsLoaded = true;
-                            DestinationDropDown.SelectedIndex = -1;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ingen flyvninger blev fundet.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fejl i hentning fra API.");
-                    }
-                }
+                    DisplayText = $"{flight.DestinationAddress}, {flight.DestinationCountry}",
+                    Value = flight.Id // Assuming there's an Id property to identify each flight uniquely
+                }).ToList();
+
+                // Update the ComboBox with the new data
+                comboBox.DisplayMember = "DisplayText";
+                comboBox.ValueMember = "Value";
+                comboBox.DataSource = flightDisplayItems;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Der opstod en fejl ved hentning af flyvninger: {ex.Message}");
+                // Handle exceptions (if any) here
+            //    MessageBox.Show("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                // Re-enable the combobox after data loading
+                comboBox.Enabled = true;
             }
         }
+
+
+
+
+        private async Task<List<Flight>> GetUpdatedFlightsAsync()
+        {
+            // Implement this method to retrieve updated flights from the database
+            // This is a placeholder for the actual database call
+            return new List<Flight>();
+        }
+
+
+
+
+
+
+
+
+
+
         private void comboBox2_DropDown(object sender, EventArgs e)
         {
             // Opdater returbilletten ved dropdown
@@ -354,120 +395,68 @@ namespace MomentozClientApp
             SamletPris.Text = $"Pris: {totalPrice:C}";
         }
 
-        private async Task<bool> LockFlight()
+
+        private async void GodkendOrdreKnap(object sender, EventArgs e)
         {
-            try
-            {
-                // Erstat med det faktiske ID for det valgte flysæde
-                var selectedFlightId = 1;
-
-                using (var httpClient = new HttpClient())
-                {
-                    httpClient.BaseAddress = new Uri("https://localhost:5114/");
-
-                    // Antager, at API'et har en endpoint til at låse et sæde
-                    var response = await httpClient.GetAsync($"api/flights/{selectedFlightId}");
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var content = await response.Content.ReadAsStringAsync();
-
-                        // Antager, at API'et returnerer en boolsk værdi, der indikerer, om låsningen lykkedes
-                        return bool.Parse(content);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return true;
-            }
-        }
-
-        private async void button1_Click_1(object sender, EventArgs e)
-
-        {
-            price = 0;
-            returnTicket = "";
-            var isFlightLocked = await LockFlight();
-
-            if (!isFlightLocked)
-            {
-                MessageBox.Show("Sædet er allerede booket. Vælg venligst en anden flyvning.", "Bookingfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Saml kvitteringsoplysningerne
-            string customerInfo = "Kundeoplysninger:\n" +
-                              "Fornavn: " + Fornavn.Text + "\n" +
-                              "Efternavn: " + lastName.Text + "\n" +
-                              "Mobil: " + mobilePhone.Text + "\n" +
-                              "Email: " + Email.Text + "\n";
+            // Antager at 'price', 'returnTicket' og 'Customer' er defineret et sted i din klasse
+            price = CalculatePrice(); // En metode, der beregner prisen baseret på brugerens valg
+          //  returnTicket = DetermineReturnTicket(); // En metode, der bestemmer, om der er en returbillet
+            Customer customer = loggedInCustomer; // Metode til at hente den nuværende kundeobjekt
+            Order newOrder = null;
 
             if (DestinationDropDown.SelectedItem != null)
             {
-                var selectedFlight = (Flight)DestinationDropDown.SelectedItem;
-                price += selectedFlight.Price; // Start med basisprisen for den valgte flyvning.
-            }
-            else
-            {
-                SamletPris.Text = "Ingen flyvning valgt";
-                return; // Hvis ingen flyvning er valgt, afbryd og vis besked.
-            }
+                Flight selectedFlight = (Flight)DestinationDropDown.SelectedItem;
 
-            string destination = "Valgt destination: " + (DestinationDropDown.SelectedItem as Flight)?.DestinationAddress ?? "Ingen";
-
-            // Tjek for returbillet og opdater pris
-            if (ReturValgDropDown.SelectedIndex != -1 && ReturValgDropDown.SelectedItem.ToString() == "Ja")
-            {
-                returnTicket += "Ja";
-                price += 150; // Tilføj ekstra omkostninger for returbillet.
-            }
-            else
-            {
-                returnTicket += ReturValgDropDown.SelectedIndex != -1 ? ReturValgDropDown.SelectedItem.ToString() : "Ingen valgt";
-            }
-
-            string baggage = "Bagage: ";
-            double baggageCost = 0;
-
-            if (BaggageDropDown.SelectedIndex != -1)
-            {
-                string selectedBaggage = BaggageDropDown.SelectedItem.ToString();
-                switch (selectedBaggage)
+                // Opret et nyt Order objekt
+                newOrder = new Order
                 {
-                    case "2kg":
-                        baggageCost = 20;
-                        break;
-                    case "5kg":
-                        baggageCost = 50;
-                        break;
-                    case "10kg":
-                        baggageCost = 100;
-                        break;
-                    case "15kg":
-                        baggageCost = 150;
-                        break;
-                    default:
-                        break;
+                    CustomerID = customer.Id, // Antager at Customer objektet har en Id property
+                    FlightID = selectedFlight.Id, // Antager at Flight objektet har en Id property
+                    TotalPrice = selectedFlight.Price,
+                    
+                    // Sæt yderligere Order egenskaber her
+                };
+
+                try
+                {
+                    // Kalder backend service for at oprette ordren
+                    bool success = await _orderServiceConnection.CreateOrder(newOrder);
+
+                    if (success)
+                    {
+                        // Vis kvitteringsoplysningerne, hvis ordren blev oprettet succesfuldt
+                        string customerInfo = $"Kundeoplysninger:\nFornavn: {customer.FirstName}\nEfternavn: {customer.LastName}\nMobil: {customer.MobilePhone}\nEmail: {customer.Email}\n";
+                        string orderDetails = $"Ordre detaljer:\nFlyvning: {selectedFlight.DestinationAddress}\nPris: {price}\n";
+                        MessageBox.Show(customerInfo + orderDetails, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kunne ikke oprette ordren, da billetten muligvis allerede er booket.", "Bookingfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log exception og/eller vis fejlmeddelelse
+                    MessageBox.Show("En fejl opstod under oprettelsen af ordren: " + ex.Message, "Systemfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            price += baggageCost;
-            baggage += baggageCost > 0 ? BaggageDropDown.SelectedItem.ToString() : "Ingen valgt";
-
-            // Formatér den opdaterede pris som en valuta
-            string formattedPrice = string.Format("{0:C}", price);
-
-            // Opret en kvitteringstekst med den opdaterede pris
-            string receiptText = $"{customerInfo}\n{departure}\n{returnTicket}\n{baggage}\nPris: {formattedPrice}\n{destination}";
-
-            // Vis kvitteringsmeddelelsen som en MessageBox
-            MessageBox.Show(receiptText, "Kvittering", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                MessageBox.Show("Vælg venligst en flyvning først.", "Ingen flyvning valgt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
+        // Husk at implementere metoderne CalculatePrice og DetermineReturnTicket
+
+        private double CalculatePrice()
+        {
+            // Implementer logikken til at beregne prisen her
+            double totalPrice = basePrice + returnTicketCost + baggageCost;
+            return totalPrice;
+        }
+
+
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -508,7 +497,7 @@ namespace MomentozClientApp
         {
             if (loggedInCustomer != null)
             {
-                Fornavn.Text = loggedInCustomer.FirstName;
+                firstName.Text = loggedInCustomer.FirstName;
             }
 
         }
@@ -532,10 +521,18 @@ namespace MomentozClientApp
         {
             if (loggedInCustomer != null)
             {
-                Email.Text = loggedInCustomer.Email;
+                email.Text = loggedInCustomer.Email;
             }
         }
+        public interface IServiceConnection
+        {
+            // Andre metoder og egenskaber
+            Task<bool> CreateOrder(Order order);
+        }
 
-    
+
+
+
     }
+
 }

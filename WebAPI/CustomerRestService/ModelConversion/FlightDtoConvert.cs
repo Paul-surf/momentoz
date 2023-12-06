@@ -27,7 +27,7 @@
             DTOs.FlightDto? aFlightReadDto = null;
             if (inFlight != null)
             {
-                aFlightReadDto = new DTOs.FlightDto(inFlight.Id, inFlight.Address, inFlight.City, inFlight.Price, inFlight.DestinationAddress, inFlight.DestinationCountry);
+                aFlightReadDto = new DTOs.FlightDto(inFlight.Id, inFlight.Departure, inFlight.Price, inFlight.DestinationAddress, inFlight.DestinationCountry);
             }
             return aFlightReadDto;
         }
@@ -36,7 +36,7 @@
             Flight? aFlight = null;
             if (inDto != null)
             {
-                aFlight = new Flight(inDto.Address, inDto.City, inDto.Price, inDto.DestinationAddress, inDto.DestinationCountry);
+                aFlight = new Flight(inDto.Departure, inDto.Price, inDto.DestinationAddress, inDto.DestinationCountry);
             }
             return aFlight;
         }

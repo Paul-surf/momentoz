@@ -11,6 +11,12 @@ namespace MomentozClientApp.Servicelayer
         // UseUrl er en egenskab, der kan ændres og bruges til at definere den specifikke URL for en given anmodning.
         public string? UseUrl { get; set; }
 
+        public interface IServiceConnection
+        {
+            HttpClient HttpClient { get; }
+            // ... andre medlemmer af interfacet ...
+        }
+
         // Asynkron metode til at foretage en GET-anmodning til webtjenesten.
         // Returnerer en HttpResponseMessage, som indeholder svaret fra anmodningen.
         Task<HttpResponseMessage?> CallServiceGet();

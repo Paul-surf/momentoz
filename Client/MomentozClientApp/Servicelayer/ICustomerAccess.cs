@@ -1,5 +1,5 @@
-﻿// Inkluderer ModelLayer-navneområdet, som indeholder data-modellerne, herunder Customer-modellen.
-using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.Model;
+
 
 // Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.Servicelayer

@@ -1,13 +1,12 @@
 ﻿// Inkluderer ModelLayer-navneområdet, som indeholder data-modellerne, herunder Customer-modellen.
 // Inkluderer også nødvendige navneområder for konfiguration og JSON-håndtering.
-using MomentozClientApp.ModelLayer;
 using System.Configuration;
 using Newtonsoft.Json;
-using MomentozClientApp.Servicelayer;
 using System.Diagnostics;
+using MomentozClientApp.Model;
 
 // Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
-namespace MomentozClientApp.ServiceLayer
+namespace MomentozClientApp.Servicelayer
 {
     // CustomerAccess-klassen implementerer ICustomerAccess-interface og håndterer adgang til kundeoplysninger.
     public class CustomerAccess : ICustomerAccess

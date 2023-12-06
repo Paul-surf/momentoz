@@ -183,7 +183,7 @@ namespace DatabaseData.DatabaseLayer
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                // Prepace SQL
+                // Prepare SQL
                 SqlParameter idParam = new SqlParameter("@UserId", findUserId);
                 readCommand.Parameters.Add(idParam);
                 //

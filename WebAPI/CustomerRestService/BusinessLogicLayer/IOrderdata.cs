@@ -5,9 +5,9 @@ namespace RESTfulService.BusinessLogicLayer
     {   
         OrderDto? Get(int id);
         List<OrderDto>? Get();
-        int Add(OrderDto orderToAdd);
+        int CreateNewOrder(OrderDto orderToAdd);
         bool Put(OrderDto orderToUpdate);
         bool Delete(int id);
-        OrderDto? GetOrderByTicketId(int ticketId);
+
     }
 }

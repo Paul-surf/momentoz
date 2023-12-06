@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTest", "DataTest\DataTe
 		{87F13AB5-EF1B-4E09-868F-47CE5183D5AA} = {87F13AB5-EF1B-4E09-868F-47CE5183D5AA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samtidighedstest", "Samtidighedstest\Samtidighedstest.csproj", "{31200B49-8001-4C03-9F3B-502A1E5FB4D8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{2560C7F2-2CB7-45D3-8799-9F5EAED25C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2560C7F2-2CB7-45D3-8799-9F5EAED25C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2560C7F2-2CB7-45D3-8799-9F5EAED25C3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31200B49-8001-4C03-9F3B-502A1E5FB4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31200B49-8001-4C03-9F3B-502A1E5FB4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31200B49-8001-4C03-9F3B-502A1E5FB4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31200B49-8001-4C03-9F3B-502A1E5FB4D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

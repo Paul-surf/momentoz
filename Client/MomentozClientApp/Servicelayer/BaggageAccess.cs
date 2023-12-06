@@ -1,5 +1,4 @@
-﻿// Inkluderer nødvendige navneområder for modellaget, JSON-håndtering og systemkonfiguration.
-using MomentozClientApp.ModelLayer;
+﻿using MomentozClientApp.Model;
 using Newtonsoft.Json;
 using System.Configuration;
 
@@ -72,7 +71,7 @@ namespace MomentozClientApp.Servicelayer
         }
 
         // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
-        public Task<int> CreateBaggage(string newUsername, Baggage baggage)
+        public Task<int> CreateBaggage( Baggage baggage)
         {
             throw new NotImplementedException();
         }
@@ -87,9 +86,6 @@ namespace MomentozClientApp.Servicelayer
             throw new NotImplementedException();
         }
 
-        public Task<int> CreateBaggage(Baggage baggage)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

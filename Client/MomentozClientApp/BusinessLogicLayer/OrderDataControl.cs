@@ -1,7 +1,6 @@
 ﻿// Inkluderer nødvendige navneområder for DTOs, modellaget og servicelaget.
 
 using MomentozClientApp.Model;
-using MomentozClientApp.ModelLayer;
 using MomentozClientApp.ServiceLayer;
 
 // Definerer navneområdet for forretningslogiklaget i MomentozClientApp-applikationen.

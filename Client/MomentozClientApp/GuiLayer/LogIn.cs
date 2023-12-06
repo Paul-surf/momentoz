@@ -1,5 +1,5 @@
-using MomentozClientApp.ModelLayer;
-using MomentozClientApp.ServiceLayer;
+using MomentozClientApp.Model;
+using MomentozClientApp.Servicelayer;
 using System.Diagnostics;
 
 namespace MomentozClientApp.GuiLayer
@@ -14,9 +14,8 @@ namespace MomentozClientApp.GuiLayer
         public LogIn(CustomerAccess customerAccess)
         {
             InitializeComponent();
+            _customerAccess = customerAccess ?? throw new ArgumentNullException(nameof(customerAccess));
 
-            // Opret en instans af CustomerAccess-klassen, som bruges til at få adgang til kundeoplysninger.
-            _customerAccess = new CustomerAccess();
         }
 
         private void InitializeComponent()
@@ -113,17 +112,13 @@ namespace MomentozClientApp.GuiLayer
                 if (customer != null && customer.Email != null)
                 {
                     // Kunden blev fundet i databasen, og du kan udføre handlingen for at logge ind.
-                  //  MessageBox.Show($"{customer.FullName}", "Log ind", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Opret en ny instans af MainMenu
-                    var mainMenu = new MainMenu(customer);
-
-                    // Abonner på lukningsbegivenheden for MainMenu
-                    mainMenu.Closed += (s, args) => Close();
-
-                    // Skjul den nuværende form (LogIn) og vis MainMenu-formen
+                    // Opret en ny instans af MainMenu med kunden som argument
+                    MainMenu mainMenu = new MainMenu(customer); // Ændret her
+                                                                // mainMenu.SetLoggedInCustomer(customer); // Denne linje kan fjernes, hvis din MainMenu konstruktør korrekt initialiserer formen med kunden
+                    mainMenu.Closed += (s, args) => this.Close();
                     mainMenu.Show();
-                    Hide();
+                    this.Hide();
                 }
                 else
                 {
@@ -135,8 +130,6 @@ namespace MomentozClientApp.GuiLayer
                 MessageBox.Show($"Der opstod en fejl under log ind: {ex.Message}", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Debug.WriteLine($"Der opstod en fejl under log ind: {ex.Message}");
             }
-           
-            
         }
 
 

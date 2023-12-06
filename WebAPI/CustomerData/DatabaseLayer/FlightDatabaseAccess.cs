@@ -22,14 +22,12 @@ namespace DatabaseData.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "INSERT INTO Flight(address, city, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
+            string insertString = "INSERT INTO Flight(departure, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                SqlParameter AddressParam = new("@Address", aFlight.Address);
+                SqlParameter AddressParam = new("@Departure", aFlight.Departure);
                 CreateCommand.Parameters.Add(AddressParam);
-                SqlParameter CityParam = new("@City", aFlight.City);
-                CreateCommand.Parameters.Add(CityParam);
                 SqlParameter PriceParam = new("@Price", aFlight.Price);
                 CreateCommand.Parameters.Add(PriceParam);
                 SqlParameter dAddressParam = new("@DestinationAddress", aFlight.DestinationAddress);
@@ -52,7 +50,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Flight> foundFlights;
             Flight readFlight;
-            string queryString = "SELECT id, address, city, price, destinationAddress, destinationCountry FROM Flights";
+            string queryString = "SELECT id, departure, price, destinationAddress, destinationCountry FROM Flights";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -72,93 +70,67 @@ namespace DatabaseData.DatabaseLayer
         {
             Flight foundFlight;
             int tempId;
-            string tempAddress;
+            string tempDeparture;
             string tempCity;
             double tempPrice;
             string tempDestinationAddress;
             string tempDestinationCountry;
 
             tempId = flightReader.GetInt32(flightReader.GetOrdinal("id"));
-            tempAddress = flightReader.GetString(flightReader.GetOrdinal("address"));
-            tempCity = flightReader.GetString(flightReader.GetOrdinal("city"));
+            tempDeparture = flightReader.GetString(flightReader.GetOrdinal("departure"));
             tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("price"));
             tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("destinationAddress"));
             tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("destinationCountry"));
 
-            foundFlight = new Flight(tempId, tempAddress, tempCity, tempPrice, tempDestinationAddress, tempDestinationCountry);
+            foundFlight = new Flight(tempId, tempDeparture, tempPrice, tempDestinationAddress, tempDestinationCountry);
             return foundFlight;
         }
 
-        public Flight GetFlightById(int findId)
+        public Flight GetFlightById(int flightId)
         {
-            Flight foundFlight;
-            string queryString = "SELECT id, address, city, price, destinationAddress, destinationCountry FROM Flights WHERE id = @Id";
+            Flight foundFlight = new Flight();
+            string queryString = "SELECT id, departure, price, destinationAddress, destinationCountry FROM Flights WHERE Id = @Id";
+
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@Id", findId);
-                readCommand.Parameters.Add(idParam);
-
                 con.Open();
-                SqlDataReader flightReader = readCommand.ExecuteReader();
+                readCommand.Parameters.AddWithValue("@Id", flightId);
 
-                if (flightReader.Read())
+                using (SqlDataReader reader = readCommand.ExecuteReader())
                 {
-                    foundFlight = GetFlightFromReader(flightReader);
-                }
-                else
-                {
-                    return null;
+                    if (reader.Read())
+                    {
+                        foundFlight.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        foundFlight.Departure = reader.GetString(reader.GetOrdinal("Departure"));
+                        foundFlight.DestinationAddress = reader.GetString(reader.GetOrdinal("DestinationAddress"));
+                        foundFlight.DestinationCountry = reader.GetString(reader.GetOrdinal("DestinationCountry"));
+                     //   foundFlight.IsBooked = reader.GetBoolean(reader.GetOrdinal("IsBooked"));
+
+                    }
                 }
             }
             return foundFlight;
         }
 
-        public bool UpdateFlight(Flight FlightToUpdate)
+        public bool UpdateFlight(Flight flightToUpdate)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool TryLockFlight(int flightId)
-        {
-            const string lockFlightQuery = @"
-            UPDATE Flights 
-            SET LockOwnerId = @LockOwnerId, LockExpiration = DATEADD(MINUTE, 15, GETUTCDATE()) 
-            WHERE Id = @Id AND (LockOwnerId IS NULL OR LockExpiration < GETUTCDATE())";
+            int rowsAffected = 0;
+            string updateString = "UPDATE Flights SET IsBooked = @IsBooked WHERE Id = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand lockCommand = new SqlCommand(lockFlightQuery, con))
+            using (SqlCommand updateCommand = new SqlCommand(updateString, con))
             {
-              //  lockCommand.Parameters.AddWithValue("@LockOwnerId");
-                lockCommand.Parameters.AddWithValue("@Id", flightId);
-
                 con.Open();
-                int rowsAffected = lockCommand.ExecuteNonQuery();
+           //     updateCommand.Parameters.AddWithValue("@IsBooked", flightToUpdate.IsBooked);
+                updateCommand.Parameters.AddWithValue("@Id", flightToUpdate.Id);
 
-                // If one row was affected, the lock was successfully obtained
-                return rowsAffected == 1;
+                rowsAffected = updateCommand.ExecuteNonQuery();
             }
+            return rowsAffected > 0;
         }
 
-        public bool ReleaseLockFlight(int flightId)
-        {
-            const string releaseLockQuery = @"
-            UPDATE Flights 
-            SET LockOwnerId = NULL, LockExpiration = NULL 
-            WHERE Id = @Id AND LockOwnerId = @LockOwnerId";
+  
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand releaseLockCommand = new SqlCommand(releaseLockQuery, con))
-            {
-            //    releaseLockCommand.Parameters.AddWithValue("@LockOwnerId", userId);
-                releaseLockCommand.Parameters.AddWithValue("@Id", flightId);
-
-                con.Open();
-                int rowsAffected = releaseLockCommand.ExecuteNonQuery();
-
-                // If one row was affected, the lock was successfully released
-                return rowsAffected == 1;
-            }
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MomentozWebClient.Models;
+﻿using MomentozWebClient.Models;
 using MomentozWebClient.ServiceLayer;
 
 namespace MomentozWebClient.BusinessLogicLayer

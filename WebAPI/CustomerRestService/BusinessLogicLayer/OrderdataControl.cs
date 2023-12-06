@@ -1,6 +1,7 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
 using RESTfulService.DTOs;
+using System.Transactions;
 
 namespace RESTfulService.BusinessLogicLayer
 {
@@ -44,23 +45,31 @@ namespace RESTfulService.BusinessLogicLayer
             return foundDtos;
         }
 
-
-        public int Add(OrderDto newOrder)
+    
+        public int CreateNewOrder(OrderDto newOrder)
         {
-            int insertedId = 0;
-            try
+            // Brug en transaktion for at sikre atomisk indsættelse
+            using (var transactionScope = new TransactionScope())
             {
-                Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(newOrder);
-                if (foundOrder != null)
+                int insertedId = 0;
+                try
                 {
-                    insertedId = _orderAccess.CreateOrder(foundOrder);
+                    Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(newOrder);
+                    if (foundOrder != null)
+                    {
+                        insertedId = _orderAccess.CreateOrder(foundOrder);
+
+                        // Hvis indsættelse lykkedes, fuldfør transaktionen
+                        transactionScope.Complete();
+                    }
                 }
+                catch (Exception)
+                {
+                    insertedId = -1;
+                }
+
+                return insertedId;
             }
-            catch
-            {
-                insertedId = -1;
-            }
-            return insertedId;
         }
 
         public bool Put(OrderDto orderToUpdate)
@@ -72,12 +81,12 @@ namespace RESTfulService.BusinessLogicLayer
         {
             throw new NotImplementedException();
         }
-        public OrderDto? GetOrderByTicketId(int ticketId)
+        public OrderDto? GetOrderByCustomerId(int customerId)
         {
             OrderDto? foundOrderDto;
             try
             {
-                Order? foundOrder = _orderAccess.GetOrderByTicketId(ticketId);
+                Order? foundOrder = _orderAccess.GetOrderByCustomerId(customerId);
                 foundOrderDto = ModelConversion.OrderDtoConvert.FromOrder(foundOrder);
             }
             catch
@@ -86,5 +95,7 @@ namespace RESTfulService.BusinessLogicLayer
             }
             return foundOrderDto;
         }
+
+    
     }
 }

@@ -1,5 +1,4 @@
-﻿// Inkluderer Model-navneområdet, som indeholder data-modellerne, herunder Flight-modellen.
-using MomentozClientApp.Model;
+﻿using MomentozClientApp.Model;
 
 // Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.Servicelayer
