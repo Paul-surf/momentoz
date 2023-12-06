@@ -35,8 +35,8 @@ namespace RESTfulService.Controllers
             }
         }
 
-        // URL: api/customers/login/{loginid}
-        [HttpGet("login/{loginid}")]
+        // URL: api/customers/{loginid}
+        [HttpGet("{loginid}")]
         public ActionResult<CustomerDtoo?> GetByLoginId(string loginid)
         {
             CustomerDtoo foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
@@ -69,7 +69,7 @@ namespace RESTfulService.Controllers
         [HttpPut("{loginid}")]
         public ActionResult<CustomerDtoo> UpdateCustomer([FromBody] CustomerDtoo customer)
         {
-            var updatedCustomer = _businessLogicCtrl.Put(customer);
+            CustomerDtoo updatedCustomer = _businessLogicCtrl.Put(customer);
             if (updatedCustomer != null)
             {
                 return Ok(updatedCustomer); // Statuscode 200
