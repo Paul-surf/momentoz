@@ -73,25 +73,17 @@ namespace RESTfulService.Controllers
             return foundReturn;
         }
 
-        // URL: api/Ticket
+        // URL: api/Tickets/{flightId}
 
-        [HttpPost]
-        public ActionResult<int> PostNewTicket(TicketDto inTicket)
+        [HttpPost, Route("{FlightId}")]
+        public ActionResult<TicketDto> PostNewTicket(TicketDto inTicket)
         {
-            ActionResult<int> foundReturn;
-            int insertedId = -1;
-
-            {
-                insertedId = _businessLogicCtrl.Add(inTicket);
-            }
+            ActionResult<TicketDto> foundReturn;
+            TicketDto? foundTicket = _businessLogicCtrl.Add(inTicket);
             // Evaluate
-            if (insertedId > 0)
+            if (foundTicket != null)
             {
-                foundReturn = Ok(insertedId);
-            }
-            else if (insertedId == 0)
-            {
-                foundReturn = BadRequest();     // missing input
+                foundReturn = Ok(foundTicket);
             }
             else
             {

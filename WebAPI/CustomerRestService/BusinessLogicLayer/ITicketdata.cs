@@ -7,7 +7,7 @@ namespace RESTfulService.BusinessLogicLayer
     {
         TicketDto? Get(int id);
         List<TicketDto>? Get();
-        int Add(TicketDto ticketToAdd);
+        TicketDto Add(TicketDto ticketToAdd);
         TicketDto Put(TicketDto ticketToUpdate);
         bool Delete(int id);
         TicketDto? GetTicketByFlightId(int flightId);

@@ -18,9 +18,9 @@ namespace DatabaseData.DatabaseLayer
             _connectionString = inConnectionString;
         }
 
-        public int CreateTicket(Ticket aTicket)
+        public Ticket CreateTicket(Ticket aTicket)
         {
-            int insertedId = -1;
+            Ticket? createdTicket;
             string insertString = @"insert into Tickets(flightID) 
                                     OUTPUT INSERTED.ID 
                                     values(@Flight)";
@@ -31,9 +31,11 @@ namespace DatabaseData.DatabaseLayer
                 CreateCommand.Parameters.Add(new SqlParameter("@Flight", aTicket.FlightID));
 
                 con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
+                CreateCommand.ExecuteScalar();
+
+                createdTicket = GetTicketByFlightId((int)aTicket.FlightID);
             }
-            return insertedId;
+            return createdTicket;
         }
 
         public bool DeleteTicketById(int id)

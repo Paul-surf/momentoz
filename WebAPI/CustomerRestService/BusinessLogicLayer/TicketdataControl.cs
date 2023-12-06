@@ -44,22 +44,23 @@ namespace RESTfulService.BusinesslogicLayer
             return foundDtos;
         }
 
-        public int Add(TicketDto newTicket)
+        public TicketDto Add(TicketDto newTicket)
         {
-            int insertedId = 0;
+            TicketDto? ticketFromService = null;
             try
             {
                 Ticket? foundTicket = ModelConversion.TicketDtoConvert.ToTicket(newTicket);
                 if (foundTicket != null)
                 {
-                    insertedId = _ticketAccess.CreateTicket(foundTicket);
+                    Ticket createdDbTicket = _ticketAccess.CreateTicket(foundTicket);
+                    ticketFromService = ModelConversion.TicketDtoConvert.FromTicket(createdDbTicket);
                 }
             }
             catch
             {
-                insertedId = -1;
+                ticketFromService = null;
             }
-            return insertedId;
+            return ticketFromService;
         }
 
 

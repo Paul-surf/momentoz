@@ -10,7 +10,7 @@ namespace DatabaseData.DatabaseLayer
 
         Ticket GetTicketById(int id);
         List<Ticket> GetTicketAll();
-        int CreateTicket(Ticket ticketToAdd);
+        Ticket CreateTicket(Ticket ticketToAdd);
         Ticket UpdateTicket(Ticket ticketToUpdate);
         bool DeleteTicketById(int id);
         Ticket? GetTicketByFlightId(int flightId);
