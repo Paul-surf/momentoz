@@ -69,7 +69,7 @@ namespace RESTfulService.Controllers
         [HttpPut("{loginid}")]
         public ActionResult<CustomerDtoo> UpdateCustomer([FromBody] CustomerDtoo customer)
         {
-            var updatedCustomer = _businessLogicCtrl.Put(customer);
+            CustomerDtoo updatedCustomer = _businessLogicCtrl.Put(customer);
             if (updatedCustomer != null)
             {
                 return Ok(updatedCustomer); // Statuscode 200
