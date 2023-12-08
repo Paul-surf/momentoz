@@ -1,5 +1,6 @@
 using MomentozClientApp.Model;
 using MomentozClientApp.Servicelayer;
+using MomentozClientApp.ServiceLayer;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using Timer = System.Windows.Forms.Timer;
@@ -9,7 +10,7 @@ namespace MomentozClientApp
 {
     public partial class MainMenu : Form
     {
-        private IServiceConnection _orderServiceConnection;
+        
         private readonly CustomerAccess _customerAccess;
         private Timer flightRefreshTimer;
         private List<Flight> flightsData;
@@ -26,7 +27,8 @@ namespace MomentozClientApp
         string departure = "Afgang: Aalborg";
         string returnTicket = "Returbillet: ";
         double price = 0; // Initialiser prisen
-        private IServiceConnection? orderServiceConnection;
+   //      private readonly OrderAccess _orderAccess;
+
 
         //  public MainMenu(Customer customer)
         public MainMenu(Customer customer)
@@ -37,13 +39,14 @@ namespace MomentozClientApp
             flightRefreshTimer = new System.Windows.Forms.Timer();
             flightRefreshTimer.Interval = 10000; // 10 sekunder
             flightRefreshTimer.Tick += new EventHandler(flightRefreshTimer_Tick);
-            _orderServiceConnection = orderServiceConnection;
+       //     _orderServiceConnection = orderServiceConnection;
             UpdateTotalPrice();
             DestinationDropDown.DropDown += flightsDropDown;
             ReturValgDropDown.DropDown += comboBox2_DropDown;
             BaggageDropDown.DropDown += comboBox3_DropDown;
             DestinationDropDown.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             loggedInCustomer = customer;
+           
             labelCustomerName.Text = loggedInCustomer.FirstName;
             lastName.Text = loggedInCustomer.LastName;
             mobilePhone.Text = loggedInCustomer.MobilePhone;
@@ -392,39 +395,31 @@ namespace MomentozClientApp
         {
             // Antager at 'price', 'returnTicket' og 'Customer' er defineret et sted i din klasse
             price = CalculatePrice(); // En metode, der beregner prisen baseret på brugerens valg
-          //  returnTicket = DetermineReturnTicket(); // En metode, der bestemmer, om der er en returbillet
+                                      // returnTicket = DetermineReturnTicket(); // En metode, der bestemmer, om der er en returbillet
             Customer customer = loggedInCustomer; // Metode til at hente den nuværende kundeobjekt
-            Order newOrder = null;
 
             if (DestinationDropDown.SelectedItem != null)
             {
                 Flight selectedFlight = (Flight)DestinationDropDown.SelectedItem;
 
                 // Opret et nyt Order objekt
-                newOrder = new Order
+                Order newOrder = new Order
                 {
                     CustomerID = customer.Id, // Antager at Customer objektet har en Id property
                     FlightID = selectedFlight.Id, // Antager at Flight objektet har en Id property
                     TotalPrice = selectedFlight.Price,
-                    
-                    // Sæt yderligere Order egenskaber her
+                    PurchaseDate = DateTime.Now // Sætter købsdatoen til nuværende tidspunkt
+                                                // Sæt yderligere Order egenskaber her
                 };
 
                 try
                 {
                     // Kalder backend service for at oprette ordren
-                    bool success = await _orderServiceConnection.CreateOrder(newOrder);
-
+                    OrderAccess _orderAccess = new OrderAccess();
+                    bool success = await _orderAccess.CreateOrder(newOrder);
                     if (success)
                     {
-                        // Vis kvitteringsoplysningerne, hvis ordren blev oprettet succesfuldt
-                        string customerInfo = $"Kundeoplysninger:\nFornavn: {customer.FirstName}\nEfternavn: {customer.LastName}\nMobil: {customer.MobilePhone}\nEmail: {customer.Email}\n";
-                        string orderDetails = $"Ordre detaljer:\nFlyvning: {selectedFlight.DestinationAddress}\nPris: {price}\n";
-                        MessageBox.Show(customerInfo + orderDetails, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Kunne ikke oprette ordren, da billetten muligvis allerede er booket.", "Bookingfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Tillykke bestlling er gennemført!");
                     }
                 }
                 catch (Exception ex)
@@ -439,7 +434,7 @@ namespace MomentozClientApp
             }
         }
 
-        // Husk at implementere metoderne CalculatePrice og DetermineReturnTicket
+
 
         private double CalculatePrice()
         {

@@ -2,55 +2,50 @@
 {
     public class Customer
     {
-
         public Customer() { }
 
-        public Customer(string? firstName, string? lastName, string? mobilePhone, string? email)
+        public Customer(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
         {
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
+            StreetName = streetName;
+            ZipCode = zipCode;
         }
 
-        public Customer(string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId)
+       
+        public Customer(int CustomerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
+            CustomerID = CustomerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
+            StreetName = streetName;
+            ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
-
-        public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email, string? loginUserId) 
-        {
-            Id = id;
-            FirstName = firstName;
-            LastName = lastName;
-            MobilePhone = mobilePhone;
-            Email = email;
-            LoginUserId = loginUserId;
+        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
+           : this(firstName, lastName, mobilePhone, email, streetName, zipCode) {
+            CustomerID = customerID;
         }
 
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? MobilePhone { get; set; }
-        public string? Email { get; set; }
-        public string? LoginUserId { get; set; }
+        public int CustomerID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MobilePhone { get; set; }
+        public string Email { get; set; }
+        public string? ZipCode { get; set; }
+        public string? StreetName { get; set; }
+        public string LoginUserId { get; set; }
 
-
-        public bool IsCustomerEmpty
-        {
-            get
-            {
-                bool customerIsEmpty = false;
-                if (String.IsNullOrWhiteSpace(FirstName) || String.IsNullOrWhiteSpace(LastName))
-                {
-                    customerIsEmpty = true;
-                }
-                return customerIsEmpty;
-            }
-        }
+        //public bool IsCustomerEmpty
+        //{
+        //    get
+        //    {
+        //        return string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName);
+        //    }
+        //}
     }
 }

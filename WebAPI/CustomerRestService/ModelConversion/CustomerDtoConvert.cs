@@ -1,45 +1,58 @@
-﻿        using DatabaseData.ModelLayer;
+﻿using DatabaseData.ModelLayer;
 
+namespace RESTfulService.ModelConversion
+{
+    public class CustomerDtoConvert
+    {
+        public static List<DTOs.CustomerDtoo> FromCustomerCollection(List<Customer> inCustomers)
+        {
+            if (inCustomers == null)
+                return null;
 
-        namespace RESTfulService.ModelConversion
-        {
-        public class CustomerDtoConvert
-        {
-        public static List<DTOs.CustomerDtoo>? FromCustomerCollection(List<Customer> inCustomers)
-        {
-            List<DTOs.CustomerDtoo>? aCustomerReadDtoList = null;
-            if (inCustomers != null)
+            var aCustomerReadDtoList = new List<DTOs.CustomerDtoo>();
+            foreach (Customer aCustomer in inCustomers)
             {
-                aCustomerReadDtoList = new List<DTOs.CustomerDtoo>();
-                DTOs.CustomerDtoo? tempDto;
-                foreach (Customer aCustomer in inCustomers)
+                if (aCustomer != null)
                 {
-                    if (aCustomer != null)
-                    {
-                        tempDto = FromCustomer(aCustomer);
-                        aCustomerReadDtoList.Add(tempDto);
-                    }
+                    var tempDto = FromCustomer(aCustomer);
+                    aCustomerReadDtoList.Add(tempDto);
                 }
             }
+
             return aCustomerReadDtoList;
         }
-        public static DTOs.CustomerDtoo? FromCustomer(Customer inCustomer)
+
+        public static DTOs.CustomerDtoo FromCustomer(Customer inCustomer)
         {
-            DTOs.CustomerDtoo? aCustomerReadDto = null;
-            if (inCustomer != null)
-            {
-                aCustomerReadDto = new DTOs.CustomerDtoo(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.LoginUserId);
-            }
-            return aCustomerReadDto;
+            if (inCustomer == null)
+                return null;
+
+            return new DTOs.CustomerDtoo(
+                inCustomer.CustomerID,
+                inCustomer.FirstName,
+                inCustomer.LastName,
+                inCustomer.MobilePhone,
+                inCustomer.Email,
+                inCustomer.ZipCode,
+                inCustomer.StreetName,
+                inCustomer.LoginUserId);
         }
-        public static Customer? ToCustomer(DTOs.CustomerDtoo inDto)
+
+        public static Customer ToCustomer(DTOs.CustomerDtoo inDto)
         {
-            Customer? aCustomer = null;
-            if (inDto != null)
-            {
-                aCustomer = new Customer(inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email, inDto.LoginUserId);
-            }
-            return aCustomer;
+            if (inDto == null)
+                return null;
+
+            // Antager at inDto.Id er tilgængelig og er af typen int
+            return new Customer(
+                inDto.CustomerID,
+                inDto.FirstName,
+                inDto.LastName,
+                inDto.MobilePhone,
+                inDto.Email,
+                inDto.StreetName,
+                inDto.ZipCode,
+                inDto.LoginUserId?.ToString()); // Konverter LoginUserId til en streng
         }
     }
 }

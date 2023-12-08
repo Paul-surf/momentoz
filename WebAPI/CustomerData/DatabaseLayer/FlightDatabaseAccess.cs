@@ -69,22 +69,24 @@ namespace DatabaseData.DatabaseLayer
         private Flight GetFlightFromReader(SqlDataReader flightReader)
         {
             Flight foundFlight;
-            int tempId;
+            int tempFlightID;
             string tempDeparture;
             string tempCity;
             double tempPrice;
             string tempDestinationAddress;
             string tempDestinationCountry;
+            DateTime tempHomeTrip;
 
-            tempId = flightReader.GetInt32(flightReader.GetOrdinal("id"));
+            tempFlightID = flightReader.GetInt32(flightReader.GetOrdinal("orderid"));
             tempDeparture = flightReader.GetString(flightReader.GetOrdinal("departure"));
             tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("price"));
             tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("destinationAddress"));
             tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("destinationCountry"));
+            tempHomeTrip = flightReader.GetDateTime(flightReader.GetOrdinal("tempcity"));
 
-            foundFlight = new Flight(tempId, tempDeparture, tempPrice, tempDestinationAddress, tempDestinationCountry);
+            foundFlight = new Flight(tempDeparture, tempPrice, tempDestinationAddress, tempDestinationCountry, tempHomeTrip);
             return foundFlight;
-        }
+        }//      public Flight(string departure, double price, string destinationAddress, string destinationCountry, string? homeTrip)
 
         public Flight GetFlightById(int flightId)
         {
@@ -101,7 +103,7 @@ namespace DatabaseData.DatabaseLayer
                 {
                     if (reader.Read())
                     {
-                        foundFlight.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        foundFlight.FlightID = reader.GetInt32(reader.GetOrdinal("Id"));
                         foundFlight.Departure = reader.GetString(reader.GetOrdinal("Departure"));
                         foundFlight.DestinationAddress = reader.GetString(reader.GetOrdinal("DestinationAddress"));
                         foundFlight.DestinationCountry = reader.GetString(reader.GetOrdinal("DestinationCountry"));
@@ -123,7 +125,7 @@ namespace DatabaseData.DatabaseLayer
             {
                 con.Open();
            //     updateCommand.Parameters.AddWithValue("@IsBooked", flightToUpdate.IsBooked);
-                updateCommand.Parameters.AddWithValue("@Id", flightToUpdate.Id);
+                updateCommand.Parameters.AddWithValue("@Id", flightToUpdate.FlightID);
 
                 rowsAffected = updateCommand.ExecuteNonQuery();
             }

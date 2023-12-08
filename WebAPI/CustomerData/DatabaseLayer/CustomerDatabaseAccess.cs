@@ -25,24 +25,58 @@ namespace DatabaseData.DatabaseLayer
         public int CreateCustomer(Customer aCustomer)
         {
             int insertedId = -1;
-            //
-            string insertString = "INSERT INTO Customers(firstName, lastName, mobilePhone, email) OUTPUT INSERTED.ID values(@FirstNam, @LastNam, @MobilePhon, @Emai)";
+            string insertString = @"
+    INSERT INTO Customers (firstName, lastName, mobilephone, email, streetName, zipcode, loginuserid) 
+    OUTPUT INSERTED.ID 
+    VALUES (
+        @FirstName, 
+        @LastName, 
+        @MobilePhone, 
+        @Email, 
+        @StreetName, 
+        @Zipcode,
+        @LoginUserId
+    )";
+
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Prepace SQL
-                SqlParameter fNameParam = new("@FirstNam", aCustomer.FirstName);
-                CreateCommand.Parameters.Add(fNameParam);
-                SqlParameter lNameParam = new("@LastNam", aCustomer.LastName);
-                CreateCommand.Parameters.Add(lNameParam);
-                SqlParameter mPhoneParam = new("@MobilePhon", aCustomer.MobilePhone);
-                CreateCommand.Parameters.Add(mPhoneParam);
-                SqlParameter mEmailParam = new("@Emai", aCustomer.Email);
-                CreateCommand.Parameters.Add(mEmailParam);
-                //
+                // Validering af indkomne data
+                if (string.IsNullOrWhiteSpace(aCustomer.FirstName) || string.IsNullOrWhiteSpace(aCustomer.LastName))
+                {
+                    throw new ArgumentException("Fornavn og efternavn er påkrævet.");
+                }
+
+                CreateCommand.Parameters.Add(new SqlParameter("@FirstName", aCustomer.FirstName));
+                CreateCommand.Parameters.Add(new SqlParameter("@LastName", aCustomer.LastName));
+                CreateCommand.Parameters.Add(new SqlParameter("@MobilePhone", aCustomer.MobilePhone));
+                CreateCommand.Parameters.Add(new SqlParameter("@Email", aCustomer.Email));
+                CreateCommand.Parameters.Add(new SqlParameter("@StreetName", aCustomer.StreetName));
+                CreateCommand.Parameters.Add(new SqlParameter("@Zipcode", aCustomer.ZipCode));
+                CreateCommand.Parameters.Add(new SqlParameter("@LoginUserId", aCustomer.LoginUserId));
+
                 con.Open();
-                // Execute save and read generated key (ID)
-                insertedId = (int)CreateCommand.ExecuteScalar();
+
+                // Brug en transaktion
+                using (SqlTransaction transaction = con.BeginTransaction())
+                {
+                    CreateCommand.Transaction = transaction;
+
+                    try
+                    {
+                        // Execute save and read generated key (ID)
+                        insertedId = (int)CreateCommand.ExecuteScalar();
+
+                        // Hvis alt er gået godt, committer transaktionen
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Håndter fejl og rul tilbage transaktionen
+                        Console.WriteLine("Fejl: " + ex.Message);
+                        transaction.Rollback();
+                    }
+                }
             }
             return insertedId;
         }
@@ -62,8 +96,8 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Customer> foundCustomers;
             Customer readCustomer;
-            //
-            string queryString = "SELECT id, firstName, lastName, mobilePhone, email, loginUserId FROM Customers";
+            
+            string queryString = "SELECT customerID, firstName, lastName, mobilePhone, email, streetName, zipCode, loginUserId FROM Customers";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -84,14 +118,13 @@ namespace DatabaseData.DatabaseLayer
         private Customer GetCustomerFromReader(SqlDataReader customerReader)
         {
             Customer foundCustomer;
-            int tempId;
-            bool isNotNull;     // Test for null value in mobilePhone
-            string? tempMobilePhone;
-            string? tempEmail;
-            string? tempFirstName, tempLastName, tempUserId;
-             
+            int tempId, tempCustomerID;
+            bool isNotNull; // Test for null values
+            string? tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempStreetName, tempLoginUserId, tempZipCode;
+
             // Fetch values
-            tempId = customerReader.GetInt32(customerReader.GetOrdinal("id"));
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("customerID"));
+            tempCustomerID = isNotNull ? customerReader.GetInt32(customerReader.GetOrdinal("customerID")) : 0;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
             tempFirstName = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("firstName")) : null;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("lastName"));
@@ -100,13 +133,18 @@ namespace DatabaseData.DatabaseLayer
             tempMobilePhone = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("mobilePhone")) : null;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("email"));
             tempEmail = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("email")) : null;
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("streetName"));
+            tempStreetName = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("streetName")) : null;
+            isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("zipcode"));
+            tempZipCode = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("zipcode")) : null;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("loginUserId"));
-            tempUserId = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("loginUserId")) : null;
-           
+            tempLoginUserId = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("loginUserId")) : null;
+
             // Create object
-            foundCustomer = new Customer(tempId, tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempUserId);
+            foundCustomer = new Customer(tempCustomerID, tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempStreetName, tempZipCode, tempLoginUserId);
             return foundCustomer;
         }
+
 
 
         /* Three possible returns:
@@ -118,7 +156,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "SELECT id, firstName, lastName, mobilePhone, email FROM Customers WHERE id = @Id";
+            string queryString = "SELECT id, customerNumber, firstName, lastName, mobilePhone, email, loginuserid FROM Customers WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -141,35 +179,53 @@ namespace DatabaseData.DatabaseLayer
 
         public Customer UpdateCustomer(Customer customerToUpdate)
         {
-            Customer updatedCustomer;
+            Customer updatedCustomer = null;
 
-            string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone";
-            string condition = "WHERE loginUserId = @UserId";
-
-            string queryString = "UPDATE Customers " + setVariables + " " + condition;
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            try
             {
-                // Prepare SQL
-                SqlParameter idParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
-                SqlParameter fnameParam = new SqlParameter("@fName", customerToUpdate.FirstName);
-                SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
-                SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
-                readCommand.Parameters.Add(idParam);
-                readCommand.Parameters.Add(fnameParam);
-                readCommand.Parameters.Add(lnameParam);
-                readCommand.Parameters.Add(phoneParam);
-                //
-                con.Open();
-                // Execute read
-                SqlDataReader customerReader = readCommand.ExecuteReader();
-                updatedCustomer = new Customer();
-                while (customerReader.Read())
+                string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone, StreetName = @street, CustomerID = @customerNumber, ZipCode = @zipCode";
+                string condition = "WHERE loginUserId = @UserId";
+
+                string queryString = "UPDATE Customers " + setVariables + " " + condition;
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand updateCommand = new SqlCommand(queryString, con))
                 {
-                    updatedCustomer = GetCustomerByUserId(customerToUpdate.LoginUserId);
+                    // Prepare SQL
+                    SqlParameter cidParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
+                    SqlParameter fnameParam = new SqlParameter("@fName", customerToUpdate.FirstName);
+                    SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
+                    SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
+                    SqlParameter streetParam = new SqlParameter("@street", customerToUpdate.StreetName);
+                    SqlParameter customeIDParam = new SqlParameter("@customerID", customerToUpdate.CustomerID);
+                    SqlParameter zipCodeParam = new SqlParameter("@zipCode", customerToUpdate.ZipCode);
+
+                    updateCommand.Parameters.Add(cidParam);
+                    updateCommand.Parameters.Add(fnameParam);
+                    updateCommand.Parameters.Add(lnameParam);
+                    updateCommand.Parameters.Add(phoneParam);
+                    updateCommand.Parameters.Add(streetParam);
+
+                    updateCommand.Parameters.Add(zipCodeParam);
+
+                    con.Open();
+
+                    // Execute update
+                    int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        updatedCustomer = GetCustomerByUserId(customerToUpdate.LoginUserId);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle any exceptions here (e.g., log the error)
+                // You may want to throw an exception or return an error status in a real-world scenario
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+
             return updatedCustomer;
         }
 
@@ -177,27 +233,40 @@ namespace DatabaseData.DatabaseLayer
         // Finds the customer by loginUserId and NOT id 
         public Customer GetCustomerByUserId(string? findUserId)
         {
-            Customer foundCustomer;
-            //
-            string queryString = "select ID, FirstName, LastName, Email, MobilePhone, loginUserId from Customers where loginUserId = @UserId";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            Customer foundCustomer = null;
+
+            try
             {
-                // Prepare SQL
-                SqlParameter idParam = new SqlParameter("@UserId", findUserId);
-                readCommand.Parameters.Add(idParam);
-                //
-                con.Open();
-                // Execute read
-                SqlDataReader customerReader = readCommand.ExecuteReader();
-                foundCustomer = new Customer();
-                while (customerReader.Read())
+                string queryString = "SELECT CustomerID, FirstName, LastName, Email, MobilePhone, StreetName, ZipCode, loginUserId FROM Customers WHERE loginUserId = @UserId";
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(queryString, con))
                 {
-                    foundCustomer = GetCustomerFromReader(customerReader);
+                    // Prepare SQL
+                    SqlParameter idParam = new SqlParameter("@UserId", findUserId);
+                    readCommand.Parameters.Add(idParam);
+
+                    con.Open();
+
+                    // Execute read
+                    SqlDataReader customerReader = readCommand.ExecuteReader();
+
+                    while (customerReader.Read())
+                    {
+                        foundCustomer = GetCustomerFromReader(customerReader);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle any exceptions here (e.g., log the error)
+                // You may want to throw an exception or return an error status in a real-world scenario
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+
             return foundCustomer;
         }
+
 
 
         // Save customer with loginUserId and email only
@@ -227,12 +296,12 @@ namespace DatabaseData.DatabaseLayer
         public Customer? GetByEmail(string findEmail)
         {
             Customer foundCustomer;
-            //
-            string queryString = "select ID, FirstName, LastName, Email, MobilePhone, loginUserId from Customers where email = @email";
+            
+            string queryString = "select CustomerID, FirstName, LastName, Email, MobilePhone, StreetName, ZipCode loginUserId from Customers where email = @email";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                // Prepace SQL
+                // Prepare SQL
                 SqlParameter idParam = new SqlParameter("@email", findEmail);
                 readCommand.Parameters.Add(idParam);
                 //

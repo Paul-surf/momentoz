@@ -21,16 +21,24 @@ namespace DatabaseData.DatabaseLayer
         public int CreateOrder(Order aOrder)
         {
             int insertedId = -1;
-            string insertString = @"insert into Orders(ticketID) 
+            string insertString = @"insert into Orders(orderNumber, customerID, flightID, purchaseDate, totalPrice) 
                                     OUTPUT INSERTED.ID 
-                                    values(@ticketID)";
+                                    values(@customerID, @flightID, @purchaseDate, @totalPrice, @orderNumber)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
                 
-                SqlParameter FlightIDParam = new("@FlightID", aOrder.FlightID);
+                SqlParameter FlightIDParam = new("@flightID", aOrder.FlightID);
                 CreateCommand.Parameters.Add(FlightIDParam);
+                SqlParameter OrderNumberParam = new("@orderNumber", aOrder.CustomerID);
+                CreateCommand.Parameters.Add(OrderNumberParam);
+                SqlParameter CustomerIDParam = new("@customerID", aOrder.CustomerID);
+                CreateCommand.Parameters.Add(CustomerIDParam);
+                SqlParameter PurchaseDateParam = new("@purchaseDate", aOrder.PurchaseDate);
+                CreateCommand.Parameters.Add(PurchaseDateParam);
+                SqlParameter TotalPriceParam = new("@totalPrice", aOrder.TotalPrice);
+                CreateCommand.Parameters.Add(TotalPriceParam);
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
@@ -47,7 +55,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Order> foundOrders = new List<Order>();
             Order readOrder;
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, FlightID FROM orders";
+            string queryString = "SELECT id, orderNumber, totalPrice, purchaseDate, customerID, FlightID FROM orders";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -67,20 +75,21 @@ namespace DatabaseData.DatabaseLayer
         {
 
             Order foundOrder;
-            int tempId;
+            int tempOrderID;
+            int tempOrderNumber;
             double tempTotalPrice;
             DateTime tempPurchaseDate;
             int tempCustomerID;
             int tempFlightID;
 
-            tempId = orderReader.GetInt32(orderReader.GetOrdinal("id"));
+            tempOrderID = orderReader.GetInt32(orderReader.GetOrdinal("orderid"));
             tempTotalPrice = orderReader.GetDouble(orderReader.GetOrdinal("totalprice"));
             tempPurchaseDate = orderReader.GetDateTime(orderReader.GetOrdinal("purchasedate"));
             tempCustomerID = orderReader.GetInt32(orderReader.GetOrdinal("customerID"));
             tempFlightID = orderReader.GetInt32(orderReader.GetOrdinal("flightID"));
 
 
-            foundOrder = new Order(tempId, tempTotalPrice, tempPurchaseDate, tempCustomerID, tempFlightID);
+            foundOrder = new Order(tempOrderID, tempTotalPrice, tempPurchaseDate, tempCustomerID, tempFlightID);
             return foundOrder;
         }
 
@@ -88,7 +97,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Order foundOrder;
          
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE id = @id";
+            string queryString = "SELECT id,orderNumber, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE id = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -116,7 +125,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Order foundOrder;
 
-            string queryString = "SELECT id, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE CustomerID = @id";
+            string queryString = "SELECT id, orderNumber, totalPrice, purchaseDate, customerID, flightID FROM orders WHERE CustomerID = @id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

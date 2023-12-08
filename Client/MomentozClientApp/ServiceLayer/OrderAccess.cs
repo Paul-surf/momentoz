@@ -67,6 +67,7 @@ namespace MomentozClientApp.ServiceLayer
             var json = JsonConvert.SerializeObject(order);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var serviceConnection = _orderServiceConnection as ServiceConnection;
+            serviceConnection.UseUrl = serviceConnection.BaseUrl + "orders";
 
             if (serviceConnection != null)
             {
