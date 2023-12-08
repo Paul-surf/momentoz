@@ -100,12 +100,12 @@ namespace MomentozWebClient.ServiceLayer
             throw new NotImplementedException();
         }
 
-        public async Task<Order> getOrderByTicketId(int ticketId)
+        public async Task<Order> getOrderByFlightId(int flightID)
         {
             Order? orderFromService = null;
 
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
-            _orderServiceConnection.UseUrl += "orders/" + ticketId;
+            _orderServiceConnection.UseUrl += "orders/" + flightID;
 
 
             if (_orderServiceConnection != null)

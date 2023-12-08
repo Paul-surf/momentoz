@@ -52,7 +52,7 @@
             <td>
                 @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
                 @*<a asp-action="Select" asp-route-id="@item.Id">Vælg</a>*@
-                <a asp-controller="Ticket" asp-action="Tickets" asp-route-id="@item.Id">Vælg</a>
+                <a asp-controller="Order" asp-action="createOrder" asp-route-id="@item.Id">Vælg</a>
                 
             </td>
         </tr>
