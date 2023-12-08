@@ -23,6 +23,7 @@ namespace RESTfulService.Controllers
         // URL: api/Orders
         [HttpGet]
         public ActionResult<List<OrderDto>> Get()
+        
         {
             ActionResult<List<OrderDto>> foundReturn;
             // retrieve data - converted to DTO
@@ -43,13 +44,12 @@ namespace RESTfulService.Controllers
             {
                 foundReturn = new StatusCodeResult(500);        // Internal server error
             }
-            // send response back to client
             return foundReturn;
         }
 
         // URL: api/Orders
         [HttpPost]
-        public ActionResult<int> PostNewOrder(OrderDto inOrderDto)
+        public ActionResult<int> CreateOrder(OrderDto inOrderDto)
         {
             // Tjek for null input
             if (inOrderDto == null)
@@ -59,11 +59,11 @@ namespace RESTfulService.Controllers
 
             try
             {
-                int insertedId = _businessLogicCtrl.CreateNewOrder(inOrderDto);
+                OrderDto createdOrderDto = _businessLogicCtrl.CreateOrder(inOrderDto);
 
-                if (insertedId > 0)
+                if (createdOrderDto != null && createdOrderDto.OrderID > 0) 
                 {
-                    return Ok(insertedId); // Ordren blev succesfuldt oprettet
+                    return Ok(createdOrderDto.OrderID); // Returnerer ID'et for den nyoprettede ordre
                 }
                 else
                 {

@@ -52,7 +52,7 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
-        public CustomerDto? Add(CustomerDto customerToAdd)
+        public CustomerDto? CreateNewCustomer(CustomerDto customerToAdd)
         {
             CustomerDto? createdCustomer = null;
             try

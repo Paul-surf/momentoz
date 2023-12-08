@@ -1,44 +1,44 @@
-﻿        using DatabaseData.ModelLayer;
+﻿using DatabaseData.ModelLayer;
 using RESTfulService.DTOs;
 
 namespace RESTfulService.ModelConversion
         {
         public class FlightDtoConvert
         {
-        public static List<FlightDto>? FromFlightCollection(List<Flight> inFlights)
+        public static List<FlightDto> FromFlightCollection(List<Flight> inFlights)
         {
-            List<FlightDto>? aFlightReadDtoList = null;
-            if (inFlights != null)
-            {
-               FlightDto? tempDto;
+            if (inFlights == null)
+                return null;
+            
+                var aFlightReadDtoList = new List<FlightDto>();
                 foreach (Flight aFlight in inFlights)
                 {
                     if (aFlight != null)
                     {
-                        tempDto = FromFlight(aFlight);
+                        var tempDto = FromFlight(aFlight);
                         aFlightReadDtoList.Add(tempDto);
                     }
+
                 }
+                return aFlightReadDtoList;
             }
-            return aFlightReadDtoList;
-        }
-        public static DTOs.FlightDto? FromFlight(Flight inFlight)
-        {
-            DTOs.FlightDto? aFlightReadDto = null;
-            if (inFlight != null)
+
+            public static FlightDto FromFlight(Flight inFlight)
             {
-                aFlightReadDto = new DTOs.FlightDto(inFlight.FlightID, inFlight.Departure, inFlight.DestinationAddress, inFlight.DestinationCountry, inFlight.HomeTrip, inFlight.Price);
+            if (inFlight == null)
+                return null;
+  
+
+                return new FlightDto(inFlight.FlightID, inFlight.Departure, inFlight.DestinationAddress, inFlight.DestinationCountry, inFlight.HomeTrip, inFlight.Price);
             }
-            return aFlightReadDto;
-        }
-        public static Flight? ToFlight(FlightDto inDto)
-        {
-            Flight? aFlight = null;
-            if (inDto != null)
+
+            public static Flight? ToFlight(FlightDto inDto)
             {
-                aFlight = new Flight(inDto.Departure,  inDto.DestinationAddress, inDto.DestinationCountry, inDto.HomeTrip, inDto.Price);
+            if (inDto == null)
+                return null;
+
+                return new Flight(inDto.Departure, inDto.DestinationAddress, inDto.DestinationCountry, inDto.HomeTrip, inDto.Price); 
             }
-            return aFlight;
         }
     }
-}
+

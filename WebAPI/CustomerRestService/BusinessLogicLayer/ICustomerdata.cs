@@ -8,9 +8,10 @@ namespace RESTfulService.BusinessLogicLayer
 
         CustomerDto? Get(int id);
         List<CustomerDto>? Get(string? email);
+        CustomerDto CreateNewCustomer(CustomerDto customerToAdd);
         CustomerDto Put(CustomerDto customerToUpdate);
+        CustomerDto GetByUserId(string loginid);
         bool Delete(int id);
-        CustomerDto? GetByUserId(string loginid);
-        CustomerDto? Add(CustomerDto customerToAdd);
+
     }
 }

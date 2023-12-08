@@ -15,20 +15,16 @@
         }
 
        
-        public Customer(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
+        public Customer(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string loginUserId)
+            :this ( firstName, lastName, mobilePhone, email, streetName, zipCode)
         {
-        
-            FirstName = firstName;
-            LastName = lastName;
-            MobilePhone = mobilePhone;
-            Email = email;
-            StreetName = streetName;
-            ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
-        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? tempLoginUserId)
-           : this(firstName, lastName, mobilePhone, email, streetName, zipCode) {
+        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string loginUserId)
+           : this(firstName, lastName, mobilePhone, email, streetName, zipCode)
+        {
             CustomerID = customerID;
+            LoginUserId = loginUserId;
         }
 
         public int CustomerID { get; set; }

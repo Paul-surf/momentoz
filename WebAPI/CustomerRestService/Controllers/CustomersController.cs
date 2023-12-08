@@ -1,7 +1,6 @@
 ﻿using RESTfulService.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
 using RESTfulService.DTOs;
-using DatabaseData.ModelLayer;
 
 namespace RESTfulService.Controllers
 {
@@ -18,9 +17,9 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers?email=value
         [HttpGet]
-        public ActionResult<List<CustomerDtoo>> Get([FromQuery] string? email)
+        public ActionResult<List<CustomerDto>> Get([FromQuery] string? email)
         {
-            List<CustomerDtoo> foundCustomerDtos = _businessLogicCtrl.Get(email);
+            List<CustomerDto> foundCustomerDtos = _businessLogicCtrl.Get(email);
             if (foundCustomerDtos != null && foundCustomerDtos.Count > 0)
             {
                 return Ok(foundCustomerDtos); // Statuscode 200
@@ -37,9 +36,9 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers/{loginid}
         [HttpGet("{loginid}")]
-        public ActionResult<CustomerDtoo?> GetByLoginId(string loginid)
+        public ActionResult<CustomerDto?> GetByLoginId(string loginid)
         {
-            CustomerDtoo foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
+            CustomerDto foundCustomer = _businessLogicCtrl.GetByUserId(loginid);
             if (foundCustomer != null)
             {
                 return Ok(foundCustomer); // Statuscode 200
@@ -52,13 +51,14 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers
         [HttpPost]
-        public ActionResult<CustomerDtoo> CreateNewCustomer(CustomerDtoo inCustomer)
+        public ActionResult<CustomerDto> CreateNewCustomer(CustomerDto inCustomer)
         {
-            var createdCustomer = _businessLogicCtrl.Add(inCustomer);
+            var createdCustomer = _businessLogicCtrl.CreateNewCustomer(inCustomer);
             if (createdCustomer != null)
             {
                 return Ok(createdCustomer);
             }
+
             else
             {
                 return StatusCode(500); // Internal server error
@@ -67,9 +67,9 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers/{loginid}
         [HttpPut("{loginid}")]
-        public ActionResult<CustomerDtoo> UpdateCustomer([FromBody] CustomerDtoo customer)
+        public ActionResult<CustomerDto> UpdateCustomer([FromBody] CustomerDto customer)
         {
-            CustomerDtoo updatedCustomer = _businessLogicCtrl.Put(customer);
+            CustomerDto updatedCustomer = _businessLogicCtrl.Put(customer);
             if (updatedCustomer != null)
             {
                 return Ok(updatedCustomer); // Statuscode 200

@@ -16,9 +16,6 @@ builder.Services.AddSingleton<IFlightdata, FlightdataControl>();
 builder.Services.AddSingleton<IFlightAccess, FlightDatabaseAccess>();
 builder.Services.AddSingleton<IOrderdata, OrderdataControl>();
 builder.Services.AddSingleton<IOrderAccess, OrderDatabaseAccess>();
-builder.Services.AddSingleton<IBaggagedata, BaggageDataControl>();
-builder.Services.AddSingleton<IBaggageAccess, BaggageDatabaseAccess>();
-
 builder.Services.AddControllers();
 
 // Tilføjer JWT-autentificering
