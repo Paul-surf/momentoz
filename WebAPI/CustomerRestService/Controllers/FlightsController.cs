@@ -20,7 +20,7 @@ namespace RESTfulService.Controllers
 
         // URL: api/Flights
         [HttpGet]
-        public ActionResult<List<FlightDto>> Get()
+        public ActionResult<List<FlightDto>> GetAllFlights()
         {
             ActionResult<List<FlightDto>> foundReturn;
             // retrieve data - converted to DTO

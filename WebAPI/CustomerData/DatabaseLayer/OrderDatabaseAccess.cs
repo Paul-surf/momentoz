@@ -21,9 +21,9 @@ namespace DatabaseData.DatabaseLayer
         public int CreateOrder(Order aOrder)
         {
             int insertedId = -1;
-            string insertString = @"insert into Orders(orderNumber, customerID, flightID, purchaseDate, totalPrice) 
+            string insertString = @"insert into Orders( customerID, flightID, purchaseDate, totalPrice) 
                                     OUTPUT INSERTED.ID 
-                                    values(@customerID, @flightID, @purchaseDate, @totalPrice, @orderNumber)";
+                                    values(@customerID, @flightID, @purchaseDate, @totalPrice)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
@@ -31,8 +31,6 @@ namespace DatabaseData.DatabaseLayer
                 
                 SqlParameter FlightIDParam = new("@flightID", aOrder.FlightID);
                 CreateCommand.Parameters.Add(FlightIDParam);
-                SqlParameter OrderNumberParam = new("@orderNumber", aOrder.CustomerID);
-                CreateCommand.Parameters.Add(OrderNumberParam);
                 SqlParameter CustomerIDParam = new("@customerID", aOrder.CustomerID);
                 CreateCommand.Parameters.Add(CustomerIDParam);
                 SqlParameter PurchaseDateParam = new("@purchaseDate", aOrder.PurchaseDate);
@@ -55,7 +53,7 @@ namespace DatabaseData.DatabaseLayer
         {
             List<Order> foundOrders = new List<Order>();
             Order readOrder;
-            string queryString = "SELECT id, orderNumber, totalPrice, purchaseDate, customerID, FlightID FROM orders";
+            string queryString = "SELECT OrderID, totalPrice, purchaseDate, customerID, FlightID FROM orders";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -76,7 +74,6 @@ namespace DatabaseData.DatabaseLayer
 
             Order foundOrder;
             int tempOrderID;
-            int tempOrderNumber;
             double tempTotalPrice;
             DateTime tempPurchaseDate;
             int tempCustomerID;

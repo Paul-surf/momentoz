@@ -5,16 +5,16 @@
 
         public FlightDto() { }
 
-        public FlightDto(int id, string? inDeparture,  string? inDestinationAddress, string? inDestinationCountry, DateTime? homeTrip, double inPrice)
+        public FlightDto(int inFlightID, string? inDeparture,  string? inDestinationAddress, string? inDestinationCountry, DateTime? homeTrip, double inPrice)
         {
-            Id = id;
+            FlightID = inFlightID;
             Departure = inDeparture;
             DestinationAddress = inDestinationAddress;
             DestinationCountry = inDestinationCountry;
             HomeTrip = homeTrip;
             Price = inPrice;
         }
-        public int Id { get; set; }
+        public int FlightID { get; set; }
         public string? Departure { get; set; }
         public string? City { get; set; }
         public double Price { get; set; }

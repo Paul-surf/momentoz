@@ -15,9 +15,9 @@
         }
 
        
-        public Customer(int CustomerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
+        public Customer(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-            CustomerID = CustomerID;
+        
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -26,7 +26,7 @@
             ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
-        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
+        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? tempLoginUserId)
            : this(firstName, lastName, mobilePhone, email, streetName, zipCode) {
             CustomerID = customerID;
         }
@@ -40,12 +40,12 @@
         public string? StreetName { get; set; }
         public string LoginUserId { get; set; }
 
-        //public bool IsCustomerEmpty
-        //{
-        //    get
-        //    {
-        //        return string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName);
-        //    }
-        //}
+        public string? Fullname
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
     }
 }

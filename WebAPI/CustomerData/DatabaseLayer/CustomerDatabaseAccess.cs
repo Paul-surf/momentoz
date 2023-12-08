@@ -25,18 +25,8 @@ namespace DatabaseData.DatabaseLayer
         public int CreateCustomer(Customer aCustomer)
         {
             int insertedId = -1;
-            string insertString = @"
-    INSERT INTO Customers (firstName, lastName, mobilephone, email, streetName, zipcode, loginuserid) 
-    OUTPUT INSERTED.ID 
-    VALUES (
-        @FirstName, 
-        @LastName, 
-        @MobilePhone, 
-        @Email, 
-        @StreetName, 
-        @Zipcode,
-        @LoginUserId
-    )";
+            string insertString = @" INSERT INTO Customers (firstName, lastName, mobilephone, email, streetName, zipcode) OUTPUT INSERTED.ID 
+                                    VALUES (@FirstName, @LastName, @MobilePhone, @Email, @StreetName, @Zipcode)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
@@ -53,30 +43,12 @@ namespace DatabaseData.DatabaseLayer
                 CreateCommand.Parameters.Add(new SqlParameter("@Email", aCustomer.Email));
                 CreateCommand.Parameters.Add(new SqlParameter("@StreetName", aCustomer.StreetName));
                 CreateCommand.Parameters.Add(new SqlParameter("@Zipcode", aCustomer.ZipCode));
-                CreateCommand.Parameters.Add(new SqlParameter("@LoginUserId", aCustomer.LoginUserId));
+
 
                 con.Open();
 
-                // Brug en transaktion
-                using (SqlTransaction transaction = con.BeginTransaction())
-                {
-                    CreateCommand.Transaction = transaction;
-
-                    try
-                    {
-                        // Execute save and read generated key (ID)
-                        insertedId = (int)CreateCommand.ExecuteScalar();
-
-                        // Hvis alt er gået godt, committer transaktionen
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        // Håndter fejl og rul tilbage transaktionen
-                        Console.WriteLine("Fejl: " + ex.Message);
-                        transaction.Rollback();
-                    }
-                }
+                insertedId = (int)CreateCommand.ExecuteScalar();
+              
             }
             return insertedId;
         }
@@ -118,7 +90,7 @@ namespace DatabaseData.DatabaseLayer
         private Customer GetCustomerFromReader(SqlDataReader customerReader)
         {
             Customer foundCustomer;
-            int tempId, tempCustomerID;
+            int tempCustomerID;
             bool isNotNull; // Test for null values
             string? tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempStreetName, tempLoginUserId, tempZipCode;
 
@@ -140,7 +112,7 @@ namespace DatabaseData.DatabaseLayer
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("loginUserId"));
             tempLoginUserId = isNotNull ? customerReader.GetString(customerReader.GetOrdinal("loginUserId")) : null;
 
-            // Create object
+            // Create object    
             foundCustomer = new Customer(tempCustomerID, tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempStreetName, tempZipCode, tempLoginUserId);
             return foundCustomer;
         }
@@ -156,7 +128,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "SELECT id, customerNumber, firstName, lastName, mobilePhone, email, loginuserid FROM Customers WHERE id = @Id";
+            string queryString = "SELECT customerID, firstName, lastName, mobilePhone, email, loginuserid FROM Customers WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -205,7 +177,6 @@ namespace DatabaseData.DatabaseLayer
                     updateCommand.Parameters.Add(lnameParam);
                     updateCommand.Parameters.Add(phoneParam);
                     updateCommand.Parameters.Add(streetParam);
-
                     updateCommand.Parameters.Add(zipCodeParam);
 
                     con.Open();
@@ -296,8 +267,8 @@ namespace DatabaseData.DatabaseLayer
         public Customer? GetByEmail(string findEmail)
         {
             Customer foundCustomer;
-            
-            string queryString = "select CustomerID, FirstName, LastName, Email, MobilePhone, StreetName, ZipCode loginUserId from Customers where email = @email";
+
+            string queryString = "SELECT CustomerID, FirstName, LastName, Email, MobilePhone, StreetName, ZipCode, loginUserId FROM Customers WHERE email = @email";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {

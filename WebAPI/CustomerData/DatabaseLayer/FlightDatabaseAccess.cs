@@ -48,50 +48,62 @@ namespace DatabaseData.DatabaseLayer
 
         public List<Flight> GetFlightAll()
         {
-            List<Flight> foundFlights;
-            Flight readFlight;
-            string queryString = "SELECT id, departure, price, destinationAddress, destinationCountry FROM Flights";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            List<Flight> foundFlights = new List<Flight>();
+
+            try
             {
-                con.Open();
-                SqlDataReader flightReader = readCommand.ExecuteReader();
-                foundFlights = new List<Flight>();
-                while (flightReader.Read())
+                string queryString = "SELECT FlightID, Departure, DestinationAddress, DestinationCountry, HomeTrip, Price FROM Flights";
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(queryString, con))
                 {
-                    readFlight = GetFlightFromReader(flightReader);
-                    foundFlights.Add(readFlight);
+                    con.Open();
+                    SqlDataReader flightReader = readCommand.ExecuteReader();
+
+                    while (flightReader.Read())
+                    {
+                        Flight readFlight = GetFlightFromReader(flightReader);
+                        foundFlights.Add(readFlight);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Log the exception here
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                // You can also rethrow the exception if needed
+                // throw;
+            }
+
             return foundFlights;
         }
+
 
         private Flight GetFlightFromReader(SqlDataReader flightReader)
         {
             Flight foundFlight;
             int tempFlightID;
             string tempDeparture;
-            string tempCity;
             double tempPrice;
             string tempDestinationAddress;
             string tempDestinationCountry;
             DateTime tempHomeTrip;
 
-            tempFlightID = flightReader.GetInt32(flightReader.GetOrdinal("orderid"));
-            tempDeparture = flightReader.GetString(flightReader.GetOrdinal("departure"));
-            tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("price"));
-            tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("destinationAddress"));
-            tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("destinationCountry"));
-            tempHomeTrip = flightReader.GetDateTime(flightReader.GetOrdinal("tempcity"));
+            tempFlightID = flightReader.GetInt32(flightReader.GetOrdinal("FlightID"));
+            tempDeparture = flightReader.GetString(flightReader.GetOrdinal("Departure"));
+            tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("DestinationAddress"));
+            tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("DestinationCountry"));
+            tempHomeTrip = flightReader.GetDateTime(flightReader.GetOrdinal("HomeTrip"));
+            tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("Price"));
 
-            foundFlight = new Flight(tempDeparture, tempPrice, tempDestinationAddress, tempDestinationCountry, tempHomeTrip);
+            foundFlight = new Flight(tempFlightID, tempDeparture, tempDestinationAddress, tempDestinationCountry, tempHomeTrip, tempPrice);
             return foundFlight;
-        }//      public Flight(string departure, double price, string destinationAddress, string destinationCountry, string? homeTrip)
+        }
 
         public Flight GetFlightById(int flightId)
         {
             Flight foundFlight = new Flight();
-            string queryString = "SELECT id, departure, price, destinationAddress, destinationCountry FROM Flights WHERE Id = @Id";
+            string queryString = "SELECT flightid, departure, price, destinationAddress, destinationCountry FROM Flights WHERE Id = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -115,24 +127,7 @@ namespace DatabaseData.DatabaseLayer
             return foundFlight;
         }
 
-        public bool UpdateFlight(Flight flightToUpdate)
-        {
-            int rowsAffected = 0;
-            string updateString = "UPDATE Flights SET IsBooked = @IsBooked WHERE Id = @Id";
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand updateCommand = new SqlCommand(updateString, con))
-            {
-                con.Open();
-           //     updateCommand.Parameters.AddWithValue("@IsBooked", flightToUpdate.IsBooked);
-                updateCommand.Parameters.AddWithValue("@Id", flightToUpdate.FlightID);
-
-                rowsAffected = updateCommand.ExecuteNonQuery();
-            }
-            return rowsAffected > 0;
-        }
-
-  
 
     }
 }

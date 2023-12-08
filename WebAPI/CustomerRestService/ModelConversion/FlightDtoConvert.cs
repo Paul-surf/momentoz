@@ -1,16 +1,16 @@
 ﻿        using DatabaseData.ModelLayer;
+using RESTfulService.DTOs;
 
-        namespace RESTfulService.ModelConversion
+namespace RESTfulService.ModelConversion
         {
         public class FlightDtoConvert
         {
-        public static List<DTOs.FlightDto>? FromFlightCollection(List<Flight> inFlights)
+        public static List<FlightDto>? FromFlightCollection(List<Flight> inFlights)
         {
-            List<DTOs.FlightDto>? aFlightReadDtoList = null;
+            List<FlightDto>? aFlightReadDtoList = null;
             if (inFlights != null)
             {
-                aFlightReadDtoList = new List<DTOs.FlightDto>();
-                DTOs.FlightDto? tempDto;
+               FlightDto? tempDto;
                 foreach (Flight aFlight in inFlights)
                 {
                     if (aFlight != null)
@@ -31,12 +31,12 @@
             }
             return aFlightReadDto;
         }
-        public static Flight? ToFlight(DTOs.FlightDto inDto)
+        public static Flight? ToFlight(FlightDto inDto)
         {
             Flight? aFlight = null;
             if (inDto != null)
             {
-                aFlight = new Flight(inDto.Departure, inDto.Price, inDto.DestinationAddress, inDto.DestinationCountry, inDto.HomeTrip);
+                aFlight = new Flight(inDto.Departure,  inDto.DestinationAddress, inDto.DestinationCountry, inDto.HomeTrip, inDto.Price);
             }
             return aFlight;
         }

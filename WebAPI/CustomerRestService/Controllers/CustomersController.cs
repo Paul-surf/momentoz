@@ -54,7 +54,7 @@ namespace RESTfulService.Controllers
         [HttpPost]
         public ActionResult<CustomerDtoo> CreateNewCustomer(CustomerDtoo inCustomer)
         {
-            CustomerDtoo createdCustomer = _businessLogicCtrl.Add(inCustomer);
+            var createdCustomer = _businessLogicCtrl.Add(inCustomer);
             if (createdCustomer != null)
             {
                 return Ok(createdCustomer);
