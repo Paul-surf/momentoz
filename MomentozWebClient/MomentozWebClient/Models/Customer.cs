@@ -2,7 +2,7 @@
 {
     public class Customer
     {
-        public int Id { get; set; }
+        public int CustomerID { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
@@ -14,7 +14,7 @@
 
         public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email, string? street, string? zipcode) 
         {
-            Id = id;
+            CustomerID = id;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -25,7 +25,7 @@
 
         public Customer(int id, string? firstName, string? lastName, string? mobilePhone, string? email, string? street, string? zipcode, string? loginUserId)
         {
-            Id = id;
+            CustomerID = id;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;

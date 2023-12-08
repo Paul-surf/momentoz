@@ -28,7 +28,7 @@ namespace RESTfulService.ModelConversion
                 return null;
 
             return new DTOs.CustomerDto(
-                inCustomer.Id,
+                inCustomer.CustomerID,
                 inCustomer.FirstName,
                 inCustomer.LastName,
                 inCustomer.MobilePhone,
@@ -45,7 +45,7 @@ namespace RESTfulService.ModelConversion
 
             // Antager at inDto.Id er tilgængelig og er af typen int
             return new Customer(
-                inDto.Id,
+                inDto.CustomerID,
                 inDto.FirstName,
                 inDto.LastName,
                 inDto.MobilePhone,

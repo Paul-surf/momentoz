@@ -1,4 +1,6 @@
-﻿namespace RESTfulService.DTOs
+﻿using DatabaseData.ModelLayer;
+
+namespace RESTfulService.DTOs
 {
     public class CustomerDto
     {
@@ -15,7 +17,7 @@
         }
         public CustomerDto(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
         {
-            Id = customerID;
+            CustomerID = customerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -25,7 +27,7 @@
         }
         public CustomerDto(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-            Id = customerID;
+            CustomerID = customerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -54,7 +56,7 @@
         public string? Street { get; set; }
         public string? ZipCode { get; set; }
         public string? LoginUserId { get; set; }
-        public int Id { get; set; }
+        public int CustomerID { get; set; }
 
        public string? Fullname
         {

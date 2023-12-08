@@ -16,7 +16,7 @@
        
         public Customer(int CustomerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-            Id = CustomerID;
+            this.CustomerID = CustomerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -27,14 +27,14 @@
         }
         public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
            : this(firstName, lastName, mobilePhone, email, streetName, zipCode) {
-            Id = customerID;
+            CustomerID = customerID;
         }
 
         public Customer()
         {
         }
 
-        public int Id { get; set; }
+        public int CustomerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobilePhone { get; set; }
