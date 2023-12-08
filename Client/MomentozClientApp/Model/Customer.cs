@@ -8,8 +8,9 @@ namespace MomentozClientApp.Model
         public Customer() { }
 
         // Udvidet konstruktør, der inkluderer alle egenskaber.
-        public Customer(string firstName, string lastName, string mobilePhone, string email, string loginUserId, string fullName)
+        public Customer(int id, string firstName, string lastName, string mobilePhone, string email, string loginUserId, string fullName)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;

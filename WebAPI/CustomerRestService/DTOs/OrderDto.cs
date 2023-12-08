@@ -4,22 +4,21 @@
         public class OrderDto
         {
         public OrderDto() { }
-        public OrderDto(double inTotalPrice, DateTime inPurchaseDate, int inCustomerID, int inTicketID, int inFlightID)
+        public OrderDto(double inTotalPrice,int inOrderID, DateTime inPurchaseDate, int inCustomerID, int inFlightID)
         {
 
-
+            OrderID = inOrderID;
             TotalPrice = inTotalPrice;
             PurchaseDate = inPurchaseDate;
             CustomerID = inCustomerID;
-            TicketID = inTicketID;
+            FlightID = inFlightID;
         }
-        public int ID { get; set; }
+        public int OrderID { get; set; }
             public double TotalPrice { get; set; }
             public DateTime PurchaseDate { get; set; }
             public int? CustomerID { get; set; }
-            public int? TicketID { get; set; }
-            public int FlightId { get; set; }
-            public bool IsBooked { get; set; }
+            public int FlightID { get; set; }
+            
     }
 }
 

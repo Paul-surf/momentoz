@@ -19,7 +19,8 @@
         {
             return new OrderDto
             {
-                ID = inOrder.ID,
+                
+                OrderID = inOrder.OrderID,
                 TotalPrice = inOrder.TotalPrice,
                 PurchaseDate = inOrder.PurchaseDate,
                 CustomerID = inOrder.CustomerID
@@ -30,9 +31,10 @@
             Order? aOrder = null;
             if(inDto != null)
             {
-                aOrder = new Order(inDto.TotalPrice, inDto.PurchaseDate, inDto.TicketID, inDto.CustomerID);
+                aOrder = new Order(inDto.OrderID, inDto.TotalPrice,  inDto.PurchaseDate, inDto.CustomerID, inDto.FlightID);
             }
             return aOrder;
         }
     }
 }
+//double totalPrice, DateTime purchaseDate, int? customerID, int? flightID

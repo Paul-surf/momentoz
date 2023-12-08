@@ -2,21 +2,23 @@
 {
     public class Order
     {
-        public Order() {}
-        public Order( double totalPrice, DateTime purchaseDate, int? CustomerID, int? FlightID)
-        {  
-            this.TotalPrice = TotalPrice;
-            this.PurchaseDate = purchaseDate;
-            this.CustomerID = CustomerID;
-            this.FlightID = FlightID;
-        }
+        public Order() { }
 
-        public Order(int id, double totalPrice, DateTime purchaseDate, int? CustomerID, int? FlightID) : this(totalPrice, purchaseDate, CustomerID, FlightID)
+        public Order(double totalPrice, DateTime purchaseDate, int? customerID, int? flightID)
         {
-            ID = id;
+            TotalPrice = totalPrice;
+            PurchaseDate = purchaseDate;
+            CustomerID = customerID;
+            FlightID = flightID;
         }
 
-        public int ID { get; set; }    
+        public Order(int orderID, double totalPrice, DateTime purchaseDate, int? customerID, int? flightID)
+            : this(totalPrice, purchaseDate, customerID, flightID)
+        {
+            OrderID = orderID;
+        }
+
+        public int OrderID { get; set; }
         public double TotalPrice { get; set; }
         public DateTime PurchaseDate { get; set; }
         public int? CustomerID { get; set; }

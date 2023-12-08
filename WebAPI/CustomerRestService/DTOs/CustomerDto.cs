@@ -1,35 +1,42 @@
-﻿        namespace RESTfulService.DTOs
-        {
-        public class CustomerDtoo
-        {
-
+﻿namespace RESTfulService.DTOs
+{
+    public class CustomerDtoo
+    {
         public CustomerDtoo() { }
 
-        public CustomerDtoo(string? inFirstName, string? inLastName, string? inMobilePhone, string? email)
+        // Match konstruktørerne til Customer klassen.
+        public CustomerDtoo(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
         {
-            FirstName = inFirstName;
-            LastName = inLastName;
-            MobilePhone = inMobilePhone;
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
             Email = email;
+            StreetName = streetName;
+            ZipCode = zipCode;
         }
 
-        public CustomerDtoo(string? inFirstName, string? inLastName, string? inMobilePhone, string? email, string? loginUserId)
+        public CustomerDtoo(string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-            FirstName = inFirstName;
-            LastName = inLastName;
-            MobilePhone = inMobilePhone;
+           
+            FirstName = firstName;
+            LastName = lastName;
+            MobilePhone = mobilePhone;
             Email = email;
+            StreetName = streetName;
+            ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
 
-
-
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? MobilePhone { get; set; }
-        public string? Email { get; set; }
+       
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MobilePhone { get; set; }
+        public string Email { get; set; }
+        public string? StreetName { get; set; }
+        public string? ZipCode { get; set; }
         public string? LoginUserId { get; set; }
-        public string? FullName
+
+       public string? Fullname
         {
             get
             {

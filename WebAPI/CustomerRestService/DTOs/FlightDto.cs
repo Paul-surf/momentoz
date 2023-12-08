@@ -5,13 +5,14 @@
 
         public FlightDto() { }
 
-        public FlightDto(int id, string? inDeparture, double inPrice, string? inDestinationAddress, string? inDestinationCountry)
+        public FlightDto(int id, string? inDeparture,  string? inDestinationAddress, string? inDestinationCountry, DateTime? homeTrip, double inPrice)
         {
             Id = id;
             Departure = inDeparture;
-            Price = inPrice;
             DestinationAddress = inDestinationAddress;
             DestinationCountry = inDestinationCountry;
+            HomeTrip = homeTrip;
+            Price = inPrice;
         }
         public int Id { get; set; }
         public string? Departure { get; set; }
@@ -19,8 +20,7 @@
         public double Price { get; set; }
         public string? DestinationAddress { get; set; }
         public string? DestinationCountry { get; set; }
-        public bool IsBooked { get; set; }
-
+        public DateTime? HomeTrip { get; set; }
         public string CustomDisplay => $"{Departure}, {DestinationAddress}, {DestinationCountry}";
     }
 }

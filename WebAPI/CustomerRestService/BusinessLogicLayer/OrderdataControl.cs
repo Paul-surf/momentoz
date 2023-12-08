@@ -45,34 +45,28 @@ namespace RESTfulService.BusinessLogicLayer
             return foundDtos;
         }
 
-    
+
         public int CreateNewOrder(OrderDto newOrder)
         {
             // Brug en transaktion for at sikre atomisk indsættelse
             using (var transactionScope = new TransactionScope())
             {
                 int insertedId = 0;
-                try
+                Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(newOrder);
+                if (foundOrder != null)
                 {
-                    Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(newOrder);
-                    if (foundOrder != null)
-                    {
-                        insertedId = _orderAccess.CreateOrder(foundOrder);
+                    insertedId = _orderAccess.CreateOrder(foundOrder);
 
-                        // Hvis indsættelse lykkedes, fuldfør transaktionen
-                        transactionScope.Complete();
-                    }
+                    // Hvis indsættelse lykkedes, fuldfør transaktionen
+                    transactionScope.Complete();
                 }
-                catch (Exception)
-                {
-                    insertedId = -1;
-                }
-
                 return insertedId;
             }
+            
         }
+    
 
-        public bool Put(OrderDto orderToUpdate)
+    public bool Put(OrderDto orderToUpdate)
         {
             throw new NotImplementedException();
         }
