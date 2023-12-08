@@ -30,12 +30,12 @@ namespace MomentozWebClient.BusinessLogicLayer
             return foundOrders;
         }
 
-        public async Task<Order> GetOrderByTicketId(int ticketId)
+        public async Task<Order> GetOrderByFlightID(int flightID)
         {
             Order foundOrder;
             try
             {
-                foundOrder = await _orderServiceAccess.getOrderByTicketId(ticketId);
+                foundOrder = await _orderServiceAccess.getOrderByFlightId(flightID);
             } 
             catch
             {

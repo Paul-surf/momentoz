@@ -6,11 +6,11 @@ namespace RESTfulService.BusinessLogicLayer
     public interface ICustomerdata
     {
 
-        CustomerDtoo? Get(int id);
-        List<CustomerDtoo>? Get(string? email);
-        CustomerDtoo Put(CustomerDtoo customerToUpdate);
+        CustomerDto? Get(int id);
+        List<CustomerDto>? Get(string? email);
+        CustomerDto Put(CustomerDto customerToUpdate);
         bool Delete(int id);
-        CustomerDtoo? GetByUserId(string loginid);
-        CustomerDtoo? Add(CustomerDtoo customerToAdd);
+        CustomerDto? GetByUserId(string loginid);
+        CustomerDto? Add(CustomerDto customerToAdd);
     }
 }

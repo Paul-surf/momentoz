@@ -8,16 +8,6 @@ namespace MomentozWebClient.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: OrderController
-        public ActionResult CreateOrder(int flightId)
-        {
-            // Her skal du tilføje logik til at oprette en ordre baseret på det valgte fly.
-            // For eksempel, tilføj flyet til brugerens ordre session eller database.
-
-            // Antag at vi omdirigerer brugeren til en 'ReviewOrder' view, hvor de kan gennemse deres ordre.
-            return RedirectToAction("ReviewOrder");
-        }
-
         readonly OrderLogic _ordersLogic;
 
         public OrderController(IConfiguration inConfiguration)
@@ -25,12 +15,14 @@ namespace MomentozWebClient.Controllers
             _ordersLogic = new OrderLogic(inConfiguration);
         }
 
-        public async Task<ActionResult> Orders(int ticketId)
+        // GET: OrderController
+        public ActionResult CreateOrder(Flight flight)
         {
-            Order foundOrders = await _ordersLogic.GetOrderByTicketId(ticketId);
-            return View(foundOrders);
-
+            Order order = new Order(flight.Id, flight.Price);
+            
+            return View(order);
         }
+
 
         // GET: OrderController/Details/5
         public ActionResult Details(int id)

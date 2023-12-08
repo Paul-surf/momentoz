@@ -14,9 +14,9 @@ namespace RESTfulService.BusinesslogicLayer
             _customerAccess = inCustomerAccess;
            
         }
-        public CustomerDtoo? Get(int idToMatch)
+        public CustomerDto? Get(int idToMatch)
         {
-            CustomerDtoo? foundCustomerDto;
+            CustomerDto? foundCustomerDto;
             try
             {
                 Customer? foundCustomer = _customerAccess.GetCustomerById(idToMatch);
@@ -29,9 +29,9 @@ namespace RESTfulService.BusinesslogicLayer
             return foundCustomerDto;
         }
 
-        public List<CustomerDtoo>? Get(string? email)
+        public List<CustomerDto>? Get(string? email)
         {
-            List<CustomerDtoo>? foundDtos;
+            List<CustomerDto>? foundDtos;
             try
             {
                 List<Customer>? foundCustomers;
@@ -52,9 +52,9 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
-        public CustomerDtoo? Add(CustomerDtoo customerToAdd)
+        public CustomerDto? Add(CustomerDto customerToAdd)
         {
-            CustomerDtoo? createdCustomer = null;
+            CustomerDto? createdCustomer = null;
             try
             {
                 Customer? dbCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToAdd);
@@ -73,9 +73,9 @@ namespace RESTfulService.BusinesslogicLayer
         }
 
 
-        public CustomerDtoo Put(CustomerDtoo customerToUpdate)
+        public CustomerDto Put(CustomerDto customerToUpdate)
         {
-            CustomerDtoo? createdCustomer = null;
+            CustomerDto? createdCustomer = null;
             try
             {
                 Customer? dbCustomer = ModelConversion.CustomerDtoConvert.ToCustomer(customerToUpdate);
@@ -98,9 +98,9 @@ namespace RESTfulService.BusinesslogicLayer
             throw new NotImplementedException();
         }
 
-        public CustomerDtoo? GetByUserId(string loginUserId)
+        public CustomerDto? GetByUserId(string loginUserId)
         {
-            CustomerDtoo? foundCustomerDto = null;
+            CustomerDto? foundCustomerDto = null;
             try
             {
                 Customer? foundCustomer = _customerAccess.GetCustomerByUserId(loginUserId);
