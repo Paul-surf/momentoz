@@ -28,16 +28,16 @@
                 <input asp-for="MobilePhone" class="form-control" />
                 <span asp-validation-for="MobilePhone" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>*@
-@*            <div class="form-group">
-                <label asp-for="LoginUserId" class="control-label"></label>
-                <input asp-for="LoginUserId" class="form-control" />
-                <span asp-validation-for="LoginUserId" class="text-danger"></span>
-            </div>*@
+            <div class="form-group">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zipcode" class="control-label"></label>
+                <input asp-for="Zipcode" class="form-control" />
+                <span asp-validation-for="Zipcode" class="text-danger"></span>
+            </div>
             <form method="Post" asp-action="Edit" asp-route-id="Edit/@Model.LoginUserId">
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />

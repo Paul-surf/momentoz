@@ -16,10 +16,10 @@ namespace MomentozWebClient.Controllers
         }
 
         // GET: OrderController
-        public async ActionResult CreateOrder(int flightId)
+        public ActionResult CreateOrder(Flight flight)
         {
-            Order order = await _ordersLogic.GetOrderByFlightId(flightId);
-            // Antag at vi omdirigerer brugeren til en 'ReviewOrder' view, hvor de kan gennemse deres ordre.
+            Order order = new Order(flight.Id, flight.Price);
+            
             return View(order);
         }
 

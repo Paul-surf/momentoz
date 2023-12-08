@@ -145,7 +145,7 @@ namespace MomentozWebClient.ServiceLayer
             Order orderFromService = null;
 
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
-            _orderServiceConnection.UseUrl += "orders/" + orderToSave.TicketID;
+            _orderServiceConnection.UseUrl += "orders/" + orderToSave.FlightID;
             if (_orderServiceConnection != null)
             {
                 try

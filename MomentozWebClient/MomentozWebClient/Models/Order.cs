@@ -6,17 +6,13 @@
         public double TotalPrice { get; set; }
         public DateTime PurchaseDate { get; set; }
         public int? CustomerID { get; set; }
-        public int? TicketID { get; set; }
+        public int? FlightID { get; set; }
 
-        public Order(int? TicketID, int? CustomerID)
+        public Order(int FlightID, double price)
         {
-            this.TicketID = TicketID;
-            this.CustomerID = CustomerID;
+            this.FlightID = FlightID;
+            TotalPrice += price;
         }
         public Order() { }
-        public Order(int ticketId) 
-        {
-            TicketID = ticketId;
-        }
     }
 }

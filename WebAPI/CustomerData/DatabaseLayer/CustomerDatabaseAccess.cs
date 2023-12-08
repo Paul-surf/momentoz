@@ -156,7 +156,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "SELECT id, customerNumber, firstName, lastName, mobilePhone, email, loginuserid FROM Customers WHERE id = @Id";
+            string queryString = "SELECT id, customerNumber, firstName, lastName, mobilePhone, email, street, zipcode, loginuserid FROM Customers WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -183,30 +183,28 @@ namespace DatabaseData.DatabaseLayer
 
             try
             {
-                string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone, StreetName = @street, CustomerID = @customerNumber, ZipCode = @zipCode";
+                string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone, StreetName = @street, ZipCode = @zipCode";
                 string condition = "WHERE loginUserId = @UserId";
 
-                string queryString = "UPDATE Customers " + setVariables + " " + condition;
+                string queryString = "UPDATE Customers \n" + setVariables + "\n" + condition;
 
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand updateCommand = new SqlCommand(queryString, con))
                 {
                     // Prepare SQL
-                    SqlParameter cidParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
                     SqlParameter fnameParam = new SqlParameter("@fName", customerToUpdate.FirstName);
                     SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
                     SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
                     SqlParameter streetParam = new SqlParameter("@street", customerToUpdate.StreetName);
-                    SqlParameter customeIDParam = new SqlParameter("@customerID", customerToUpdate.CustomerID);
                     SqlParameter zipCodeParam = new SqlParameter("@zipCode", customerToUpdate.ZipCode);
+                    SqlParameter cidParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
 
-                    updateCommand.Parameters.Add(cidParam);
                     updateCommand.Parameters.Add(fnameParam);
                     updateCommand.Parameters.Add(lnameParam);
                     updateCommand.Parameters.Add(phoneParam);
                     updateCommand.Parameters.Add(streetParam);
-
                     updateCommand.Parameters.Add(zipCodeParam);
+                    updateCommand.Parameters.Add(cidParam);
 
                     con.Open();
 

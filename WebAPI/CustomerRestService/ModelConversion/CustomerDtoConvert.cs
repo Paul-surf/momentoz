@@ -4,12 +4,12 @@ namespace RESTfulService.ModelConversion
 {
     public class CustomerDtoConvert
     {
-        public static List<DTOs.CustomerDtoo> FromCustomerCollection(List<Customer> inCustomers)
+        public static List<DTOs.CustomerDto>? FromCustomerCollection(List<Customer> inCustomers)
         {
             if (inCustomers == null)
                 return null;
 
-            var aCustomerReadDtoList = new List<DTOs.CustomerDtoo>();
+            var aCustomerReadDtoList = new List<DTOs.CustomerDto>();
             foreach (Customer aCustomer in inCustomers)
             {
                 if (aCustomer != null)
@@ -22,23 +22,23 @@ namespace RESTfulService.ModelConversion
             return aCustomerReadDtoList;
         }
 
-        public static DTOs.CustomerDtoo FromCustomer(Customer inCustomer)
+        public static DTOs.CustomerDto? FromCustomer(Customer inCustomer)
         {
             if (inCustomer == null)
                 return null;
 
-            return new DTOs.CustomerDtoo(
+            return new DTOs.CustomerDto(
                 inCustomer.CustomerID,
                 inCustomer.FirstName,
                 inCustomer.LastName,
                 inCustomer.MobilePhone,
                 inCustomer.Email,
-                inCustomer.ZipCode,
                 inCustomer.StreetName,
+                inCustomer.ZipCode,
                 inCustomer.LoginUserId);
         }
 
-        public static Customer ToCustomer(DTOs.CustomerDtoo inDto)
+        public static Customer? ToCustomer(DTOs.CustomerDto inDto)
         {
             if (inDto == null)
                 return null;
