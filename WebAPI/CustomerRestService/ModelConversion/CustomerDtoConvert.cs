@@ -28,12 +28,12 @@ namespace RESTfulService.ModelConversion
                 return null;
 
             return new DTOs.CustomerDto(
-                inCustomer.CustomerID,
+                inCustomer.Id,
                 inCustomer.FirstName,
                 inCustomer.LastName,
                 inCustomer.MobilePhone,
                 inCustomer.Email,
-                inCustomer.StreetName,
+                inCustomer.Street,
                 inCustomer.ZipCode,
                 inCustomer.LoginUserId);
         }
@@ -45,12 +45,12 @@ namespace RESTfulService.ModelConversion
 
             // Antager at inDto.Id er tilgængelig og er af typen int
             return new Customer(
-                inDto.CustomerID,
+                inDto.Id,
                 inDto.FirstName,
                 inDto.LastName,
                 inDto.MobilePhone,
                 inDto.Email,
-                inDto.StreetName,
+                inDto.Street,
                 inDto.ZipCode,
                 inDto.LoginUserId?.ToString()); // Konverter LoginUserId til en streng
         }

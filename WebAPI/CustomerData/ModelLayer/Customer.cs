@@ -9,37 +9,37 @@
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
-            StreetName = streetName;
+            Street = streetName;
             ZipCode = zipCode;
         }
 
        
         public Customer(int CustomerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-            this.CustomerID = CustomerID;
+            Id = CustomerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
-            StreetName = streetName;
+            Street = streetName;
             ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
         public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string? streetName, string? zipCode)
            : this(firstName, lastName, mobilePhone, email, streetName, zipCode) {
-            CustomerID = customerID;
+            Id = customerID;
         }
 
         public Customer()
         {
         }
 
-        public int CustomerID { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobilePhone { get; set; }
         public string Email { get; set; }
-        public string? StreetName { get; set; } 
+        public string? Street { get; set; } 
         public string? ZipCode { get; set; }
         public string? LoginUserId { get; set; }
 

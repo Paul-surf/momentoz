@@ -51,7 +51,7 @@ namespace DatabaseData.DatabaseLayer
                 CreateCommand.Parameters.Add(new SqlParameter("@LastName", aCustomer.LastName));
                 CreateCommand.Parameters.Add(new SqlParameter("@MobilePhone", aCustomer.MobilePhone));
                 CreateCommand.Parameters.Add(new SqlParameter("@Email", aCustomer.Email));
-                CreateCommand.Parameters.Add(new SqlParameter("@StreetName", aCustomer.StreetName));
+                CreateCommand.Parameters.Add(new SqlParameter("@StreetName", aCustomer.Street));
                 CreateCommand.Parameters.Add(new SqlParameter("@Zipcode", aCustomer.ZipCode));
                 CreateCommand.Parameters.Add(new SqlParameter("@LoginUserId", aCustomer.LoginUserId));
 
@@ -195,7 +195,7 @@ namespace DatabaseData.DatabaseLayer
                     SqlParameter fnameParam = new SqlParameter("@fName", customerToUpdate.FirstName);
                     SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
                     SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
-                    SqlParameter streetParam = new SqlParameter("@street", customerToUpdate.StreetName);
+                    SqlParameter streetParam = new SqlParameter("@street", customerToUpdate.Street);
                     SqlParameter zipCodeParam = new SqlParameter("@zipCode", customerToUpdate.ZipCode);
                     SqlParameter cidParam = new SqlParameter("@UserId", customerToUpdate.LoginUserId);
 
