@@ -134,10 +134,8 @@ namespace MomentozWebClient.ServiceLayer
         public async Task<Customer> UpdateCustomer(Customer customer)
         {
             Customer customerFromService = null;
-            string userId = customer.LoginUserId;
 
-            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
-            _customerServiceConnection.UseUrl += "Customers/" + userId;
+            _customerServiceConnection.UseUrl += "Customers/" + customer.LoginUserId;
 
             if (_customerServiceConnection != null)
             {

@@ -67,7 +67,7 @@ namespace RESTfulService.Controllers
 
         // URL: api/customers/{loginid}
         [HttpPut("{loginid}")]
-        public ActionResult<CustomerDto> UpdateCustomer([FromBody] CustomerDto customer)
+        public ActionResult<CustomerDto> UpdateCustomer(CustomerDto customer)
         {
             CustomerDto updatedCustomer = _businessLogicCtrl.Put(customer);
             if (updatedCustomer != null)
