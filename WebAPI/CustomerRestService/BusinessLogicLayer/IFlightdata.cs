@@ -8,7 +8,6 @@ namespace RESTfulService.BusinessLogicLayer
         FlightDto? GetFlightById(int flightId); 
         int Add(FlightDto flightToAdd);
         bool Put(FlightDto flightToUpdate);
-     //   bool UpdateFlight(FlightDto flight);
         bool Delete(int id);
     }
 }

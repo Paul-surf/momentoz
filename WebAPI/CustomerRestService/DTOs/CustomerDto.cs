@@ -34,10 +34,10 @@
         //    LoginUserId = loginUserId;
         //}
 
-        public CustomerDto(string? firstName, string? lastName, string? mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
+        public CustomerDto(int inCustomerID, string? inFirstName, string? lastName, string? mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-           
-            FirstName = firstName;
+           CustomerID = inCustomerID;
+            FirstName = inFirstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;

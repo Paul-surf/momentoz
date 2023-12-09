@@ -27,7 +27,7 @@ namespace RESTfulService.ModelConversion
             if (inCustomer == null)
                 return null;
 
-            return new CustomerDto(inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.ZipCode, inCustomer.StreetName, inCustomer.LoginUserId);
+            return new CustomerDto(inCustomer.CustomerID, inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.ZipCode, inCustomer.StreetName, inCustomer.LoginUserId);
         }
 
         public static Customer ToCustomer(CustomerDto inDto)
@@ -35,7 +35,7 @@ namespace RESTfulService.ModelConversion
             if (inDto == null)
                 return null;
 
-            return new Customer(inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email, inDto.StreetName, inDto.ZipCode, inDto.LoginUserId?.ToString()); // Konverter LoginUserId til en streng
+            return new Customer(inDto.CustomerID, inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email, inDto.StreetName, inDto.ZipCode, inDto.LoginUserId?.ToString()); // Konverter LoginUserId til en streng
         }
     }
 }

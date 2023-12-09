@@ -44,7 +44,6 @@ namespace DatabaseData.DatabaseLayer
                 CreateCommand.Parameters.Add(new SqlParameter("@StreetName", aCustomer.StreetName));
                 CreateCommand.Parameters.Add(new SqlParameter("@Zipcode", aCustomer.ZipCode));
 
-
                 con.Open();
 
                 insertedId = (int)CreateCommand.ExecuteScalar();

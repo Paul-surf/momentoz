@@ -8,14 +8,14 @@ namespace MomentozClientApp.Model
         public Order() { }
 
         // Konstruktør, der initialiserer en ny Order-instans med totalpris, købsdato, kunde-ID og billet-ID.
-        public Order(double totalPrice, DateTime purchaseDate, int customerID, int flightID)
-        {
-            // Sætter egenskaberne TotalPrice, PurchaseDate, CustomerID og TicketID til de givne værdier.
-            TotalPrice = totalPrice;
-            PurchaseDate = purchaseDate;
-            CustomerID = customerID;
-            FlightID = flightID;
-        }
+        //public Order(double totalPrice, DateTime purchaseDate, int customerID, int flightID)
+        //{
+        //    // Sætter egenskaberne TotalPrice, PurchaseDate, CustomerID og TicketID til de givne værdier.
+        //    TotalPrice = totalPrice;
+        //    PurchaseDate = purchaseDate;
+        //    CustomerID = customerID;
+        //    FlightID = flightID;
+        //}
 
         //public Order(int orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
         //    : this(totalPrice, purchaseDate, customerID, flightID)

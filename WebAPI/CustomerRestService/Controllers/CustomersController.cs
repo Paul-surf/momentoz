@@ -79,7 +79,5 @@ namespace RESTfulService.Controllers
                 return StatusCode(500); // Internal server error
             }
         }
-
-        // ... yderligere metoder, såsom Delete, hvis de er implementeret ....
     }
 }

@@ -40,6 +40,7 @@ namespace DatabaseData.DatabaseLayer
                 CreateCommand.Parameters.Add(CustomerIDParam);
 
                 con.Open();
+
                 insertedId = (int)CreateCommand.ExecuteScalar();
             }
             return insertedId;

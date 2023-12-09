@@ -2,6 +2,7 @@
 using RESTfulService.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Transactions;
+using DatabaseData.ModelLayer;
 
 namespace RESTfulService.Controllers
 {
@@ -51,7 +52,7 @@ namespace RESTfulService.Controllers
 
         // URL: api/Orders
         [HttpPost]
-        public ActionResult<int> CreateOrder(OrderDto inOrderDto)
+        public ActionResult<Order> CreateOrder(OrderDto inOrderDto)
         {
             // Tjek for null input
             if (inOrderDto == null)
@@ -76,6 +77,19 @@ namespace RESTfulService.Controllers
             {
                 // Håndter fejl og returner en fejlstatuskode
                 return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+        [HttpGet("{orderid}")]
+        public ActionResult<OrderDto> UpdateOrder( OrderDto order)
+        {
+            OrderDto updatedOrder = _businessLogicCtrl.Put(order);
+            if (updatedOrder != null)
+            {
+                return Ok(updatedOrder); // Statuscode 200
+            }
+            else
+            {
+                return StatusCode(500); // Internal server error
             }
         }
 

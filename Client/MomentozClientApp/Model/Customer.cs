@@ -8,9 +8,9 @@ namespace MomentozClientApp.Model
         public Customer() { }
 
         // Udvidet konstruktør, der inkluderer alle egenskaber.
-        public Customer(int id, string firstName, string lastName, string mobilePhone, string email, string loginUserId, string fullName)
+        public Customer(int customerID, string firstName, string lastName, string mobilePhone, string email, string loginUserId, string fullName)
         {
-            Id = id;
+            CustomerID = customerID;
             FirstName = firstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -19,8 +19,8 @@ namespace MomentozClientApp.Model
             FullName = fullName;
         }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        [JsonProperty("customerid")]
+        public int CustomerID { get; set; }
 
         [JsonProperty("firstName")]
         public string FirstName { get; set; }

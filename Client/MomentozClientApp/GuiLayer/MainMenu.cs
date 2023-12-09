@@ -312,7 +312,7 @@ namespace MomentozClientApp
                 {
                     TotalPrice = price,
                     PurchaseDate = DateTime.Now,
-                    CustomerID = customer.CustomerID,
+                    CustomerID = loggedInCustomer.CustomerID,
                     FlightID = selectedFlight.FlightID
                 };
 
