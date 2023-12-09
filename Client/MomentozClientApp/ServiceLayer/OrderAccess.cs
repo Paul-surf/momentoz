@@ -67,14 +67,13 @@ namespace MomentozClientApp.ServiceLayer
             var json = JsonConvert.SerializeObject(orderToAdd);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var serviceConnection = _orderServiceConnection as ServiceConnection;
-            var requestUrl = serviceConnection?.BaseUrl + "orders";
+            _orderServiceConnection.UseUrl += "orders";
 
-            if (serviceConnection != null && requestUrl != null)
+            if (_orderServiceConnection != null)
             {
                 try
                 {
-                    var response = await serviceConnection.HttpClient.PostAsync(requestUrl, content);
+                    var response = await _orderServiceConnection.CallServicePost(content);
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
