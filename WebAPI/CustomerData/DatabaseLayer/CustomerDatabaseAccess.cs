@@ -151,10 +151,10 @@ namespace DatabaseData.DatabaseLayer
         public Customer UpdateCustomer(Customer customerToUpdate)
         {
             Customer updatedCustomer = null;
-
+            
             try
             {
-                string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone, StreetName = @street, CustomerID = @customerNumber, ZipCode = @zipCode";
+                string setVariables = "SET FirstName = @fName, LastName = @lName, MobilePhone = @phone, StreetName = @street, ZipCode = @zip";
                 string condition = "WHERE loginUserId = @UserId";
 
                 string queryString = "UPDATE Customers " + setVariables + " " + condition;
@@ -168,8 +168,7 @@ namespace DatabaseData.DatabaseLayer
                     SqlParameter lnameParam = new SqlParameter("@lName", customerToUpdate.LastName);
                     SqlParameter phoneParam = new SqlParameter("@phone", customerToUpdate.MobilePhone);
                     SqlParameter streetParam = new SqlParameter("@street", customerToUpdate.StreetName);
-                    SqlParameter customeIDParam = new SqlParameter("@customerID", customerToUpdate.CustomerID);
-                    SqlParameter zipCodeParam = new SqlParameter("@zipCode", customerToUpdate.ZipCode);
+                    SqlParameter zipCodeParam = new SqlParameter("@zip", customerToUpdate.ZipCode);
 
                     updateCommand.Parameters.Add(cidParam);
                     updateCommand.Parameters.Add(fnameParam);

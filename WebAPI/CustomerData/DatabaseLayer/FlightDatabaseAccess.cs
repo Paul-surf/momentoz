@@ -52,7 +52,11 @@ namespace DatabaseData.DatabaseLayer
 
             try
             {
-                string queryString = "SELECT FlightID, Departure, DestinationAddress, DestinationCountry, HomeTrip, Price FROM Flights";
+                string info = "FlightID, Departure, DestinationAddress, DestinationCountry, HomeTrip, Price";
+                string table = "Flights";
+                string whereStatement = "FlightID not in (SELECT FlightID From Orders)";
+
+                string queryString = "SELECT " + info + " FROM " + table + " WHERE " + whereStatement;
 
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand readCommand = new SqlCommand(queryString, con))

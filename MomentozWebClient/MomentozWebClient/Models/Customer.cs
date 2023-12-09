@@ -7,7 +7,7 @@
         public string? LastName { get; set; }
         public string? MobilePhone { get; set; }
         public string? Email { get; set; }
-        public string? Street { get; set; }
+        public string? StreetName { get; set; }
         public string? Zipcode { get; set; }
 
         public string? LoginUserId { get; set; }
@@ -19,7 +19,7 @@
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
-            Street = street;
+            StreetName = street;
             Zipcode = zipcode;
         }
 
@@ -30,7 +30,7 @@
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
-            Street = street;
+            StreetName = street;
             Zipcode = zipcode;
             LoginUserId = loginUserId;
         }
@@ -40,7 +40,7 @@
             LastName = lastName;
             MobilePhone = mobilePhone;
             Email = email;
-            Street = street;
+            StreetName = street;
             Zipcode = zipcode;
             LoginUserId = loginUserId;
         }
@@ -54,7 +54,7 @@
             LastName = form["LastName"];
             MobilePhone = form["MobilePhone"];
             LoginUserId = form["LoginUserId"];
-            Street = form["Street"];
+            StreetName = form["StreetName"];
             Zipcode = form["Zipcode"];
         }
 

@@ -27,7 +27,7 @@ namespace RESTfulService.ModelConversion
             if (inCustomer == null)
                 return null;
 
-            return new CustomerDto(inCustomer.CustomerID, inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.ZipCode, inCustomer.StreetName, inCustomer.LoginUserId);
+            return new CustomerDto(inCustomer.CustomerID, inCustomer.FirstName, inCustomer.LastName, inCustomer.MobilePhone, inCustomer.Email, inCustomer.StreetName, inCustomer.ZipCode, inCustomer.LoginUserId);
         }
 
         public static Customer ToCustomer(CustomerDto inDto)

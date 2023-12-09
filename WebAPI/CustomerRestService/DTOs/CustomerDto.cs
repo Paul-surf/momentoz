@@ -36,7 +36,7 @@
 
         public CustomerDto(int inCustomerID, string? inFirstName, string? lastName, string? mobilePhone, string email, string? streetName, string? zipCode, string? loginUserId)
         {
-           CustomerID = inCustomerID;
+            CustomerID = inCustomerID;
             FirstName = inFirstName;
             LastName = lastName;
             MobilePhone = mobilePhone;
@@ -45,6 +45,7 @@
             ZipCode = zipCode;
             LoginUserId = loginUserId;
         }
+        public CustomerDto() { }
         public int CustomerID { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

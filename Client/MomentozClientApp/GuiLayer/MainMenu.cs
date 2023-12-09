@@ -28,7 +28,7 @@ namespace MomentozClientApp
         double price = 0;
 
 
-     
+
         public MainMenu(Customer customer)
         {
             InitializeComponent();
@@ -340,6 +340,8 @@ namespace MomentozClientApp
                         $"Købsdato: {createdOrderResult.PurchaseDate}\n";
 
                         MessageBox.Show(kvittering, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        bookFlight(selectedFlight);
                     }
                     else
                     {
@@ -357,8 +359,10 @@ namespace MomentozClientApp
             }
         }
 
-
-
+        private void bookFlight(Flight selectedFlight)
+        {
+            throw new NotImplementedException();
+        }
 
         private double CalculatePrice()
         {

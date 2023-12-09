@@ -100,7 +100,9 @@ namespace MomentozWebClient.Controllers
             {
                 Customer reOrientedCustomer = new Customer(formCustomer);
                 string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                string? email = User.Identity is not null ? User.Identity.Name : null;
                 reOrientedCustomer.LoginUserId = userId;
+                reOrientedCustomer.Email = email;
                 Customer customerUpdated = await _customerLogic.UpdateCustomer(reOrientedCustomer);
 
                 if (customerUpdated == null) {/* handle error */}
