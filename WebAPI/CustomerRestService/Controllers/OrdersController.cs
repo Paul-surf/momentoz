@@ -79,8 +79,9 @@ namespace RESTfulService.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-        [HttpGet("{orderid}")]
-        public ActionResult<OrderDto> UpdateOrder( OrderDto order)
+        // URL: api/Orders
+        [HttpPut]
+        public ActionResult<OrderDto> UpdateOrder([FromBody] OrderDto order)
         {
             OrderDto updatedOrder = _businessLogicCtrl.Put(order);
             if (updatedOrder != null)
@@ -95,5 +96,3 @@ namespace RESTfulService.Controllers
 
     }
 }
-    
-

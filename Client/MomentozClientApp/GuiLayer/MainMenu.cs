@@ -320,36 +320,27 @@ namespace MomentozClientApp
 
                 try
                 {
-                    // Opret ordre og få ordre-ID
+                    // Opret ordre, med alle oplysningerne (klar til brug)
                     Order createdOrderResult = await _orderAccess.CreateOrder(newOrder);
 
                     if (createdOrderResult != null)
                     {
-                        // Ordre oprettet med succes, hent ordreoplysninger
-                        Order createdOrder = await _orderAccess.GetOrderById(createdOrderResult.OrderID);
-                        if (createdOrder != null)
-                        {
-                            // Opret en kvittering
-                            string kvittering = $"Kvittering:\n\n" +
-                            $"Kundeoplysninger:\n" +
-                            $"Navn: {customer.FirstName} {customer.LastName}\n" +
-                            $"Email: {customer.Email}\n" +
-                            $"Telefon: {customer.MobilePhone}\n\n" +
-                            $"Flyrejseoplysninger:\n" +
-                            $"Afgang: {selectedFlight.Departure}\n" +
-                            $"Ankomst: {selectedFlight.DestinationAddress}\n" +
-                            $"Ankomst: {selectedFlight.DestinationCountry}\n" +
-                            $"Pris: {selectedFlight.Price:C}\n\n" +
-                            $"Ordreoplysninger:\n" +
-                            $"Total Pris: {createdOrder.TotalPrice:C}\n" +
-                            $"Købsdato: {createdOrder.PurchaseDate}\n";
+                        // Opret en kvittering
+                        string kvittering = $"Kvittering:\n\n" +
+                        $"Kundeoplysninger:\n" +
+                        $"Navn: {customer.FirstName} {customer.LastName}\n" +
+                        $"Email: {customer.Email}\n" +
+                        $"Telefon: {customer.MobilePhone}\n\n" +
+                        $"Flyrejseoplysninger:\n" +
+                        $"Afgang: {selectedFlight.Departure}\n" +
+                        $"Ankomst: {selectedFlight.DestinationAddress}\n" +
+                        $"Ankomst: {selectedFlight.DestinationCountry}\n" +
+                        $"Pris: {selectedFlight.Price:C}\n\n" +
+                        $"Ordreoplysninger:\n" +
+                        $"Total Pris: {createdOrderResult.TotalPrice:C}\n" +
+                        $"Købsdato: {createdOrderResult.PurchaseDate}\n";
 
-                            MessageBox.Show(kvittering, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Der opstod en fejl under hentningen af den oprettede ordre.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        MessageBox.Show(kvittering, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {

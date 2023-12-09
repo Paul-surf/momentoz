@@ -48,19 +48,15 @@ namespace RESTfulService.BusinessLogicLayer
 
         public OrderDto CreateOrder(OrderDto orderToAdd)
         {
-            using (var transactionScope = new TransactionScope())
+            Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(orderToAdd);
+            if (foundOrder != null)
             {
-                Order? foundOrder = ModelConversion.OrderDtoConvert.ToOrder(orderToAdd);
-                if (foundOrder != null)
+                int insertedId = _orderAccess.CreateOrder(foundOrder);
+                if (insertedId > 0)
                 {
-                    int insertedId = _orderAccess.CreateOrder(foundOrder);
-                    if (insertedId > 0)
-                    {
-                        // Antager at du kan hente det indsatte objekt ved hjælp af ID
-                        Order insertedOrder = _orderAccess.GetOrderById(insertedId);
-                        transactionScope.Complete();
-                        return ModelConversion.OrderDtoConvert.FromOrder(insertedOrder);
-                    }
+                    // Antager at du kan hente det indsatte objekt ved hjælp af ID
+                    Order insertedOrder = _orderAccess.GetOrderById(insertedId);
+                    return ModelConversion.OrderDtoConvert.FromOrder(insertedOrder);
                 }
             }
             // Håndter fejltilfælde, f.eks. ved at returnere null eller kaste en exception
