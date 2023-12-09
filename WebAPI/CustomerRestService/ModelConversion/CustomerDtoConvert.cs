@@ -35,17 +35,7 @@ namespace RESTfulService.ModelConversion
             if (inDto == null)
                 return null;
 
-            // Antager at inDto.Id er tilgængelig og er af typen int
             return new Customer(inDto.FirstName, inDto.LastName, inDto.MobilePhone, inDto.Email, inDto.StreetName, inDto.ZipCode, inDto.LoginUserId?.ToString()); // Konverter LoginUserId til en streng
         }
     }
 }
-//public interface IOrderdata
-//{
-//    OrderDto? Get(int id);
-//    List<OrderDto>? Get();
-//    OrderDto CreateNewOrder(OrderDto orderToAdd);
-//    OrderDto Put(OrderDto orderToUpdate);
-//    bool Delete(int id);
-
-//}

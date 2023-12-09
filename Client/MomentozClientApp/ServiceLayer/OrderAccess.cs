@@ -39,10 +39,10 @@ namespace MomentozClientApp.ServiceLayer
             return listFromService;
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetOrderById(int orderID)
         {
             Order foundOrder = null;
-            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl + "orders/" + id;
+            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl + "orders/" + orderID;
 
             try
             {
@@ -62,56 +62,74 @@ namespace MomentozClientApp.ServiceLayer
             return foundOrder;
         }
 
-        public async Task<bool> CreateOrder(Order order)
+        public async Task<Order> CreateOrder(Order orderToAdd)
         {
-            var json = JsonConvert.SerializeObject(order);
+            var json = JsonConvert.SerializeObject(orderToAdd);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var serviceConnection = _orderServiceConnection as ServiceConnection;
-            serviceConnection.UseUrl = serviceConnection.BaseUrl + "orders";
 
-            if (serviceConnection != null)
+            var serviceConnection = _orderServiceConnection as ServiceConnection;
+            var requestUrl = serviceConnection?.BaseUrl + "orders";
+
+            if (serviceConnection != null && requestUrl != null)
             {
                 try
                 {
-                    var response = await serviceConnection.HttpClient.PostAsync(serviceConnection.UseUrl, content);
+                    var response = await serviceConnection.HttpClient.PostAsync(requestUrl, content);
                     if (response.IsSuccessStatusCode)
                     {
-                        // Logik for behandling af succesfuldt svar
-                        return true;
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var createdOrder = JsonConvert.DeserializeObject<Order>(responseContent);
+                        return createdOrder; // Return the deserialized Order object
                     }
                     else
                     {
-                        // Logik for behandling af fejlsvar
-                        return false;
+                        Console.WriteLine("Response was not successful: " + response.StatusCode);
+                        return null; // Return null if the response was not successful
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Logik for fejlhåndtering
-                    // Du kan logge fejlen eller vise en fejlmeddelelse til brugeren
-                    return false;
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                    return null; // Return null if an exception was thrown
                 }
             }
             else
             {
-                // Håndter situationen, hvor serviceConnection er null
-                // Det kan betyde, at _orderServiceConnection ikke er af typen ServiceConnection
-                return false;
+                Console.WriteLine("Service connection or request URL is null.");
+                return null; // Return null if the service connection or request URL was null
             }
         }
 
-        Task<int> IOrderAccess.CreateOrder(Order order)
+
+        Order IOrderAccess.GetOrderById(int orderID)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetOrderByUserId(string loginUserId)
+        List<Order> IOrderAccess.GetOrderAll()
         {
             throw new NotImplementedException();
         }
 
+        int IOrderAccess.CreateOrder(Order orderToAdd)
+        {
+            throw new NotImplementedException();
+        }
 
+        public bool UpdateOrder(Order orderToUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
-        // Resten af dine metoder...
+        public bool DeleteOrderById(int orderID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order? GetOrderByCustomerId(int orderID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+

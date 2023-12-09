@@ -3,7 +3,7 @@
         {
         public class OrderDto
     { 
-        public OrderDto() { }
+      //  public OrderDto() { }
         
         public OrderDto(int inOrderID, double inTotalPrice, DateTime inPurchaseDate, int inCustomerID, int inFlightID) { 
 

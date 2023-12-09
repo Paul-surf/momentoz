@@ -11,12 +11,14 @@ namespace RESTfulService.Controllers
     {
         private readonly IOrderdata _businessLogicCtrl;
         private readonly IFlightdata _flightDataCtrl;
+        private readonly ICustomerdata _customerDataCtrl;
 
         // Constructor with Dependency Injection
-        public OrdersController(IOrderdata inBusinessLogicCtrl, IFlightdata inFlightDataCtrl)
+        public OrdersController(IOrderdata inBusinessLogicCtrl, IFlightdata inFlightDataCtrl, ICustomerdata inCustomerDataCtrl)
         {
             _businessLogicCtrl = inBusinessLogicCtrl;
             _flightDataCtrl = inFlightDataCtrl;
+            _customerDataCtrl = inCustomerDataCtrl;
         }
 
 

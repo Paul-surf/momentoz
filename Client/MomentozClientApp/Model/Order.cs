@@ -8,7 +8,7 @@ namespace MomentozClientApp.Model
         public Order() { }
 
         // Konstruktør, der initialiserer en ny Order-instans med totalpris, købsdato, kunde-ID og billet-ID.
-        public Order(double totalPrice, DateTime purchaseDate, int? customerID, int? flightID)
+        public Order(double totalPrice, DateTime purchaseDate, int customerID, int flightID)
         {
             // Sætter egenskaberne TotalPrice, PurchaseDate, CustomerID og TicketID til de givne værdier.
             TotalPrice = totalPrice;
@@ -17,24 +17,16 @@ namespace MomentozClientApp.Model
             FlightID = flightID;
         }
 
-        // Udvidet konstruktør, der inkluderer et id samt de andre parametre.
-  
-        public Order(int id, double totalPrice, DateTime purchaseDate, int? customerID, int? flightID)
-        {
-            // Sætter egenskaben ID til den givne værdi.
-            ID = id;
-            TotalPrice = totalPrice;
-            PurchaseDate = purchaseDate;
-            CustomerID = customerID;
-            FlightID = flightID;
-            
-        }
+        //public Order(int orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
+        //    : this(totalPrice, purchaseDate, customerID, flightID)
+        //{
+        //    OrderID = orderID;
+        //}
 
-        // Egenskaber for at holde ordreinformationer såsom ID, totalpris, købsdato, kunde-ID og billet-ID.
-        public int ID { get; set; }
+        public int OrderID { get; set; }
         public double TotalPrice { get; set; }
         public DateTime PurchaseDate { get; set; }
-        public int? CustomerID { get; set; }
-        public int? FlightID { get; set; }
+        public int CustomerID { get; set; }
+        public int FlightID { get; set; }
     }
 }
