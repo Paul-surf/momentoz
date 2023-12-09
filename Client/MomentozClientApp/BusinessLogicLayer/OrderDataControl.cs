@@ -1,97 +1,63 @@
-﻿// Inkluderer nødvendige navneområder for DTOs, modellaget og servicelaget.
-
-using MomentozClientApp.Model;
+﻿using MomentozClientApp.Model;
 using MomentozClientApp.ServiceLayer;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-// Definerer navneområdet for forretningslogiklaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.BusinessLogicLayer
 {
-    // OrderdataControl-klassen implementerer IOrderdata-interface og håndterer logikken omkring ordrer.
-    public class OrderdataControl : IOrderdata
+    // Implementer IOrderdata-interfacet
+    public class OrderData : IOrderdata
     {
-        // En skrivebeskyttet reference til IOrderAccess for at interagere med ordre data.
         private readonly IOrderAccess _orderAccess;
 
-        // Konstruktøren initialiserer OrderdataControl med en IOrderAccess instans.
-        public OrderdataControl(IOrderAccess inOrderAccess)
+        public OrderData(IOrderAccess orderAccess)
         {
-            _orderAccess = inOrderAccess;
+            _orderAccess = orderAccess;
         }
 
-        // Metode til at hente en specifik ordre baseret på dens id og konvertere den til en OrderDto.
         public Order? Get(int id)
         {
-            
-            try
-            {
-                // Forsøger at hente ordren fra data laget og konvertere til OrderDto.
-                return _orderAccess.GetOrderById(id).Result;
-            }
-            catch
-            {
-                // Returnerer null, hvis der opstår en fejl.
-                return null;
-            }
-          
+            // Implementer logik for at hente en ordre baseret på ID
+            throw new NotImplementedException();
         }
 
-        // Metode til at hente alle ordrer og konvertere dem til en liste af OrderDto'er.
         public List<Order>? Get()
         {
-            List<Order>? foundOrders;
-            try
-            {
-                return _orderAccess.GetOrderAll().Result;
-            }
-            catch
-            {
-                return null;
-            }
+            // Implementer logik for at hente en liste af ordrer
+            throw new NotImplementedException();
         }
 
-        // Metode til at tilføje en ny ordre og returnere det nye id for den oprettede ordre.
         public int Add(Order orderToAdd)
         {
-
             try
             {
                 if (orderToAdd != null)
                 {
-                    return _orderAccess.CreateOrder(orderToAdd).Result;
+                    // Implementer kode til at tilføje ordren og returnere den indsættelse ID
+                    // f.eks., hvis du bruger en database, kan du indsætte ordren og få ID'en
+                    int insertedId = -1; /* Dine databaseindsætningsoperationer her */
+                    return insertedId;
                 }
                 return 0;
             }
-            catch
-                {
+            catch (Exception ex)
+            {
+                // Håndter fejl, log fejlen, eller returner en fejlkode efter behov
                 return -1;
-                }
             }
-          
-        
+        }
 
-        // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
         public bool Put(Order orderToUpdate)
         {
+            // Implementer logik for at opdatere en eksisterende ordre
             throw new NotImplementedException();
         }
 
         public bool Delete(int id)
         {
+            // Implementer logik for at slette en ordre baseret på ID
             throw new NotImplementedException();
         }
-
-        public Order? GetOrderById(int id)
-        {
-            try
-            {
-                return _orderAccess.GetOrderById(id).Result;
-            }
-            catch
-            {
-                return null;
-            }
-        }
     }
-
-
 }

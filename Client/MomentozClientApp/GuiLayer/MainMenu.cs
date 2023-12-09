@@ -10,27 +10,25 @@ namespace MomentozClientApp
 {
     public partial class MainMenu : Form
     {
-        
+
         private readonly CustomerAccess _customerAccess;
         private Timer flightRefreshTimer;
         private List<Flight> flightsData;
         private bool isDataLoaded = false;
         private double originalPrice;
-        private double basePrice; // Basispris for flyvningen
-        private double returnTicketCost; // Ekstra omkostning for returbillet
-        private double baggageCost; // Ekstra omkostning for bagage
-        private bool customersLoaded = false; // Denne variable holder styr på, om kunde-data er blevet indlæst
+        private double basePrice;
+        private double returnTicketCost; 
+        private double baggageCost;
+        private bool customersLoaded = false; 
         private bool flightsLoaded = false;
         private readonly string _customerId;
         private Customer loggedInCustomer;
-        //   private Customer _customer;
         string departure = "Afgang: Aalborg";
         string returnTicket = "Returbillet: ";
-        double price = 0; // Initialiser prisen
-   //      private readonly OrderAccess _orderAccess;
+        double price = 0;
 
 
-        //  public MainMenu(Customer customer)
+     
         public MainMenu(Customer customer)
         {
             InitializeComponent();
@@ -39,39 +37,30 @@ namespace MomentozClientApp
             flightRefreshTimer = new System.Windows.Forms.Timer();
             flightRefreshTimer.Interval = 10000; // 10 sekunder
             flightRefreshTimer.Tick += new EventHandler(flightRefreshTimer_Tick);
-       //     _orderServiceConnection = orderServiceConnection;
             UpdateTotalPrice();
             DestinationDropDown.DropDown += flightsDropDown;
             ReturValgDropDown.DropDown += comboBox2_DropDown;
             BaggageDropDown.DropDown += comboBox3_DropDown;
             DestinationDropDown.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             loggedInCustomer = customer;
-           
+
             labelCustomerName.Text = loggedInCustomer.FirstName;
             lastName.Text = loggedInCustomer.LastName;
             mobilePhone.Text = loggedInCustomer.MobilePhone;
             email.Text = loggedInCustomer.Email;
-
+            customerID.Text = loggedInCustomer.CustomerID.ToString();
             this.Shown += new System.EventHandler(this.MainMenu_Shown);
-
-
-            //_flightAccess = new FlightAccess();
         }
+      
+        private void CustomerIDLabel_Click(object sender, EventArgs e)
+        {
 
+        }
         private async void MainMenu_Shown(object sender, EventArgs e)
         {
             await LoadFlightsAsync();
             await LoadCustomersAsync();
-            // Eventuelt yderligere initialisering...
         }
-
-        public void SetLoggedInCustomer(Customer customer)
-        {
-            loggedInCustomer = customer;
-            UpdateCustomerInfo(customer.FirstName, customer.LastName, customer.MobilePhone, customer.Email);
-
-        }
-
 
         private void InitializeYesNoComboBox()
         {
@@ -93,8 +82,9 @@ namespace MomentozClientApp
             BaggageDropDown.SelectedIndex = -1;
         }
 
-        public void UpdateCustomerInfo(string firstName, string lastName, string mobilePhone, string email)
+        public void UpdateCustomerInfo(int customerID, string firstName, string lastName, string mobilePhone, string email)
         {
+            this.customerID.Text = customerID.ToString();
             if (firstName == null)
                 this.labelCustomerName.Text = firstName;
             this.lastName.Text = lastName;
@@ -105,22 +95,12 @@ namespace MomentozClientApp
             }
         }
 
-
         private void UpdateTotalPrice(double additionalCosts)
         {
-            // Antager at 'label12' er din prislabel.
             double totalPrice = basePrice + additionalCosts;
             SamletPris.Text = $"Pris: {totalPrice:C}";
         }
-        private async void PopulateDestinationDropDown()
-        {
-            // Forudsat at GetFlightAll er en statisk metode i klassen 'FlightService',
-            // og at den returnerer en liste af Flight objekter eller en tilsvarende type.
-         //   var flightList = await FlightAccess.GetFlightAll();
 
-            // Her tilføjer du flyvningerne til din dropdown.
-            // Resten af din kode...
-        }
         private async void flightRefreshTimer_Tick(object sender, EventArgs e)
         {
 
@@ -128,40 +108,6 @@ namespace MomentozClientApp
             await LoadFlightsAsync();
 
             DestinationDropDown.Enabled = true;
-        }
-        private async void MainMenu_Load(object sender, EventArgs e)
-        {
-            if (!isDataLoaded)
-            {
-                await LoadFlightsAsync(); // Brug "await" for at vente på, at LoadFlightsAsync er færdig.
-                isDataLoaded = true; // Sæt flaget til sandt, når data er indlæst første gang
-                flightRefreshTimer.Start();
-            }
-        }
-
-        private async void Form1_Load(object sender, EventArgs e)
-        {
-            if (!isDataLoaded)
-            {
-                await LoadFlightsAsync();
-                isDataLoaded = true;
-                flightRefreshTimer.Start();
-            }
-        }
-        private void Form3_Load(object sender, EventArgs e)
-        {
-            InitializeBagageWeightCombobox();
-        }
-
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            base.OnFormClosed(e);
-            if (flightRefreshTimer != null)
-            {
-                flightRefreshTimer.Stop();
-                flightRefreshTimer.Dispose();
-            }
         }
 
         private async Task LoadFlightsAsync()
@@ -183,7 +129,7 @@ namespace MomentozClientApp
                     if (flightsData != null && flightsData.Any())
                     {
                         DestinationDropDown.DisplayMember = "CustomDisplay";
-                        DestinationDropDown.ValueMember = "Id";
+                        DestinationDropDown.ValueMember = "flightId";
                         DestinationDropDown.DataSource = flightsData;
                     }
                     else
@@ -211,9 +157,7 @@ namespace MomentozClientApp
 
                     if (customers != null && customers.Any())
                     {
-                        //    // label14_Click.DisplayMember = "FullName"; // Erstat med den egenskab, du vil vise i dropdown for kunder.
-                        //      comboBox4.ValueMember = "Id"; // Antages at dit CustomerDto har en 'Id' egenskab.
-                        //    comboBox4.DataSource = customers;
+                 
                     }
                     else
                     {
@@ -228,34 +172,28 @@ namespace MomentozClientApp
         {
             var comboBox = (ComboBox)sender;
 
-            // Disable the combobox to prevent multiple clicks during data loading
             comboBox.Enabled = false;
 
             try
             {
-                // Get updated flights data from the database asynchronously
                 List<Flight> updatedFlights = await GetUpdatedFlightsAsync();
 
-                // Create a list of anonymous objects with just the destination address and country
                 var flightDisplayItems = updatedFlights.Select(flight => new
                 {
                     DisplayText = $"{flight.DestinationAddress}, {flight.DestinationCountry}",
-                    Value = flight.Id // Assuming there's an Id property to identify each flight uniquely
+                    Value = flight.FlightID 
                 }).ToList();
 
-                // Update the ComboBox with the new data
                 comboBox.DisplayMember = "DisplayText";
                 comboBox.ValueMember = "Value";
                 comboBox.DataSource = flightDisplayItems;
             }
             catch (Exception ex)
             {
-                // Handle exceptions (if any) here
-            //    MessageBox.Show("An error occurred: " + ex.Message);
+               
             }
             finally
             {
-                // Re-enable the combobox after data loading
                 comboBox.Enabled = true;
             }
         }
@@ -263,20 +201,16 @@ namespace MomentozClientApp
 
         private async Task<List<Flight>> GetUpdatedFlightsAsync()
         {
-            // Implement this method to retrieve updated flights from the database
-            // This is a placeholder for the actual database call
             return new List<Flight>();
         }
 
         private void comboBox2_DropDown(object sender, EventArgs e)
         {
-            // Opdater returbilletten ved dropdown
             UpdateTotalPrice();
         }
 
         private void comboBox3_DropDown(object sender, EventArgs e)
         {
-            // Opdater bagageomkostningerne ved dropdown
             UpdateTotalPrice(baggageCost);
         }
 
@@ -287,7 +221,6 @@ namespace MomentozClientApp
             if (DestinationDropDown.SelectedItem != null)
             {
                 var selectedFlight = (Flight)DestinationDropDown.SelectedItem;
-                // Tjek for null eller tom DestinationAddress
                 if (!string.IsNullOrEmpty(selectedFlight.DestinationAddress))
                 {
                     Destination.Text = selectedFlight.DestinationAddress;
@@ -296,8 +229,6 @@ namespace MomentozClientApp
                 {
                     Destination.Text = "Ingen adresse tilgængelig";
                 }
-
-                // Opdater også prisen, når en anden flyvning vælges
                 basePrice = selectedFlight.Price;
                 UpdateTotalPrice();
             }
@@ -312,7 +243,7 @@ namespace MomentozClientApp
             if (ReturValgDropDown.SelectedItem != null)
             {
                 string choice = ReturValgDropDown.SelectedItem.ToString();
-                returnTicketCost = choice == "Ja" ? +basePrice*1 : 0;
+                returnTicketCost = choice == "Ja" ? +basePrice * 1 : 0;
             }
             else
             {
@@ -320,21 +251,6 @@ namespace MomentozClientApp
             }
 
             UpdateTotalPrice();
-        }
-        private void UpdatePriceBasedOnSelections()
-        {
-            // Beregn den nye pris baseret på valg af returbillet og andet.
-            double additionalCosts = 0;
-
-
-            // Tjek om der er valgt en returbillet og læg den ekstra omkostning til.
-            if (ReturValgDropDown.SelectedIndex != -1 && ReturValgDropDown.SelectedItem.ToString() == "Ja")
-            {
-                additionalCosts += basePrice; // Ekstra omkostning for returbillet.
-            }
-
-            // Opdater label med den nye pris.
-            SamletPris.Text = $"Pris: {originalPrice + additionalCosts:C}";
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -375,17 +291,9 @@ namespace MomentozClientApp
             UpdateTotalPrice();
         }
 
-        // Metode, der skal kaldes, når en flyvning vælges for at sætte basisprisen
-        private void SetBasePrice(double price)
-        {
-            basePrice = price;
-            // Opdater prisen på GUI med det samme for at reflektere basisprisen
-            SamletPris.Text = $"Pris: {basePrice:C}";
-        }
 
         private void UpdateTotalPrice()
         {
-            // Samlede pris er summen af basisprisen, returbilletten og bagageomkostningerne
             double totalPrice = basePrice + returnTicketCost + baggageCost;
             SamletPris.Text = $"Pris: {totalPrice:C}";
         }
@@ -393,38 +301,63 @@ namespace MomentozClientApp
 
         private async void GodkendOrdreKnap(object sender, EventArgs e)
         {
-            // Antager at 'price', 'returnTicket' og 'Customer' er defineret et sted i din klasse
-            price = CalculatePrice(); // En metode, der beregner prisen baseret på brugerens valg
-                                      // returnTicket = DetermineReturnTicket(); // En metode, der bestemmer, om der er en returbillet
-            Customer customer = loggedInCustomer; // Metode til at hente den nuværende kundeobjekt
+            price = CalculatePrice();
+            Customer customer = loggedInCustomer; // Det nuværende kundeobjekt
 
             if (DestinationDropDown.SelectedItem != null)
             {
                 Flight selectedFlight = (Flight)DestinationDropDown.SelectedItem;
 
-                // Opret et nyt Order objekt
                 Order newOrder = new Order
                 {
-                    CustomerID = customer.Id, // Antager at Customer objektet har en Id property
-                    FlightID = selectedFlight.Id, // Antager at Flight objektet har en Id property
-                    TotalPrice = selectedFlight.Price,
-                    PurchaseDate = DateTime.Now // Sætter købsdatoen til nuværende tidspunkt
-                                                // Sæt yderligere Order egenskaber her
+                    TotalPrice = price,
+                    PurchaseDate = DateTime.Now,
+                    CustomerID = customer.CustomerID,
+                    FlightID = selectedFlight.FlightID
                 };
+
+                OrderAccess _orderAccess = new OrderAccess(); // Oprettelse af en instans af OrderAccess udenfor try-catch blokken.
 
                 try
                 {
-                    // Kalder backend service for at oprette ordren
-                    OrderAccess _orderAccess = new OrderAccess();
-                    bool success = await _orderAccess.CreateOrder(newOrder);
-                    if (success)
+                    // Opret ordre og få ordre-ID
+                    Order createdOrderResult = await _orderAccess.CreateOrder(newOrder);
+
+                    if (createdOrderResult != null)
                     {
-                        MessageBox.Show("Tillykke bestlling er gennemført!");
+                        // Ordre oprettet med succes, hent ordreoplysninger
+                        Order createdOrder = await _orderAccess.GetOrderById(createdOrderResult.OrderID);
+                        if (createdOrder != null)
+                        {
+                            // Opret en kvittering
+                            string kvittering = $"Kvittering:\n\n" +
+                            $"Kundeoplysninger:\n" +
+                            $"Navn: {customer.FirstName} {customer.LastName}\n" +
+                            $"Email: {customer.Email}\n" +
+                            $"Telefon: {customer.MobilePhone}\n\n" +
+                            $"Flyrejseoplysninger:\n" +
+                            $"Afgang: {selectedFlight.Departure}\n" +
+                            $"Ankomst: {selectedFlight.DestinationAddress}\n" +
+                            $"Ankomst: {selectedFlight.DestinationCountry}\n" +
+                            $"Pris: {selectedFlight.Price:C}\n\n" +
+                            $"Ordreoplysninger:\n" +
+                            $"Total Pris: {createdOrder.TotalPrice:C}\n" +
+                            $"Købsdato: {createdOrder.PurchaseDate}\n";
+
+                            MessageBox.Show(kvittering, "Ordrebekræftelse", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Der opstod en fejl under hentningen af den oprettede ordre.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Det var ikke muligt at oprette ordren.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Log exception og/eller vis fejlmeddelelse
                     MessageBox.Show("En fejl opstod under oprettelsen af ordren: " + ex.Message, "Systemfejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -436,14 +369,13 @@ namespace MomentozClientApp
 
 
 
+
         private double CalculatePrice()
         {
             // Implementer logikken til at beregne prisen her
             double totalPrice = basePrice + returnTicketCost + baggageCost;
             return totalPrice;
         }
-
-
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -454,7 +386,6 @@ namespace MomentozClientApp
 
             MessageBox.Show(message, caption, buttons, icon);
         }
-
         private void label10_Click(object sender, EventArgs e)
         {
             AfgangsDestination.Text = "Aalborg";
@@ -511,15 +442,5 @@ namespace MomentozClientApp
                 email.Text = loggedInCustomer.Email;
             }
         }
-        public interface IServiceConnection
-        {
-            // Andre metoder og egenskaber
-            Task<bool> CreateOrder(Order order);
-        }
-
-
-
-
     }
-
 }

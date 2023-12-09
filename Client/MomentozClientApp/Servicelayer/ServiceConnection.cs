@@ -9,8 +9,6 @@ namespace MomentozClientApp.Servicelayer
     // Denne klasse bruges til at håndtere HTTP-forbindelser til en webtjeneste.
     public class ServiceConnection : IServiceConnection
     {
-
-        // ... resten af konstruktøren ...
         public HttpClient HttpClient { get; private set; }
 
 
@@ -74,28 +72,28 @@ namespace MomentozClientApp.Servicelayer
         {
             throw new NotImplementedException();
         }
-        public interface IServiceConnection
-        {
-            Task<bool> CreateOrder(Order order);
+        //public interface IServiceConnection
+        //{
+        //    Task<bool> CreateOrder(Order order);
          
-        }
-        public async Task<bool> CreateOrder(Order order)
-        {
-            var json = JsonConvert.SerializeObject(order);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //}
+        //public async Task<bool> CreateOrder(Order order)
+        //{
+        //    var json = JsonConvert.SerializeObject(order);
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            try
-            {
-                var response = await this.HttpClient.PostAsync(this.UseUrl, content);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                // Log fejlen; i et rigtigt miljø ville du bruge en logging service frem for Console.WriteLine
-                Console.WriteLine("Exception ved oprettelse af ordre: " + ex.Message);
-                return false;
-            }
-        }
+        //    try
+        //    {
+        //        var response = await this.HttpClient.PostAsync(this.UseUrl, content);
+        //        return response.IsSuccessStatusCode;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log fejlen; i et rigtigt miljø ville du bruge en logging service frem for Console.WriteLine
+        //        Console.WriteLine("Exception ved oprettelse af ordre: " + ex.Message);
+        //        return false;
+        //    }
+        
 
     }
 }

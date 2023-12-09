@@ -9,8 +9,7 @@ namespace RESTfulService.BusinessLogicLayer
     {
         private readonly IOrderAccess _orderAccess;
 
-        public OrderdataControl(IOrderAccess inOrderAccess)
-        {
+        public OrderdataControl(IOrderAccess inOrderAccess){
             _orderAccess = inOrderAccess;
         }
 
@@ -58,7 +57,7 @@ namespace RESTfulService.BusinessLogicLayer
                     if (insertedId > 0)
                     {
                         // Antager at du kan hente det indsatte objekt ved hjælp af ID
-                        Order? insertedOrder = _orderAccess.GetOrderById(insertedId);
+                        Order insertedOrder = _orderAccess.GetOrderById(insertedId);
                         transactionScope.Complete();
                         return ModelConversion.OrderDtoConvert.FromOrder(insertedOrder);
                     }

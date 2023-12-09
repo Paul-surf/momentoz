@@ -15,14 +15,14 @@ namespace MomentozClientApp.Servicelayer
         // Felt der holder basis-URL'en til flyservicen, hentet fra konfigurationsindstillingerne.
         private readonly string _serviceBaseUrl;
         // Konstruktøren initialiserer FlightAccess-klassen.
-        public FlightAccess()
-        {
-            // Hent basis-URL fra konfigurationsindstillingerne.
-            _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
-            // Initialiser serviceforbindelsen med basis-URL'en.
-            _serviceConnection = new ServiceConnection(_serviceBaseUrl);
+        //public FlightAccess()
+        //{
+        //    // Hent basis-URL fra konfigurationsindstillingerne.
+        //    _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
+        //    // Initialiser serviceforbindelsen med basis-URL'en.
+        //    _serviceConnection = new ServiceConnection(_serviceBaseUrl);
        
-        }
+        //}
 
         // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
         public Task<int> CreateFlight(Flight flight)
