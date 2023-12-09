@@ -79,8 +79,12 @@ namespace MomentozClientApp.ServiceLayer
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var createdOrderID = JsonConvert.DeserializeObject<int>(responseContent);
+
                         Order createdOrder = new Order();
                         createdOrder.OrderID = createdOrderID;
+
+                        orderToAdd.OrderID = createdOrderID;
+
                         return orderToAdd; // Return the deserialized Order object
                     }
                     else
