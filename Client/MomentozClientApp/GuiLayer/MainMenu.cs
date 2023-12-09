@@ -317,7 +317,6 @@ namespace MomentozClientApp
                 };
 
                 OrderAccess _orderAccess = new OrderAccess(); // Oprettelse af en instans af OrderAccess udenfor try-catch blokken.
-
                 try
                 {
                     // Opret ordre, med alle oplysningerne (klar til brug)

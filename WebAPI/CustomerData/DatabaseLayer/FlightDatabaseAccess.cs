@@ -87,13 +87,17 @@ namespace DatabaseData.DatabaseLayer
             double tempPrice;
             string tempDestinationAddress;
             string tempDestinationCountry;
-            DateTime tempHomeTrip;
+            DateTime? tempHomeTrip;
+            bool isNotNull;
 
             tempFlightID = flightReader.GetInt32(flightReader.GetOrdinal("FlightID"));
             tempDeparture = flightReader.GetString(flightReader.GetOrdinal("Departure"));
             tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("DestinationAddress"));
             tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("DestinationCountry"));
-            tempHomeTrip = flightReader.GetDateTime(flightReader.GetOrdinal("HomeTrip"));
+
+            isNotNull = !flightReader.IsDBNull(flightReader.GetOrdinal("HomeTrip"));
+            tempHomeTrip = isNotNull ? flightReader.GetDateTime(flightReader.GetOrdinal("HomeTrip")) : null;
+
             tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("Price"));
 
             foundFlight = new Flight(tempFlightID, tempDeparture, tempDestinationAddress, tempDestinationCountry, tempHomeTrip, tempPrice);
