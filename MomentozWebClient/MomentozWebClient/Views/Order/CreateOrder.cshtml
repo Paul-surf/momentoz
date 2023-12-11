@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label asp-for="PurchaseDate" class="control-label"></label>
                 <div style="background-color:white;padding:5px;">
-                    @DateTime.Now
+                    @Model.PurchaseDate
                 </div>
                 <span asp-validation-for="PurchaseDate" class="text-danger"></span>
             </div>
@@ -36,8 +36,13 @@
         </form>
     </div>
 </div>
-<form method="Post" asp-controller="Order" asp-action="Profile" asp-route-order="@Model">
+<form method="Post" asp-controller="Order" asp-action="CreateOrderReceipt" >
                 <div class="form-group">
+
+        @Html.HiddenFor(model => model.FlightID)
+        @Html.HiddenFor(model => model.TotalPrice)
+        @Html.HiddenFor(model => model.PurchaseDate)
+
                     <input type="submit" value="Køb" class="btn btn-primary" />
                 </div>
             </form>

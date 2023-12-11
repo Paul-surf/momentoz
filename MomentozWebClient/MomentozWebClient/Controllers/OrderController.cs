@@ -18,17 +18,18 @@ namespace MomentozWebClient.Controllers
         }
 
         // GET: OrderController
-        public ActionResult CreateOrder(int FlightID, double price)
+        public ActionResult CreateOrder(int id, double price)
         {
             Order order = new Order();
-            order.FlightID = FlightID;
+            order.FlightID = id;
             order.TotalPrice += price;
+            order.PurchaseDate = DateTime.Now;
             return View(order);
         }
 
         // POST: api/Order/{Order}
         [HttpPost("Order")]
-        public async Task<ActionResult> Profile(Order o)
+        public async Task<ActionResult> CreateOrderReceipt(Order order)
         {
             string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
@@ -38,15 +39,15 @@ namespace MomentozWebClient.Controllers
                 return View(null);
             }
 
-            o.CustomerID = customerFromService.CustomerID;
-            Order submittedOrder = await _ordersLogic.postNewOrder(o);
+            order.CustomerID = customerFromService.CustomerID;
+            Order submittedOrder = await _ordersLogic.postNewOrder(order);
 
             if (submittedOrder == null)
             {
                 return View(null);
             }
 
-            return RedirectToAction(nameof(Index));
+            return View(submittedOrder);
         }
 
         // GET: OrderController/Details/5
