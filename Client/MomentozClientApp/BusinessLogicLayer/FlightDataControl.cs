@@ -28,7 +28,7 @@ namespace MomentozClientApp.BusinessLogicLayer
         {
             try
             {
-                return _flightAccess.GetFlightAll().Result;
+                return _flightAccess.GetAllFlights().Result;
             }
             catch
             {

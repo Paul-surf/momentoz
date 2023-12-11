@@ -1,6 +1,4 @@
-﻿using MomentozWebClient.ServiceLayer;
-using Microsoft.Extensions.DependencyInjection;
-using MomentozWebClient.Models;
+﻿using MomentozWebClient.Models;
 using Newtonsoft.Json;
 
 namespace MomentozWebClient.ServiceLayer
@@ -59,7 +57,7 @@ namespace MomentozWebClient.ServiceLayer
             return flightFromService;
         }
 
-        public bool AddFlightr(Flight flight)
+        public bool AddFlight(Flight flight)
         {
             throw new NotImplementedException();
         }

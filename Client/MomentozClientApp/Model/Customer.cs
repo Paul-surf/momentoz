@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace MomentozClientApp.Model
+﻿namespace MomentozClientApp.Model
 {
     public class Customer
     {
@@ -19,25 +17,13 @@ namespace MomentozClientApp.Model
             FullName = fullName;
         }
 
-        [JsonProperty("customerid")]
+      
         public int CustomerID { get; set; }
-
-        [JsonProperty("firstName")]
         public string FirstName { get; set; }
-
-        [JsonProperty("lastName")]
         public string LastName { get; set; }
-
-        [JsonProperty("mobilePhone")]
-        public string MobilePhone { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("loginUserId")]
+        public string MobilePhone { get; set; }   
+        public string Email { get; set; }  
         public string LoginUserId { get; set; }
-
-        [JsonProperty("fullName")]
         public string FullName { get; set; }
     }
 }
