@@ -60,9 +60,32 @@ namespace MomentozWebClient.ServiceLayer
             return orderFromService;
         }
 
-        public bool AddOrder(Order order)
+        public async Task<Order> AddOrder(Order newOrder)
         {
-            throw new NotImplementedException();
+            Order? orderFromService = null;
+
+            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
+            _orderServiceConnection.UseUrl += "orders/";
+            if (_orderServiceConnection != null)
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(newOrder);
+                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var serviceResponse = await _orderServiceConnection.CallServicePost(inContent);
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
+                        orderFromService = JsonConvert.DeserializeObject<Order>(resultContent);
+                    }
+                }
+                catch
+                {
+                    orderFromService = null;
+                }
+            }
+            return orderFromService;
         }
 
         public bool DeleteOrder(int id)
@@ -142,7 +165,7 @@ namespace MomentozWebClient.ServiceLayer
 
         public async Task<Order?> SaveOrder(Order orderToSave)
         {
-            Order orderFromService = null;
+            Order? orderFromService = null;
 
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
             _orderServiceConnection.UseUrl += "orders/" + orderToSave.FlightID;

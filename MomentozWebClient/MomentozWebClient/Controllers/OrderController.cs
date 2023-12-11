@@ -2,27 +2,52 @@
 using Microsoft.AspNetCore.Mvc;
 using MomentozWebClient.BusinessLogicLayer;
 using MomentozWebClient.Models;
-
+using System.Security.Claims;
 
 namespace MomentozWebClient.Controllers
 {
     public class OrderController : Controller
     {
         readonly OrderLogic _ordersLogic;
+        readonly CustomerLogic _customerLogic;
 
         public OrderController(IConfiguration inConfiguration)
         {
             _ordersLogic = new OrderLogic(inConfiguration);
+            _customerLogic = new CustomerLogic(inConfiguration);
         }
 
         // GET: OrderController
-        public ActionResult CreateOrder(Flight flight)
+        public ActionResult CreateOrder(int FlightID, double price)
         {
-            Order order = new Order(flight.Id, flight.Price);
-            
+            Order order = new Order();
+            order.FlightID = FlightID;
+            order.TotalPrice += price;
             return View(order);
         }
 
+        // POST: api/Order/{Order}
+        [HttpPost("Order")]
+        public async Task<ActionResult> Profile(Order o)
+        {
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
+
+            if (customerFromService == null)
+            {
+                return View(null);
+            }
+
+            o.CustomerID = customerFromService.CustomerID;
+            Order submittedOrder = await _ordersLogic.postNewOrder(o);
+
+            if (submittedOrder == null)
+            {
+                return View(null);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: OrderController/Details/5
         public ActionResult Details(int id)
