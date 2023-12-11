@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using DatabaseData.ModelLayer;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace DatabaseData.DatabaseLayer
 {
@@ -21,30 +22,45 @@ namespace DatabaseData.DatabaseLayer
         public int CreateOrder(Order aOrder)
         {
             int insertedId = -1;
-                
             string insertString = @"INSERT INTO Orders (TotalPrice, PurchaseDate, CustomerID, FlightID) 
-                        OUTPUT INSERTED.OrderID 
-                        VALUES (@TotalPrice, @PurchaseDate, @CustomerID, @FlightID)";
-
+                            OUTPUT INSERTED.OrderID 
+                            VALUES (@TotalPrice, @PurchaseDate, @CustomerID, @FlightID)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                SqlParameter TotalPriceParam = new("@totalPrice", aOrder.TotalPrice);
-                CreateCommand.Parameters.Add(TotalPriceParam);
-                SqlParameter PurchaseDateParam = new("@purchaseDate", aOrder.PurchaseDate);
-                CreateCommand.Parameters.Add(PurchaseDateParam);
-                SqlParameter FlightIDParam = new("@flightID", aOrder.FlightID);
-                CreateCommand.Parameters.Add(FlightIDParam);
-                SqlParameter CustomerIDParam = new("@customerID", aOrder.CustomerID);
-                CreateCommand.Parameters.Add(CustomerIDParam);
-
                 con.Open();
+                //  using (SqlTransaction transaction = con.BeginTransaction())
+                using (SqlTransaction transaction = con.BeginTransaction(IsolationLevel.Serializable))
 
-                insertedId = (int)CreateCommand.ExecuteScalar();
+                {
+                    using (SqlCommand CreateCommand = new SqlCommand(insertString, con, transaction))
+                    {
+                        try
+                        {
+                            // Tilføj parametre til CreateCommand
+                            CreateCommand.Parameters.Add(new SqlParameter("@totalPrice", aOrder.TotalPrice));
+                            CreateCommand.Parameters.Add(new SqlParameter("@purchaseDate", aOrder.PurchaseDate));
+                            CreateCommand.Parameters.Add(new SqlParameter("@flightID", aOrder.FlightID));
+                            CreateCommand.Parameters.Add(new SqlParameter("@customerID", aOrder.CustomerID));
+
+                            // Udfør kommandoen
+                            insertedId = (int)CreateCommand.ExecuteScalar();
+
+                            // Commit transaktionen
+                            transaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            // Noget gik galt, rul transaktionen tilbage
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
             }
             return insertedId;
         }
+
 
         public bool DeleteOrderById(int id)
         {
@@ -95,7 +111,6 @@ namespace DatabaseData.DatabaseLayer
         public Order GetOrderById(int findId)
         {
             Order foundOrder;
-         
             string queryString = "SELECT OrderID, TotalPrice, PurchaseDate, CustomerID, FlightID FROM orders WHERE OrderID = @OrderID";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -120,7 +135,7 @@ namespace DatabaseData.DatabaseLayer
             throw new NotImplementedException();
         }
 
-        Order? IOrderAccess.GetOrderByCustomerId(int customerId)
+        public Order? GetOrderByCustomerId(int customerId)
         {
             Order foundOrder;
 

@@ -13,7 +13,8 @@ namespace MomentozClientApp.Servicelayer
 
         // Asynkron metode til at hente alle tilgængelige flyvninger.
         // Returnerer en liste af Flight-objekter.
-        Task<List<Flight>> GetFlightAll();
+        Task<List<Flight>> GetAllFlights();
+
 
         // Asynkron metode til at oprette en ny flyvning.
         // Modtager et Flight-objekt som parameter og returnerer en identifikator for den oprettede flyvning.

@@ -1,10 +1,7 @@
-﻿using MomentozWebClient.ServiceLayer;
-using Microsoft.Extensions.DependencyInjection;
-using MomentozWebClient.Models;
+﻿using MomentozWebClient.Models;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MomentozWebClient.ServiceLayer
 {

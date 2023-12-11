@@ -1,6 +1,4 @@
-﻿using MomentozWebClient.ServiceLayer;
-using Microsoft.Extensions.DependencyInjection;
-using MomentozWebClient.Models;
+﻿using MomentozWebClient.Models;
 using Newtonsoft.Json;
 using System.Text;
 
