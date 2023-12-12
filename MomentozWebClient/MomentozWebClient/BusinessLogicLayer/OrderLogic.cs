@@ -43,5 +43,17 @@ namespace MomentozWebClient.BusinessLogicLayer
             }
             return foundOrder;
         }
+        public async Task<Order> postNewOrder(Order newOrder)
+        {
+            Order createdOrder;
+            try
+            {
+                createdOrder = await _orderServiceAccess.AddOrder(newOrder);
+            } catch
+            {
+                createdOrder = null;
+            }
+            return createdOrder;
+        }
     }
 }

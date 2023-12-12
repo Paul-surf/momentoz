@@ -3,7 +3,7 @@
         public class FlightDto
         {
 
-      //  public FlightDto() { }
+        public FlightDto() { }
 
         public FlightDto(int inFlightID, string? inDeparture,  string? inDestinationAddress, string? inDestinationCountry, DateTime? homeTrip, double inPrice)
         {

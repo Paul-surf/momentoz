@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MomentozWebClient.BusinessLogicLayer;
 using MomentozWebClient.Models;
@@ -18,6 +19,7 @@ namespace MomentozWebClient.Controllers
             _flightsLogic = new FlightLogic(inConfiguration);
         }
 
+        [Authorize]
         public async Task<ActionResult> Flights()
         {
             List<Flight>? foundFlights = await _flightsLogic.GetAllFlights();
