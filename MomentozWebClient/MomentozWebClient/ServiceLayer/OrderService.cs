@@ -60,7 +60,7 @@ namespace MomentozWebClient.ServiceLayer
 
         public async Task<Order> AddOrder(Order newOrder)
         {
-            Order? orderFromService = null;
+            int? orderFromService = null;
 
             _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
             _orderServiceConnection.UseUrl += "orders/";
@@ -75,7 +75,7 @@ namespace MomentozWebClient.ServiceLayer
                     if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
                     {
                         var resultContent = await serviceResponse.Content.ReadAsStringAsync();
-                        orderFromService = JsonConvert.DeserializeObject<Order>(resultContent);
+                        orderFromService = JsonConvert.DeserializeObject<int>(resultContent);
                     }
                 }
                 catch
@@ -85,9 +85,9 @@ namespace MomentozWebClient.ServiceLayer
             }
             if(orderFromService == null)
             {
-                return orderFromService;
+                return null;
             }
-            newOrder.ID = orderFromService.ID;
+            newOrder.ID = orderFromService;
             return newOrder;
             
         }
