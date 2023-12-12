@@ -1,9 +1,4 @@
-﻿// Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
-using MomentozClientApp.Model;
-using Newtonsoft.Json;
-using System.Text;
-
-namespace MomentozClientApp.Servicelayer
+﻿namespace MomentozClientApp.Servicelayer
 {
     // ServiceConnection-klassen implementerer IServiceConnection-grænsefladen.
     // Denne klasse bruges til at håndtere HTTP-forbindelser til en webtjeneste.
@@ -29,8 +24,10 @@ namespace MomentozClientApp.Servicelayer
         // HttpEnabler er en instans af HttpClient og er skjult for eksterne klasser (private get).
         // 'init' betyder, at denne ejendom kun kan sættes under objektets initialisering.
         public HttpClient HttpEnabler { private get; init; }
+
         // BaseUrl indeholder den grundlæggende URL for HTTP-forbindelser.
         public string? BaseUrl { get; init; }
+
         // UseUrl kan ændres og indeholder den aktuelle URL, der anvendes for HTTP-anmodninger.
         public string? UseUrl { get; set; }
 
@@ -63,7 +60,6 @@ namespace MomentozClientApp.Servicelayer
             return hrm;
         }
 
-        // Metoderne CallServicePut og CallServiceDelete er ikke implementeret endnu og vil kaste en NotImplementedException, hvis de forsøges anvendt.
         public Task<HttpResponseMessage?> CallServicePut(StringContent postJson)
         {
             throw new NotImplementedException();
@@ -72,28 +68,5 @@ namespace MomentozClientApp.Servicelayer
         {
             throw new NotImplementedException();
         }
-        //public interface IServiceConnection
-        //{
-        //    Task<bool> CreateOrder(Order order);
-         
-        //}
-        //public async Task<bool> CreateOrder(Order order)
-        //{
-        //    var json = JsonConvert.SerializeObject(order);
-        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //    try
-        //    {
-        //        var response = await this.HttpClient.PostAsync(this.UseUrl, content);
-        //        return response.IsSuccessStatusCode;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log fejlen; i et rigtigt miljø ville du bruge en logging service frem for Console.WriteLine
-        //        Console.WriteLine("Exception ved oprettelse af ordre: " + ex.Message);
-        //        return false;
-        //    }
-        
-
     }
 }

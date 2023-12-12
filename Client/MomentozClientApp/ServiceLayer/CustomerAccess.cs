@@ -99,9 +99,6 @@ namespace MomentozClientApp.Servicelayer
             throw new NotImplementedException();
         }
 
-
-
-        // Stub for at oprette en kunde.
         public Task<int> CreateCustomer(Customer customer)
         {
             throw new NotImplementedException();
