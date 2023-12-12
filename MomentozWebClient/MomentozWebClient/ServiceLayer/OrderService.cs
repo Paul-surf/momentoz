@@ -83,7 +83,13 @@ namespace MomentozWebClient.ServiceLayer
                     orderFromService = null;
                 }
             }
-            return orderFromService;
+            if(orderFromService == null)
+            {
+                return orderFromService;
+            }
+            newOrder.ID = orderFromService.ID;
+            return newOrder;
+            
         }
 
         public bool DeleteOrder(int id)
