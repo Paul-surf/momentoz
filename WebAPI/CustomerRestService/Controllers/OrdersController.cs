@@ -72,7 +72,7 @@ namespace RESTfulService.Controllers
 
                 if (createdOrderDto != null && createdOrderDto.OrderID > 0) 
                 {
-                    return Ok(createdOrderDto); // Returnerer den nyoprettede ordre
+                    return Ok(createdOrderDto.OrderID); // Returnerer ID'et for den nyoprettede ordre
                 }
                 else
                 {
