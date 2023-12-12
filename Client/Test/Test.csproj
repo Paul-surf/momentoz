@@ -5,8 +5,6 @@
 	  <!-- Updated this line -->
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
-	  <UseWPF>true</UseWPF>
-	  <!-- Add this line if using WPF -->
 	  <UseWindowsForms>true</UseWindowsForms>
 	  <!-- Add this line if using Windows Forms -->
 	  <IsPackable>false</IsPackable>

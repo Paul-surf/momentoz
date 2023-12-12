@@ -3,6 +3,7 @@ using RESTfulService.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Transactions;
 using DatabaseData.ModelLayer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RESTfulService.Controllers
 {
@@ -24,7 +25,12 @@ namespace RESTfulService.Controllers
 
 
         // URL: api/Orders
-        [HttpGet]
+        [Authorize]
+        [HttpGet("protected")]
+        public IActionResult ProtectedEndpoint()
+        {
+            return Ok(new { result = "Du har adgang til beskyttet data!" });
+        }
         public ActionResult<List<OrderDto>> Get()
         
         {
