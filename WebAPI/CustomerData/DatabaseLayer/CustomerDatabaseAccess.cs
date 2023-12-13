@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using DatabaseData.ModelLayer;
 using Microsoft.Data.SqlClient;
-using System.Data;
 
 namespace DatabaseData.DatabaseLayer
 {

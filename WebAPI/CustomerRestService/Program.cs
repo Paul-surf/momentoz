@@ -4,14 +4,13 @@ using RESTfulService.BusinesslogicLayer;
 using DatabaseData.DatabaseLayer;
 using RESTfulService.BusinessLogicLayer;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
 
-// Add services to the container.
+//Dependency Injections
 builder.Services.AddSingleton<ICustomerdata, CustomerdataControl>();
 builder.Services.AddSingleton<ICustomerAccess, CustomerDatabaseAccess>();
 builder.Services.AddSingleton<IFlightdata, FlightdataControl>();
