@@ -33,7 +33,6 @@
             FlightID = flightID;
         }
 
-
   
         public int FlightID { get; set; }
 

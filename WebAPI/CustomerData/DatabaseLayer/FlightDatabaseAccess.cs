@@ -73,10 +73,7 @@ namespace DatabaseData.DatabaseLayer
             }
             catch (Exception ex)
             {
-                // Log the exception here
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                // You can also rethrow the exception if needed
-                // throw;
             }
 
             return foundFlights;
@@ -91,7 +88,6 @@ namespace DatabaseData.DatabaseLayer
             double tempPrice;
             string tempDestinationAddress;
             string tempDestinationCountry;
-            DateTime? tempHomeTrip;
             bool isNotNull;
 
             tempFlightID = flightReader.GetInt32(flightReader.GetOrdinal("FlightID"));
@@ -100,7 +96,6 @@ namespace DatabaseData.DatabaseLayer
             tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("DestinationCountry"));
 
             tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("Price"));
-
             foundFlight = new Flight(tempFlightID, tempDeparture, tempDestinationAddress, tempDestinationCountry, tempPrice);
             return foundFlight;
         }

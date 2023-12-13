@@ -5,7 +5,6 @@ namespace DatabaseData.DatabaseLayer
 {
     public interface ICustomerAccess
     {
-
         Customer GetCustomerById(int id);
         List<Customer> GetCustomerAll();
         int CreateCustomer(Customer customerToAdd);

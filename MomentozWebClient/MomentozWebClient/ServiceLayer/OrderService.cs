@@ -87,7 +87,7 @@ namespace MomentozWebClient.ServiceLayer
             {
                 return null;
             }
-            newOrder.ID = orderFromService;
+            newOrder.OrderID = orderFromService;
             return newOrder;
             
         }

@@ -5,7 +5,6 @@ namespace RESTfulService.BusinessLogicLayer
 
     public interface ICustomerdata
     {
-
         CustomerDto? Get(int id);
         List<CustomerDto>? Get(string? email);
         CustomerDto CreateNewCustomer(CustomerDto customerToAdd);

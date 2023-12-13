@@ -96,5 +96,10 @@ namespace MomentozWebClient.ServiceLayer
         {
             throw new NotImplementedException();
         }
+
+        internal Task<Flight> GetFlightById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

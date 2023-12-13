@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MomentozWebClient.Models.Flight>
 
 @{
-    ViewData["Title"] = "Flights";
+    ViewData["Title"] = "Flyrejser";
 }
 
 <h1>Rejser</h1>
 @if (Model == null)
 {
-    <h4> Der er i øjeblikket ingen rejser.</h4>
+    <h4> Der er i øjeblikket ingen tilgængelige rejser.</h4>
 } else
 {
 <table class="table">
@@ -16,9 +16,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Departure)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
@@ -37,9 +34,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Departure)
             </td>
-        @*     <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
@@ -50,11 +44,7 @@
                 @Html.DisplayFor(modelItem => item.DestinationCountry)
             </td>
             <td>
-                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                @*<a asp-action="Select" asp-route-id="@item.Id">Vælg</a>*@
                 <a asp-controller="Order" asp-action="createOrder" asp-route-id="@item.FlightID" asp-route-price="@item.Price">Vælg</a>
-
-                
             </td>
         </tr>
 }

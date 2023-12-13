@@ -14,7 +14,6 @@ namespace DatabaseData.DatabaseLayer
             _connectionString = configuration.GetConnectionString("MomentozConnection");
         }
 
-        // For test
         public CustomerDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
@@ -30,7 +29,6 @@ namespace DatabaseData.DatabaseLayer
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Validering af indkomne data
                 if (string.IsNullOrWhiteSpace(aCustomer.FirstName) || string.IsNullOrWhiteSpace(aCustomer.LastName))
                 {
                     throw new ArgumentException("Fornavn og efternavn er påkrævet.");
@@ -56,12 +54,6 @@ namespace DatabaseData.DatabaseLayer
         {
             throw new NotImplementedException();
         }
-
-        /* Three possible returns:
-          * A List<Person> with content
-          * A List<Person> with no content (no rows found in table)
-          * Null - Some error occurred
-          */
         public List<Customer> GetCustomerAll()
         {
             List<Customer> foundCustomers;
@@ -72,9 +64,9 @@ namespace DatabaseData.DatabaseLayer
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
                 con.Open();
-                // Execute read
+            
                 SqlDataReader customerReader = readCommand.ExecuteReader();
-                // Collect data
+              
                 foundCustomers = new List<Customer>();
                 while (customerReader.Read())
                 {
@@ -89,10 +81,10 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             int tempCustomerID;
-            bool isNotNull; // Test for null values
+            bool isNotNull; 
             string? tempFirstName, tempLastName, tempMobilePhone, tempEmail, tempStreetName, tempLoginUserId, tempZipCode;
 
-            // Fetch values
+         
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("customerID"));
             tempCustomerID = isNotNull ? customerReader.GetInt32(customerReader.GetOrdinal("customerID")) : 0;
             isNotNull = !customerReader.IsDBNull(customerReader.GetOrdinal("firstName"));
@@ -115,13 +107,6 @@ namespace DatabaseData.DatabaseLayer
             return foundCustomer;
         }
 
-
-
-        /* Three possible returns:
-         * A Person object
-         * An empty Person object (no match on id)
-         * Null - Some error occurred
-        */
         public Customer GetCustomerById(int findId)
         {
             Customer foundCustomer;
@@ -189,16 +174,12 @@ namespace DatabaseData.DatabaseLayer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions here (e.g., log the error)
-                // You may want to throw an exception or return an error status in a real-world scenario
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
 
             return updatedCustomer;
         }
 
-
-        // Finds the customer by loginUserId and NOT id 
         public Customer GetCustomerByUserId(string? findUserId)
         {
             Customer foundCustomer = null;
@@ -227,35 +208,29 @@ namespace DatabaseData.DatabaseLayer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions here (e.g., log the error)
-                // You may want to throw an exception or return an error status in a real-world scenario
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
 
             return foundCustomer;
         }
 
-
-
-        // Save customer with loginUserId and email only
         public Customer CreateCustomerMinimal(Customer aMinimalCustomer)
         {
             Customer createdCustomer;
-            //
+            
             string insertString = "insert into Customers(loginUserId, email) values(@loginUserI, @emai)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-                // Prepare SQL
                 SqlParameter fNameParam = new("@loginUserI", aMinimalCustomer.LoginUserId);
                 CreateCommand.Parameters.Add(fNameParam);
                 SqlParameter lNameParam = new("@emai", aMinimalCustomer.Email);
                 CreateCommand.Parameters.Add(lNameParam);
-                //
+                
                 con.Open();
-                // Execute save
+               
                 CreateCommand.ExecuteNonQuery();
-                // Read customer to verify saving was ok
+               
                 createdCustomer = GetCustomerByUserId(aMinimalCustomer.LoginUserId);
             }
             return createdCustomer;
@@ -269,12 +244,11 @@ namespace DatabaseData.DatabaseLayer
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                // Prepare SQL
                 SqlParameter idParam = new SqlParameter("@email", findEmail);
                 readCommand.Parameters.Add(idParam);
-                //
+                
                 con.Open();
-                // Execute read
+              
                 SqlDataReader customerReader = readCommand.ExecuteReader();
                 foundCustomer = new Customer();
                 while (customerReader.Read())
