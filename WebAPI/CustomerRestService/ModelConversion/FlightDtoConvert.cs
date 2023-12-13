@@ -29,7 +29,7 @@ namespace RESTfulService.ModelConversion
                 return null;
   
 
-                return new FlightDto(inFlight.FlightID, inFlight.Departure, inFlight.DestinationAddress, inFlight.DestinationCountry, inFlight.HomeTrip, inFlight.Price);
+                return new FlightDto(inFlight.FlightID, inFlight.Departure, inFlight.DestinationAddress, inFlight.DestinationCountry, inFlight.Price);
             }
 
             public static Flight? ToFlight(FlightDto inDto)
@@ -37,7 +37,7 @@ namespace RESTfulService.ModelConversion
             if (inDto == null)
                 return null;
 
-                return new Flight(inDto.Departure, inDto.DestinationAddress, inDto.DestinationCountry, inDto.HomeTrip, inDto.Price); 
+                return new Flight(inDto.Departure, inDto.DestinationAddress, inDto.DestinationCountry, inDto.Price); 
             }
         }
     }

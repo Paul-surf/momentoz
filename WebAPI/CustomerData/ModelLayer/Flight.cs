@@ -13,12 +13,11 @@
         // - destinationCountry: Land for destinationen.
         // - homeTrip: Dato for hjemrejsen (kan være null).
         // - price: Prisen for flyvningen.
-        public Flight(string departure, string destinationAddress, string destinationCountry, DateTime? homeTrip, double price)
+        public Flight(string departure, string destinationAddress, string destinationCountry, double price)
         {
             Departure = departure;
             DestinationAddress = destinationAddress;
             DestinationCountry = destinationCountry;
-            HomeTrip = homeTrip;
             Price = price;
         }
 
@@ -28,8 +27,8 @@
         // Parametre genbruges fra den tidligere konstruktør.
         // - flightID: Unik identifikator for flyvningen. Denne konstruktør bruges, hvis der allerede er et ID,
         //   eller hvis der skal tildeles en specifik ID.
-        public Flight(int flightID, string departure, string destinationAddress, string destinationCountry, DateTime? homeTrip, double price)
-            : this(departure, destinationAddress, destinationCountry, homeTrip, price)
+        public Flight(int flightID, string departure, string destinationAddress, string destinationCountry, double price)
+            : this(departure, destinationAddress, destinationCountry, price)
         {
             FlightID = flightID;
         }
@@ -46,7 +45,6 @@
 
         public string DestinationCountry { get; set; }
 
-        public DateTime? HomeTrip { get; set; }
 
         // Egenskab som bruger string concatenation til at danne en brugerdefineret displaystreng, der viser afgang, destination og land.
         public string? CustomDisplay => $"{Departure}, {DestinationAddress}, {DestinationCountry}";

@@ -52,7 +52,7 @@ namespace DatabaseData.DatabaseLayer
 
             try
             {
-                string info = "FlightID, Departure, DestinationAddress, DestinationCountry, HomeTrip, Price";
+                string info = "FlightID, Departure, DestinationAddress, DestinationCountry, Price";
                 string table = "Flights";
                 string whereStatement = "FlightID not in (SELECT FlightID From Orders)";
 
@@ -99,12 +99,9 @@ namespace DatabaseData.DatabaseLayer
             tempDestinationAddress = flightReader.GetString(flightReader.GetOrdinal("DestinationAddress"));
             tempDestinationCountry = flightReader.GetString(flightReader.GetOrdinal("DestinationCountry"));
 
-            isNotNull = !flightReader.IsDBNull(flightReader.GetOrdinal("HomeTrip"));
-            tempHomeTrip = isNotNull ? flightReader.GetDateTime(flightReader.GetOrdinal("HomeTrip")) : null;
-
             tempPrice = flightReader.GetDouble(flightReader.GetOrdinal("Price"));
 
-            foundFlight = new Flight(tempFlightID, tempDeparture, tempDestinationAddress, tempDestinationCountry, tempHomeTrip, tempPrice);
+            foundFlight = new Flight(tempFlightID, tempDeparture, tempDestinationAddress, tempDestinationCountry, tempPrice);
             return foundFlight;
         }
 
