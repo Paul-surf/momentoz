@@ -1,7 +1,6 @@
 ﻿using DatabaseData.ModelLayer;
 using DatabaseData.DatabaseLayer;
 using RESTfulService.DTOs;
-using System.Transactions;
 
 namespace RESTfulService.BusinessLogicLayer
 {
@@ -12,7 +11,6 @@ namespace RESTfulService.BusinessLogicLayer
         public OrderdataControl(IOrderAccess inOrderAccess){
             _orderAccess = inOrderAccess;
         }
-
         public OrderDto? Get(int idToMatch)
         {
             OrderDto? foundOrderDto;
@@ -28,7 +26,6 @@ namespace RESTfulService.BusinessLogicLayer
             return foundOrderDto;
         }
 
-
         public List<OrderDto>? Get()
         {
             List<OrderDto>? foundDtos;
@@ -43,7 +40,6 @@ namespace RESTfulService.BusinessLogicLayer
             }
             return foundDtos;
         }
-        
 
         public OrderDto CreateOrder(OrderDto orderToAdd)
         {
@@ -62,18 +58,6 @@ namespace RESTfulService.BusinessLogicLayer
             return null;
         }
 
-
-
-        
-        public OrderDto Put(OrderDto orderToUpdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
         public OrderDto? GetOrderByCustomerId(int customerId)
         {
             OrderDto? foundOrderDto;
@@ -89,6 +73,15 @@ namespace RESTfulService.BusinessLogicLayer
             return foundOrderDto;
         }
 
-    
+        public OrderDto Put(OrderDto orderToUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

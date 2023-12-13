@@ -9,6 +9,6 @@ namespace DatabaseData.DatabaseLayer
         int CreateOrder(Order orderToAdd);
         bool UpdateOrder(Order orderToUpdate);
         bool DeleteOrderById(int id);
-        Order? GetOrderByCustomerId(int ticketId);
+        Order? GetOrderByCustomerId(int customerId);
     }
 }
