@@ -36,7 +36,7 @@ namespace MomentozWebClient.Controllers
 
             if (customerFromService == null)
             {
-                return View(null);
+                return RedirectToPagePermanent("/Account/Login");
             }
 
             order.CustomerID = customerFromService.CustomerID;
