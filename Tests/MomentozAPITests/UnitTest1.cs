@@ -7,7 +7,7 @@ namespace MomentozAPITests
         {
             // Arrange
             using var client = new HttpClient();
-            var apiUrl = "http://localhost:5114/api/";
+            var apiUrl = "http://localhost:7049/index.html";
 
             // Act
             var response = await client.GetAsync(apiUrl);
