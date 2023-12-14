@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataTest;
 
-public class OrderDatabaseAccessTests
+public class TestORDER
     {
         [Fact]
         public void CreateOrder_Test()
@@ -25,14 +25,14 @@ public class OrderDatabaseAccessTests
             // Angiv de nødvendige egenskaber for Order-klassen
             TotalPrice = 100.0,
             PurchaseDate = DateTime.Now,
-            CustomerID = 1,
-            FlightID = 1
+            CustomerID = 4,
+            FlightID = 4
         };
 
         // Act
         var result = orderDatabaseAccess.CreateOrder(aOrder);
 
         // Assert
-        Assert.Equals(1, result); // Bekræft, at den returnerede ID er som forventet
+        Assert.AreEqual(1, result); ; // Bekræft, at den returnerede ID er som forventet
     }
 }
