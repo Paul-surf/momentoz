@@ -119,7 +119,7 @@ namespace DatabaseData.DatabaseLayer
                         foundFlight.Departure = reader.GetString(reader.GetOrdinal("Departure"));
                         foundFlight.DestinationAddress = reader.GetString(reader.GetOrdinal("DestinationAddress"));
                         foundFlight.DestinationCountry = reader.GetString(reader.GetOrdinal("DestinationCountry"));
-
+                        foundFlight.Price = reader.GetDouble(reader.GetOrdinal("price"));
                     }
                 }
             }

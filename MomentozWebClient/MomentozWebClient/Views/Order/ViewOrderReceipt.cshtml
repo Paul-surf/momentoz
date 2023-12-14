@@ -1,5 +1,4 @@
-﻿@model MomentozWebClient.Models.Order
-
+﻿@model MomentozWebClient.Models.OrderData
 @{
     ViewData["Title"] = "Kvittering";
 }
@@ -20,23 +19,23 @@
                         </dt>
                         <dd class="col-sm-10">
                             <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                                @Html.DisplayFor(model => model.TotalPrice)
+                                @Html.DisplayFor(model => model.OrderOrder.TotalPrice)
                             </div>
                         </dd>
                         <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                            @Html.DisplayNameFor(model => model.OrderOrder.PurchaseDate)
                         </dt>
                         <dd class="col-sm-10">
                             <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                                @Html.DisplayFor(model => model.PurchaseDate)
+                                @Html.DisplayFor(model => model.OrderOrder.PurchaseDate)
                             </div>
                         </dd>
                         <dt class="col-sm-2">
-                            KundeID
+                            Kunde Email
                         </dt>
                         <dd class="col-sm-10">
                             <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                               @Html.DisplayFor(model => model.CustomerID)
+                               @Html.DisplayFor(model => model.OrderCustomer.Email)
                             </div>
                         </dd>
                         <dt class="col-sm-2">
@@ -44,7 +43,7 @@
                         </dt>
                         <dd class="col-sm-10">
                             <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                                @Html.DisplayFor(model => model.FlightID)
+                                @Html.DisplayFor(model => model.OrderFlight.FlightID)
                             </div>
                         </dd>
                     </dl>
@@ -59,3 +58,4 @@ else
     <h4>En anden har placeret ordreren på rejsen før dig.</h4>
     <p>Du er velkommen til og bestille en anden rejse :)</p>
 }
+

@@ -8,14 +8,13 @@ namespace MomentozWebClient.BusinessLogicLayer
 
 
         private readonly OrderService _orderServiceAccess;
+        private readonly FlightService _flightService;
 
         public OrderLogic(IConfiguration inConfiguration)
         {
             _orderServiceAccess = new OrderService(inConfiguration);
+            _flightService = new FlightService(inConfiguration);
         }
-
-
-
         public async Task<List<Order>> GetAllOrders()
         {
             List<Order> foundOrders;
@@ -54,6 +53,11 @@ namespace MomentozWebClient.BusinessLogicLayer
                 createdOrder = null;
             }
             return createdOrder;
+        }
+        public async Task<Flight> getFlightById(int flightID)
+        {
+            Flight flight = await _flightService.GetFlightById(flightID);
+            return flight;
         }
     }
 }

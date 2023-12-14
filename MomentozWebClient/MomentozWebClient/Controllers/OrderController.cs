@@ -10,6 +10,7 @@ namespace MomentozWebClient.Controllers
     {
         readonly OrderLogic _ordersLogic;
         readonly CustomerLogic _customerLogic;
+        private static OrderData dataBag = OrderData.getInstance();
 
         public OrderController(IConfiguration inConfiguration)
         {
@@ -17,37 +18,41 @@ namespace MomentozWebClient.Controllers
             _customerLogic = new CustomerLogic(inConfiguration);
         }
 
-        // GET: OrderController
-        public ActionResult CreateOrder(int id, double price)
+        public async Task<ActionResult> ViewOrderData(int id)
         {
-            Order order = new Order();
-            order.FlightID = id;
-            order.TotalPrice += price;
-            order.PurchaseDate = DateTime.Now;
-            return View(order);
+            dataBag.OrderFlight = await _ordersLogic.getFlightById(id);
+
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
+
+            dataBag.OrderCustomer = customerFromService;
+
+            return View(dataBag);
         }
 
         // POST: api/Order/{Order}
         [HttpPost("Order")]
-        public async Task<ActionResult> CreateOrderReceipt(Order order)
+        public async Task<ActionResult> ViewOrderReceipt(int id)
         {
-            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
-
-            if (customerFromService == null)
-            {
-                return RedirectToPagePermanent("/Account/Login");
-            }
-
-            order.CustomerID = customerFromService.CustomerID;
-            Order submittedOrder = await _ordersLogic.postNewOrder(order);
-
-            if (submittedOrder == null)
+            if (dataBag.Id != id)
             {
                 return View(null);
             }
 
-            return View(submittedOrder);
+            Order order = new Order();
+            order.FlightID = dataBag.OrderFlight.FlightID;
+            order.CustomerID = dataBag.OrderCustomer.CustomerID;
+            order.TotalPrice = dataBag.OrderFlight.Price;
+            order.PurchaseDate = DateTime.Now;
+
+            Order submittedOrder = await _ordersLogic.postNewOrder(order);
+            if (submittedOrder == null)
+            {
+                return View(null);
+            }
+            dataBag.OrderOrder = submittedOrder;
+
+            return View(dataBag);
         }
 
         // GET: OrderController/Details/5

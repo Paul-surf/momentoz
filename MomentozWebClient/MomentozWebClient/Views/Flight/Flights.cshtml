@@ -44,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.DestinationCountry)
             </td>
             <td>
-                <a asp-controller="Order" asp-action="createOrder" asp-route-id="@item.FlightID" asp-route-price="@item.Price">Vælg</a>
+                <a asp-controller="Order" asp-action="ViewOrderData" asp-route-id="@item.FlightID">Vælg</a>
             </td>
         </tr>
 }

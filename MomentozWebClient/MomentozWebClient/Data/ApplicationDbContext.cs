@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MomentozWebClient.Models;
 
 namespace MomentozWebClient.Data
 {
@@ -12,5 +13,6 @@ namespace MomentozWebClient.Data
         public DbSet<MomentozWebClient.Models.Customer>? Customer { get; set; }
         public DbSet<MomentozWebClient.Models.Flight>? Flight { get; set; }
         public DbSet<MomentozWebClient.Models.Order>? Order { get; set; }
+        public DbSet<MomentozWebClient.Models.OrderData>? OrderData { get; set; }
     }
 }
