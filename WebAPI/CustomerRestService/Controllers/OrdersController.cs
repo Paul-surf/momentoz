@@ -30,8 +30,9 @@ namespace RESTfulService.Controllers
         {
             return Ok(new { result = "Du har adgang til beskyttet data!" });
         }
+        [HttpGet] // Endpoints are now /api/Orders (default route)
         public ActionResult<List<OrderDto>> Get()
-        
+
         {
             ActionResult<List<OrderDto>> foundReturn;
             // retrieve data - converted to DTO
@@ -85,8 +86,9 @@ namespace RESTfulService.Controllers
             }
         }
         // URL: api/Orders
-        [HttpPut]
+        [HttpPut("Update")] // Endpoints are now /api/Orders/Update
         public ActionResult<OrderDto> UpdateOrder([FromBody] OrderDto order)
+
         {
             OrderDto updatedOrder = _businessLogicCtrl.Put(order);
             if (updatedOrder != null)
