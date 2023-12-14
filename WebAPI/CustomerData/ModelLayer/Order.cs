@@ -24,13 +24,13 @@
         // - orderID: Unik identifikator for ordren. Denne konstruktør bruges, hvis der allerede er et ID,
         //   eller hvis der skal tildeles en specifik ID.
 
-        public Order(int orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
+        public Order(int? orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
             : this(totalPrice, purchaseDate, customerID, flightID)
         {
             OrderID = orderID;
         }
 
-        public int OrderID { get; set; }
+        public int? OrderID { get; set; }
         public double TotalPrice { get; set; }
         public DateTime PurchaseDate { get; set; }
         public int CustomerID { get; set; }

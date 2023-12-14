@@ -13,7 +13,6 @@ namespace MomentozWebClient.Controllers
 
 
         readonly FlightLogic _flightsLogic;
-
         public FlightController(IConfiguration inConfiguration)
         {
             _flightsLogic = new FlightLogic(inConfiguration);
@@ -30,6 +29,11 @@ namespace MomentozWebClient.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+        public async Task<Flight> getFlightById(int id)
+        {
+            Flight flightFromService = await _flightsLogic.GetFlightById(id);
+            return flightFromService;
         }
 
         // GET: DestinationController/Create

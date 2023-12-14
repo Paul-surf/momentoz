@@ -103,7 +103,7 @@ namespace DatabaseData.DatabaseLayer
         public Flight GetFlightById(int flightId)
         {
             Flight foundFlight = new Flight();
-            string queryString = "SELECT flightid, departure, price, destinationAddress, destinationCountry FROM Flights WHERE Id = @Id";
+            string queryString = "SELECT flightid, departure, destinationAddress, destinationCountry, price FROM Flights WHERE flightid = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -115,7 +115,7 @@ namespace DatabaseData.DatabaseLayer
                 {
                     if (reader.Read())
                     {
-                        foundFlight.FlightID = reader.GetInt32(reader.GetOrdinal("Id"));
+                        foundFlight.FlightID = reader.GetInt32(reader.GetOrdinal("FlightID"));
                         foundFlight.Departure = reader.GetString(reader.GetOrdinal("Departure"));
                         foundFlight.DestinationAddress = reader.GetString(reader.GetOrdinal("DestinationAddress"));
                         foundFlight.DestinationCountry = reader.GetString(reader.GetOrdinal("DestinationCountry"));

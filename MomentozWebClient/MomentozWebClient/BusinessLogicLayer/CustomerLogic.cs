@@ -27,6 +27,19 @@ namespace MomentozWebClient.BusinessLogicLayer
             }
             return foundCustomers;
         }
+        public async Task<Customer> getCustomerByOrderCustomerId(int id)
+        {
+            Customer foundCustomer;
+            try
+            {
+                foundCustomer = await _customerServiceAccess.getCustomerByOrderCustomerId(id);
+            }
+            catch
+            {
+                foundCustomer = null;
+            }
+            return foundCustomer;
+        }
 
         public async Task<Customer> GetCustomerByUserId(string userId)
         {

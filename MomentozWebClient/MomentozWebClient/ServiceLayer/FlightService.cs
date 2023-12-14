@@ -97,9 +97,44 @@ namespace MomentozWebClient.ServiceLayer
             throw new NotImplementedException();
         }
 
-        internal Task<Flight> GetFlightById(int id)
+        public async Task<Flight>? GetFlightById(int id)
         {
-            throw new NotImplementedException();
+            Flight? flightFromService = null;
+
+            _flightServiceConnection.UseUrl = _flightServiceConnection.BaseUrl;
+            _flightServiceConnection.UseUrl += "flights/" + id;
+
+
+            if (_flightServiceConnection != null)
+            {
+                try
+                {
+                    var serviceResponse = await _flightServiceConnection.CallServiceGet();
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        var content = await serviceResponse.Content.ReadAsStringAsync();
+
+                        flightFromService = JsonConvert.DeserializeObject<Flight>(content);
+
+                    }
+                    else
+                    {
+                        if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            flightFromService = new Flight();
+                        }
+                        else
+                        {
+                            flightFromService = null;
+                        }
+                    }
+                }
+                catch
+                {
+                    flightFromService = null;
+                }
+            }
+            return flightFromService;
         }
     }
 }

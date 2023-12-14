@@ -1,58 +1,91 @@
 ﻿@model MomentozWebClient.Models.Order
+@using MomentozWebClient.Controllers;
+@inject FlightController FlightController
+@inject CustomerController CustomerController
 
 @{
     ViewData["Title"] = "Kvittering";
 }
+
 @if (Model != null)
 {
     <h1>Ordren gennemført</h1>
 
-    <div>
-        <h4>Order</h4>
-        <hr />
-        <dl class="row">
-            @* <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID)
-        </dd> *@
-            <dt class = "col-sm-2">
-                Total Price
-                @* @Html.DisplayNameFor(model => model.TotalPrice)*@
-            </dt>
-            <dd class = "col-sm-10">
-                <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                    @Html.DisplayFor(model => model.TotalPrice)
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div>
+                    <h4>Order</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            Total Price
+                        </dt>
+                        <dd class="col-sm-10">
+                            <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
+                                @Html.DisplayFor(model => model.TotalPrice)
+                            </div>
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                        </dt>
+                        <dd class="col-sm-10">
+                            <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
+                                @Html.DisplayFor(model => model.PurchaseDate)
+                            </div>
+                        </dd>
+                        <dt class="col-sm-2">
+                            Kunde ID
+                        </dt>
+                        <dd class="col-sm-10">
+                            <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
+                               @Html.DisplayFor(model => model.CustomerID)
+                            </div>
+                        </dd>
+                        <dt class="col-sm-2">
+                            Rejse Nummer
+                        </dt>
+                        <dd class="col-sm-10">
+                            <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
+                                @Html.DisplayFor(model => model.FlightID)
+                            </div>
+                        </dd>
+                    </dl>
                 </div>
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.PurchaseDate)
-            </dt>
-            <dd class = "col-sm-10">
-                <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                    @Html.DisplayFor(model => model.PurchaseDate)
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Rejse Info</h5>
+                        @if (Model != null)
+                        {
+                            Customer customer = await CustomerController.getCustomerByOrderCustomerId();
+                            Flight flight = await FlightController.getFlightById(Model.FlightID);
+                            @if (flight != null)
+                            {
+                                <p>Afgang: @flight.Departure</p>
+                                <p>Destination: @flight.DestinationAddress</p>
+                                <p>Land: @flight.DestinationCountry</p>
+                            }
+                            @if (customer != null)
+                            {
+                                <h5 class="card-title">Kunde Info</h5>
+                                <p>Navn: @customer.FirstName @customer.LastName</p>
+                                <p>Email: @customer.Email</p>
+                                <p>Tlf: @customer.MobilePhone</p>
+                                <p>Addresse: @customer.StreetName</p>
+                                <p>Postnummer: @customer.Zipcode</p>
+                            }
+                            <p style="color:black;font-size:xx-small;">Momentoz</p>
+                        }
+                    </div>
                 </div>
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CustomerID)
-            </dt>
-            <dd class = "col-sm-10">
-                <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                    @Html.DisplayFor(model => model.CustomerID)
-                </div>
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.FlightID)
-            </dt>
-            <dd class = "col-sm-10">
-                <div style="background-color:#000;color:#fff;margin-bottom:5px; padding:5px; width:160px; text-align:center;">
-                    @Html.DisplayFor(model => model.FlightID)
-                </div>
-            </dd>
-        </dl>
+            </div>
+        </div>
     </div>
-} else {
+}
+else
+{
     <h1>Din ordre kunne ikke blive skabt</h1>
     <h4>En anden har placeret ordreren på rejsen før dig.</h4>
     <p>Du er velkommen til og bestille en anden rejse :)</p>

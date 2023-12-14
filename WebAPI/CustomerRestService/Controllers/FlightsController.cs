@@ -49,7 +49,20 @@ namespace RESTfulService.Controllers
         [HttpGet, Route("{id}")]
         public ActionResult<FlightDto> Get(int id)
         {
-            return null;
+            ActionResult<FlightDto> foundReturn;
+            // retrieve data - converted to DTO
+            FlightDto? foundFlights = _businessLogicCtrl.GetFlightById(id);
+            // evaluate
+            if (foundFlights != null)
+            {
+                foundReturn = Ok(foundFlights);                 // Statuscode 200
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        // Internal server error
+            }
+            // send response back to client
+            return foundReturn;
         }
 
         // URL: api/Flights

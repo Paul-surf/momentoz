@@ -4,7 +4,7 @@ namespace RESTfulService.DTOs
 {
     public class OrderDto
     {
-        public OrderDto(int orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
+        public OrderDto(int? orderID, double totalPrice, DateTime purchaseDate, int customerID, int flightID)
         {
             OrderID = orderID;
             TotalPrice = totalPrice;
@@ -13,7 +13,7 @@ namespace RESTfulService.DTOs
             FlightID = flightID;
         }
 
-        public int OrderID { get; set; }
+        public int? OrderID { get; set; }
 
         public double TotalPrice { get; set; }
   

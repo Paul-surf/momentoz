@@ -95,6 +95,42 @@ namespace MomentozWebClient.ServiceLayer
             }
             return customerFromService;
         }
+        public async Task<Customer> getCustomerByOrderCustomerId(int id)
+        {
+            Customer customerFromService = null;
+
+            _customerServiceConnection.UseUrl = _customerServiceConnection.BaseUrl;
+            _customerServiceConnection.UseUrl += "Customers/" + id;
+
+            if (_customerServiceConnection != null)
+            {
+                try
+                {
+                    var serviceResponse = await _customerServiceConnection.CallServiceGet();
+                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
+                    {
+                        if (serviceResponse.StatusCode == HttpStatusCode.OK)
+                        {
+                            var content = await serviceResponse.Content.ReadAsStringAsync();
+                            customerFromService = JsonConvert.DeserializeObject<Customer>(content);
+                        }
+                        else
+                        {
+                            customerFromService = new Customer();
+                        }
+                    }
+                    else
+                    {
+                        customerFromService = null;
+                    }
+                }
+                catch
+                {
+                    customerFromService = null;
+                }
+            }
+            return customerFromService;
+        }
 
 
         public async Task<Customer> SaveCustomerMinimal(Customer newCust)

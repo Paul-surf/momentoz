@@ -76,7 +76,17 @@ namespace RESTfulService.BusinesslogicLayer
 
         public FlightDto? GetFlightById(int flightId)
         {
-            throw new NotImplementedException();
+            FlightDto? foundDtos;
+            try
+            {
+                Flight? foundFlight = _flightAccess.GetFlightById(flightId);
+                foundDtos = ModelConversion.FlightDtoConvert.FromFlight(foundFlight);
+            }
+            catch
+            {
+                foundDtos = null;
+            }
+            return foundDtos;
         }
     }
 }

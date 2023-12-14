@@ -10,7 +10,8 @@ namespace MomentozWebClient.Controllers
     {
 
         readonly CustomerLogic _customerLogic;
-
+        private static string userId;
+        public void setUserId(string id) { userId = id; }
         public CustomerController(IConfiguration inConfiguration)
         {
             _customerLogic = new CustomerLogic(inConfiguration);
@@ -36,7 +37,7 @@ namespace MomentozWebClient.Controllers
         public async Task<IActionResult> Profile()
         {
             // Get id logged in user
-            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             // Get customer through service
             Customer customerFromService = await _customerLogic.GetCustomerByUserId(userId);
             // If customer was not found (but call ok)
@@ -49,6 +50,11 @@ namespace MomentozWebClient.Controllers
             return View(customerFromService);
         }
 
+        public async Task<Customer> getCustomerByOrderCustomerId()
+        {
+            Customer fromService = await _customerLogic.GetCustomerByUserId(userId);
+            return fromService;
+        }
 
 
 
@@ -82,7 +88,7 @@ namespace MomentozWebClient.Controllers
         // GET: CustomerController/Edit/{id}
         public ActionResult Edit(string id)
         {
-            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (!userId.Equals(id)) { /* throw error */ }
 
@@ -99,7 +105,7 @@ namespace MomentozWebClient.Controllers
             try
             {
                 Customer reOrientedCustomer = new Customer(formCustomer);
-                string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 string? email = User.Identity is not null ? User.Identity.Name : null;
                 reOrientedCustomer.LoginUserId = userId;
                 reOrientedCustomer.Email = email;

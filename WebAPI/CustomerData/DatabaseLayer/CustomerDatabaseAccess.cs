@@ -111,7 +111,7 @@ namespace DatabaseData.DatabaseLayer
         {
             Customer foundCustomer;
             //
-            string queryString = "SELECT customerID, firstName, lastName, mobilePhone, email, loginuserid FROM Customers WHERE id = @Id";
+            string queryString = "SELECT customerID, firstName, lastName, mobilePhone, email, streetname, zipcode, LoginUserId loginuserid FROM Customers WHERE id = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
