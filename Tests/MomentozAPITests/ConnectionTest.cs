@@ -1,6 +1,6 @@
 namespace MomentozAPITests
 {
-    public class UnitTest1
+    public class ConnectionTest
     {
         [Fact]
         public async void MyApiMethod_Should_Return_Ok()
