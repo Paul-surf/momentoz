@@ -37,7 +37,6 @@ namespace MomentozWebClient.ServiceLayer
                         var content = await serviceResponse.Content.ReadAsStringAsync();
 
                         customersFromService = JsonConvert.DeserializeObject<List<Customer>>(content);
-                        
                     }
                     else
                     {

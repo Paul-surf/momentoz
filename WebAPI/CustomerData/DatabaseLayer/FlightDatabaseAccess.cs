@@ -22,7 +22,7 @@ namespace DatabaseData.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "INSERT INTO Flight(departure, price, destinationAddress, destinationCountry) OUTPUT INSERTED.ID values(@Address, @City, @Price, @DestinationAddress, @DestinationCountry)";
+            string insertString = "INSERT INTO Flight(departure, destinationAddress, destinationCountry, price) OUTPUT INSERTED.ID values(@Departure, @DestinationAddress, @DestinationCountry, @Price)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
@@ -54,7 +54,7 @@ namespace DatabaseData.DatabaseLayer
             {
                 string info = "FlightID, Departure, DestinationAddress, DestinationCountry, Price";
                 string table = "Flights";
-                string whereStatement = "FlightID not in (SELECT FlightID From Orders)";
+                string whereStatement = "FlightID not in (SELECT FlightID From Orders) AND Departure <> 'test'";
 
                 string queryString = "SELECT " + info + " FROM " + table + " WHERE " + whereStatement;
 

@@ -15,7 +15,6 @@
         }
         public int FlightID { get; set; }
         public string? Departure { get; set; }
-        public string? City { get; set; }
         public string? DestinationAddress { get; set; }
         public string? DestinationCountry { get; set; }
         public double Price { get; set; }
