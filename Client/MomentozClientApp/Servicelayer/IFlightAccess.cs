@@ -1,6 +1,5 @@
 ﻿using MomentozClientApp.Model;
 
-// Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.Servicelayer
 {
     // IFlightAccess er et interface, der definerer kontrakten for flyadgang.

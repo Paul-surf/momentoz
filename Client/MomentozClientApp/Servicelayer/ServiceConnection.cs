@@ -1,7 +1,7 @@
 ﻿namespace MomentozClientApp.Servicelayer
 {
     // ServiceConnection-klassen implementerer IServiceConnection-grænsefladen.
-    // Denne klasse bruges til at håndtere HTTP-forbindelser til en webtjeneste.
+    // Denne klasse bruges til at håndtere HTTP-forbindelser til API.
     public class ServiceConnection : IServiceConnection
     {
         public HttpClient HttpClient { get; private set; }

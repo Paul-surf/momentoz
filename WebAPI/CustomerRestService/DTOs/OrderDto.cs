@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace RESTfulService.DTOs
+﻿namespace RESTfulService.DTOs
 {
     public class OrderDto
     {

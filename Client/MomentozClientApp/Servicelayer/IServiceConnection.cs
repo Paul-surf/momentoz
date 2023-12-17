@@ -1,4 +1,4 @@
-﻿// Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
+﻿
 namespace MomentozClientApp.Servicelayer
 {
     // IServiceConnection er et intern interface, hvilket betyder, at det kun er tilgængeligt inden for samme assembly.

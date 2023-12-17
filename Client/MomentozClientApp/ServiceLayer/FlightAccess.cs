@@ -14,29 +14,21 @@ namespace MomentozClientApp.Servicelayer
 
         // Felt der holder basis-URL'en til flyservicen, hentet fra konfigurationsindstillingerne.
         private readonly string _serviceBaseUrl;
-        // Konstruktøren initialiserer FlightAccess-klassen.
-        //public FlightAccess()
-        //{
-        //    // Hent basis-URL fra konfigurationsindstillingerne.
-        //    _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
-        //    // Initialiser serviceforbindelsen med basis-URL'en.
-        //    _serviceConnection = new ServiceConnection(_serviceBaseUrl);
-       
-        //}
+       // Konstruktøren initialiserer FlightAccess-klassen.
+        public FlightAccess()
+        {
+            // Hent basis-URL fra konfigurationsindstillingerne.
+            _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
+            // Initialiser serviceforbindelsen med basis-URL'en.
+            _serviceConnection = new ServiceConnection(_serviceBaseUrl);
 
-        // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
-        public Task<int> CreateFlight(Flight flight)
+        }
+
+        public Task<Flight> GetFlightById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteFlightById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Asynkron metode til at hente alle flyvninger. 
-        // Fanger og håndterer eventuelle undtagelser, der opstår under hentningen.
         public async Task<List<Flight>?> GetAllFlights()
         {
             List<Flight>? foundFlights = null;
@@ -62,25 +54,20 @@ namespace MomentozClientApp.Servicelayer
 
             return foundFlights;
         }
-
-
-        // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
-        public Task<List<Flight>> GetFlightAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Flight> GetFlightById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Flight> GetFlightByUserId(string loginUserId)
+        public Task<int> CreateFlight(Flight flight)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> UpdateFlight(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<bool> DeleteFlightById(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<Flight> GetFlightByUserId(string loginUserId)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace MomentozClientApp.Servicelayer
     // CustomerAccess-klassen implementerer ICustomerAccess-interface og håndterer adgang til kundeoplysninger.
     public class CustomerAccess : ICustomerAccess
     {
-        // En skrivebeskyttet instans af IServiceConnection, der bruges til at håndtere forbindelser til webtjenester.
+        // readonly instans af IServiceConnection, der bruges til at håndtere forbindelser til webtjenester.
         readonly IServiceConnection _customerServiceConnection;
         // Basis-URL'en til servicen, hentet fra applikationskonfigurationen.
         readonly string? _serviceBaseUrl = ConfigurationManager.AppSettings.Get("ServiceUrlToUse");
@@ -19,11 +19,9 @@ namespace MomentozClientApp.Servicelayer
         // Konstruktøren initialiserer CustomerAccess-klassen.
         public CustomerAccess()
         {
-            // Initialiserer _customerServiceConnection med en ny instans af ServiceConnection.
             _customerServiceConnection = new ServiceConnection(_serviceBaseUrl);
         }
 
-        // Asynkron metode til at hente alle kunder.
         public async Task<List<Customer>> GetCustomerAll()
         {
             List<Customer> listFromService = new List<Customer>();
@@ -40,20 +38,17 @@ namespace MomentozClientApp.Servicelayer
             }
             catch (Exception ex)
             {
-                // Log the exception and handle it as per your error handling policy
                 Debug.WriteLine($"An error occurred while fetching all customers: {ex.Message}");
-                // Depending on the policy, you might want to rethrow, return an empty list, or handle the exception differently
             }
 
             return listFromService;
         }
 
-        // Asynkron metode til at hente en kunde baseret på dens id.
         public async Task<Customer> GetCustomerByEmail(string email)
         {
             Customer  foundCustomer = null;
             List<Customer> foundCustomers = null;
-            // Assuming that the base URL ends with "/", if not you might need to adjust this line.
+
             _customerServiceConnection.UseUrl = $"{_customerServiceConnection.BaseUrl}customers?email={Uri.EscapeDataString(email)}";
 
             try
@@ -68,17 +63,12 @@ namespace MomentozClientApp.Servicelayer
             }
             catch (Exception ex)
             {
-                // Log the exception and handle it as per your error handling policy
                 Debug.WriteLine($"An error occurred while fetching customer by email: {ex.Message}");
-                // Depending on the policy, you might want to rethrow, return null, or handle the exception differently
             }
 
             return foundCustomer;
         }
 
-
-
-        // Metoder, der endnu ikke er implementeret, og som kaster NotImplementedException.
         public Task<int> CreateCustomer(string newUsername, Customer customer)
         {
             throw new NotImplementedException();

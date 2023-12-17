@@ -5,6 +5,10 @@ using Microsoft.OpenApi.Models;
 using RESTfulService.BusinesslogicLayer;
 using RESTfulService.BusinessLogicLayer;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace RESTfulService
 {
@@ -33,9 +37,7 @@ namespace RESTfulService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // ... (andre services)
-
-            // Her tilføjer du Swagger-konfigurationen
+            // Her tilføjes Swagger-konfigurationen
             var jwtSettings = Configuration.GetSection("JwtSettings");
             var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
 
@@ -108,12 +110,12 @@ namespace RESTfulService
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Momentoz");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Momentoz");  
                     c.RoutePrefix = string.Empty; // Swagger UI på rodstien
                 });
             }
 
-            // Resten af konfigurationen for HTTP request pipeline
+            // HTTP request pipeline
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

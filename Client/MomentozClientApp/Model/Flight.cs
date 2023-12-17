@@ -1,42 +1,43 @@
-﻿// Definerer navneområdet for modellen i MomentozClientApp-applikationen.
-namespace MomentozClientApp.Model
+﻿namespace MomentozClientApp.Model
 {
-    // Flight-klassen repræsenterer en flyvning med detaljer som afgang og ankomst.
+    // Flight-klassen repræsenterer oplysninger om en flyvning i systemet.
     public class Flight
     {
-        // Standardkonstruktør uden parametre.
-        //public Flight() { }
+        // Standardkonstruktør.
+        public Flight() { }
 
-        //// Konstruktør, der initialiserer en Flight-instans med oplysninger om afgang, ankomst og pris.
-        //public Flight(string? departure, double price, string? destinationAddress, string? destinationCountry)
-        //{
-        //    // Sætter egenskaberne for afgang (adresse og by), pris, og ankomst (adresse og land) til de givne værdier.
-        //    Departure = departure;
-        //    Price = price;
-        //    DestinationAddress = destinationAddress;
-        //    DestinationCountry = destinationCountry;
-        //}
+        // Konstruktør til oprettelse af en ny flyvning med angivelse af detaljer.
+        public Flight(string? departure, double price, string? destinationAddress, string? destinationCountry)
+        {
+            Departure = departure;
+            Price = price;
+            DestinationAddress = destinationAddress;
+            DestinationCountry = destinationCountry;
+        }
 
-        //// Udvidet konstruktør, der inkluderer et id samt de andre parametre.
-        //// Den kalder den anden konstruktør ved hjælp af 'this' nøgleordet.
-        //public Flight(int flightID, string? departure, double price, string? destinationAddress, string? destinationCountry)
-        //{
-        //    // Sætter egenskaberne Id, Address, City, Price, DestinationAddress og DestinationCountry til de givne værdier.
-        //    FlightID = flightID;
-        //    Departure = departure;
-        //    Price = price;
-        //    DestinationAddress = destinationAddress;
-        //    DestinationCountry = destinationCountry;
-        //}
+        // Konstruktør til oprettelse af en flyvning med angivelse af ID og detaljer.
+        public Flight(int flightID, string? departure, double price, string? destinationAddress, string? destinationCountry)
+            : this(departure, price, destinationAddress, destinationCountry)
+        {
+            FlightID = flightID;
+        }
 
-        // Egenskaber for at holde flyvningens id, afgangsadresse, afgangsby, pris, ankomstadresse og ankomstland.
+        // Egenskab til at få eller indstille flyvningens ID.
         public int FlightID { get; set; }
+
+        // Egenskab til at få eller indstille afgang for flyvningen.
         public string? Departure { get; set; }
+
+        // Egenskab til at få eller indstille prisen for flyvningen.
         public double Price { get; set; }
+
+        // Egenskab til at få eller indstille destinationens adresse for flyvningen.
         public string? DestinationAddress { get; set; }
+
+        // Egenskab til at få eller indstille destinationens land for flyvningen.
         public string? DestinationCountry { get; set; }
 
-        // En egenskab, der returnerer en brugerdefineret tekstrepræsentation af flyvningen.
+        // Egenskab, der genererer en brugerdefineret streng til visning af destinationen.
         public string CustomDisplay => $"{DestinationAddress}, {DestinationCountry}";
     }
 }

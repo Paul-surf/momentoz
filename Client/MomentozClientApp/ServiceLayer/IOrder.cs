@@ -1,18 +1,14 @@
-﻿using MomentozClientApp.Model;
+﻿using MomentozClientApp.Model;  // Bruger Order-klassen fra MomentozClientApp.Model namespace.
 
-
-// Definerer navneområdet for servicelaget i MomentozClientApp-applikationen.
 namespace MomentozClientApp.ServiceLayer
 {
-    // IOrderAccess er et interface, der definerer kontrakten for ordreadgang.
-    // Alle klasser, der implementerer dette interface, skal implementere disse metoder.
     public interface IOrderAccess
     {
-        Order GetOrderById(int orderID);
-        List<Order> GetOrderAll();
-        int CreateOrder(Order orderToAdd);
-        bool UpdateOrder(Order orderToUpdate);
-        bool DeleteOrderById(int orderID);
-        Order? GetOrderByCustomerId(int customerID);
+        Task<Order> GetOrderById(int orderID);  // Metode til at hente en ordre efter ID.
+        Task<List<Order>> GetOrderAll();  // Metode til at hente alle ordrer som en liste.
+        Task<Order> CreateOrder(Order orderToAdd);  // Metode til at oprette en ny ordre.
+        bool UpdateOrder(Order orderToUpdate);  // Metode til at opdatere en eksisterende ordre.
+        bool DeleteOrderById(int orderID);  // Metode til at slette en ordre efter ID.
+        Order? GetOrderByCustomerId(int customerID);  // Metode til at hente en ordre efter kunde-ID.
     }
 }

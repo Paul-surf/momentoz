@@ -1,41 +1,38 @@
-﻿using MomentozClientApp.Model;
-using MomentozClientApp.ServiceLayer;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using MomentozClientApp.Model;  // Bruger Order-klassen fra MomentozClientApp.Model namespace.
+using MomentozClientApp.ServiceLayer;  // Bruger IOrderAccess-grænsefladen fra MomentozClientApp.ServiceLayer namespace.
 
 namespace MomentozClientApp.BusinessLogicLayer
 {
-    // Implementer IOrderdata-interfacet
+    // OrderData-klassen er ansvarlig for forretningslogikken relateret til ordredata.
     public class OrderData : IOrderdata
     {
         private readonly IOrderAccess _orderAccess;
 
+        // Konstruktør, der modtager en IOrderAccess-implementering som parameter.
         public OrderData(IOrderAccess orderAccess)
         {
             _orderAccess = orderAccess;
         }
 
+        // Metode til at hente en ordre efter ID (endnu ikke implementeret).
         public Order? Get(int id)
         {
-            // Implementer logik for at hente en ordre baseret på ID
             throw new NotImplementedException();
         }
 
+        // Metode til at hente alle ordrer (endnu ikke implementeret).
         public List<Order>? Get()
         {
-            // Implementer logik for at hente en liste af ordrer
             throw new NotImplementedException();
         }
 
+        // Metode til at tilføje en ny ordre.
         public int Add(Order orderToAdd)
         {
             try
             {
                 if (orderToAdd != null)
                 {
-                    // Implementer kode til at tilføje ordren og returnere den indsættelse ID
-                    // f.eks., hvis du bruger en database, kan du indsætte ordren og få ID'en
                     int insertedId = -1; /* Dine databaseindsætningsoperationer her */
                     return insertedId;
                 }
@@ -43,20 +40,19 @@ namespace MomentozClientApp.BusinessLogicLayer
             }
             catch (Exception ex)
             {
-                // Håndter fejl, log fejlen, eller returner en fejlkode efter behov
-                return -1;
+                return -1;  // Returnerer -1 i tilfælde af en fejl.
             }
         }
 
+        // Metode til at opdatere en eksisterende ordre (endnu ikke implementeret).
         public bool Put(Order orderToUpdate)
         {
-            // Implementer logik for at opdatere en eksisterende ordre
             throw new NotImplementedException();
         }
 
+        // Metode til at slette en ordre efter ID (endnu ikke implementeret).
         public bool Delete(int id)
         {
-            // Implementer logik for at slette en ordre baseret på ID
             throw new NotImplementedException();
         }
     }
