@@ -10,7 +10,7 @@ namespace MomentozAPITests
         {
             // Arrange
             using var client = new HttpClient();
-            var apiUrl = "https://localhost:5114/api/customers?email=br.doe@example.com"; // Adjust the email parameter as needed
+            var apiUrl = "https://localhost:5114/api/customers?email=br.doe@example.com";
 
             // Act
             var response = await client.GetAsync(apiUrl);

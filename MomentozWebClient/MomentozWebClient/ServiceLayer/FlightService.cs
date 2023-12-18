@@ -56,47 +56,6 @@ namespace MomentozWebClient.ServiceLayer
             }
             return flightFromService;
         }
-
-        public bool AddFlight(Flight flight)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteFlight(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer GetFlight(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateFlight(Flight flight)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Flight> IFlightAccess.GetFlight(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IFlightAccess.AddFlight(Flight flight)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IFlightAccess.UpdateFlight(Flight flight)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IFlightAccess.DeleteFlight(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Flight>? GetFlightById(int id)
         {
             Flight? flightFromService = null;
@@ -136,5 +95,25 @@ namespace MomentozWebClient.ServiceLayer
             }
             return flightFromService;
         }
+        public Task<bool> AddFlight(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteFlight(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Flight> GetFlight(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateFlight(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 }
