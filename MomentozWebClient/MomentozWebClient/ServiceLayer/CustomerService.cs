@@ -191,48 +191,16 @@ namespace MomentozWebClient.ServiceLayer
 
             return customerFromService;
         }
-
-
-
-
-
-
-
-        public bool AddCustomer(Customer customer)
+        public Task<bool> AddCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteCustomer(int id)
+        public Task<bool> DeleteCustomer(int id)
         {
             throw new NotImplementedException();
         }
-
-        
-
-        public Customer GetCustomer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        
-
-        Task<Customer> ICustomerAccess.GetCustomer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> ICustomerAccess.AddCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> ICustomerAccess.UpdateCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> ICustomerAccess.DeleteCustomer(int id)
+        public Task<Customer> GetCustomer(int id)
         {
             throw new NotImplementedException();
         }
