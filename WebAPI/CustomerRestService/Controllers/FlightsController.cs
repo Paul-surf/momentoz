@@ -1,6 +1,7 @@
 ﻿using RESTfulService.BusinessLogicLayer;
 using RESTfulService.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using DatabaseData.ModelLayer;
 
 namespace RESTfulService.Controllers
 {
@@ -67,22 +68,13 @@ namespace RESTfulService.Controllers
 
         // URL: api/Flights
         [HttpPost]
-        public ActionResult<int> PostNewFlight(FlightDto inFlightDto)
+        public ActionResult<FlightDto> PostNewFlight(FlightDto inFlightDto)
         {
-            ActionResult<int> foundReturn;
-            int insertedId = -1;
-            if (inFlightDto != null)
-            {
-                insertedId = _businessLogicCtrl.Add(inFlightDto);
-            }
+            ActionResult<FlightDto> foundReturn;
+            FlightDto insertedFlight = _businessLogicCtrl.Add(inFlightDto);
             // Evaluate
-            if (insertedId > 0)
-            {
-                foundReturn = Ok(insertedId);
-            }
-            else if (insertedId == 0)
-            {
-                foundReturn = BadRequest();     // missing input
+            if (insertedFlight != null) {
+                foundReturn = Ok(insertedFlight);
             }
             else
             {

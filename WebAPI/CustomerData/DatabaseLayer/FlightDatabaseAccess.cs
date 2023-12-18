@@ -18,11 +18,12 @@ namespace DatabaseData.DatabaseLayer
             _connectionString = inConnectionString;
         }
 
-        public int CreateFlight(Flight aFlight)
+        public Flight CreateFlight(Flight aFlight)
         {
-            int insertedId = -1;
+            Flight? insertedFlight = null;
+            int insertedId;
 
-            string insertString = "INSERT INTO Flight(departure, destinationAddress, destinationCountry, price) OUTPUT INSERTED.ID values(@Departure, @DestinationAddress, @DestinationCountry, @Price)";
+            string insertString = "INSERT INTO Flights(departure, destinationAddress, destinationCountry, price) OUTPUT INSERTED.FLIGHTID values(@Departure, @DestinationAddress, @DestinationCountry, @Price)";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
@@ -37,8 +38,10 @@ namespace DatabaseData.DatabaseLayer
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
+                aFlight.FlightID = insertedId;
+                insertedFlight = aFlight;
             }
-            return insertedId;
+            return insertedFlight;
         }
 
         public bool DeleteFlightById(int id)

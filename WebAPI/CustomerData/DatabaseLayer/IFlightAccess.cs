@@ -7,7 +7,7 @@ namespace DatabaseData.DatabaseLayer
     {
         Flight GetFlightById(int id);
         List<Flight> GetFlightAll();
-        int CreateFlight(Flight flightToAdd);
+        Flight CreateFlight(Flight flightToAdd);
         bool DeleteFlightById(int id);
     }
 }

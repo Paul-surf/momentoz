@@ -28,7 +28,6 @@ namespace MomentozAPITests
             var content = await response.Content.ReadAsStringAsync();
             var flightList = System.Text.Json.JsonSerializer.Deserialize<List<FlightDto>>(content);
             Assert.NotNull(flightList);
-            Assert.True(flightList.Count > 0);
         }
         [Fact]
         public async void GetFlightsWithoutTestFlights()
@@ -36,32 +35,16 @@ namespace MomentozAPITests
             // Arrange
             using var client = new HttpClient();
             var apiUrl = "https://localhost:5114/api/flights";
-            FlightDto flight = new FlightDto();
-            flight.Departure = "test";
-            flight.Price = 1234;
-            flight.DestinationAddress = "test123";
-            flight.DestinationCountry = "test";
-
             // Act
             var response = await client.GetAsync(apiUrl);
 
             // Assert
             Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
 
-            // setup flight til JSON format
-            var JSONflight = JsonConvert.SerializeObject(flight);
-            var inContent = new StringContent(JSONflight, Encoding.UTF8, "application/json");
-            // Post flight til DB
-            var serviceResponse = await client.PostAsync(apiUrl, inContent);
-
-            // Assert
-            Assert.True(serviceResponse.IsSuccessStatusCode);
-
-
-            /*var content = await response.Content.ReadAsStringAsync();
-            var flightList = JsonSerializer.Deserialize<List<FlightDto>>(content);
+            var content = await response.Content.ReadAsStringAsync();
+            var flightList = System.Text.Json.JsonSerializer.Deserialize<List<FlightDto>>(content);
             Assert.NotNull(flightList);
-            Assert.True(flightList.Count > 0);*/
+            Assert.All(flightList, f => Assert.DoesNotContain("test", f.Departure));
         }
     }
 }

@@ -16,7 +16,14 @@ namespace MomentozAPITests.Models
             CustomerID = customerID;
             FlightID = flightID;
         }
-
+        public OrderDto(double totalPrice, DateTime purchaseDate, int customerID, int flightID)
+        {
+            TotalPrice = totalPrice;
+            PurchaseDate = purchaseDate;
+            CustomerID = customerID;
+            FlightID = flightID;
+        }
+        public OrderDto() { }
         public int? OrderID { get; set; }
 
         public double TotalPrice { get; set; }

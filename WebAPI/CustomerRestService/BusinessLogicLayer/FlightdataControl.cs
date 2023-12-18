@@ -45,23 +45,23 @@ namespace RESTfulService.BusinesslogicLayer
             return foundDtos;
         }
 
-        public int Add(FlightDto flightToAdd)
+        public FlightDto Add(FlightDto flightToAdd)
         {
-            int insertedId = 0;
+            FlightDto conversion = null;
             try
             {
                 Flight? newFlight = ModelConversion.FlightDtoConvert.ToFlight(flightToAdd);
                 if (newFlight != null)
                 {
-                    insertedId = _flightAccess.CreateFlight(newFlight);
+                    Flight insertedFlight = _flightAccess.CreateFlight(newFlight);
+                    conversion = ModelConversion.FlightDtoConvert.FromFlight(insertedFlight);
                 }
             }
             catch (Exception es)
             {
                 Console.WriteLine("Caught exception:" + es);
-                insertedId = -1;
             }
-            return insertedId;
+            return conversion;
         }
 
         public bool Put(FlightDto flightToUpdate)
@@ -88,5 +88,6 @@ namespace RESTfulService.BusinesslogicLayer
             }
             return foundDtos;
         }
+
     }
 }

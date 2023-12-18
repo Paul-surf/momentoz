@@ -92,108 +92,15 @@ namespace MomentozWebClient.ServiceLayer
             
         }
 
-        public bool DeleteOrder(int id)
+        public Task<Order> DeleteOrder(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Customer GetOrder(int id)
+
+        public Task<Order> UpdateOrder(Order order)
         {
             throw new NotImplementedException();
-        }
-
-        public bool UpdateOrdert(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Order> IOrderAccess.GetOrder(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IOrderAccess.AddOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IOrderAccess.UpdateOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IOrderAccess.DeleteOrder(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Order> getOrderByFlightId(int flightID)
-        {
-            Order? orderFromService = null;
-
-            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
-            _orderServiceConnection.UseUrl += "orders/" + flightID;
-
-
-            if (_orderServiceConnection != null)
-            {
-                try
-                {
-                    var serviceResponse = await _orderServiceConnection.CallServiceGet();
-                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
-                    {
-                        var content = await serviceResponse.Content.ReadAsStringAsync();
-
-                        orderFromService = JsonConvert.DeserializeObject<Order>(content);
-
-                    }
-                    else
-                    {
-                        if (serviceResponse != null && serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
-                        {
-                            orderFromService = new Order();
-                        }
-                        else
-                        {
-                            orderFromService = null;
-                        }
-                    }
-                }
-                catch
-                {
-                    orderFromService = null;
-                }
-            }
-            return orderFromService;
-        }
-
-        public async Task<Order?> SaveOrder(Order orderToSave)
-        {
-            Order? orderFromService = null;
-
-            _orderServiceConnection.UseUrl = _orderServiceConnection.BaseUrl;
-            _orderServiceConnection.UseUrl += "orders/" + orderToSave.FlightID;
-            if (_orderServiceConnection != null)
-            {
-                try
-                {
-                    var json = JsonConvert.SerializeObject(orderToSave);
-                    var inContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var serviceResponse = await _orderServiceConnection.CallServicePost(inContent);
-                    if (serviceResponse != null && serviceResponse.IsSuccessStatusCode)
-                    {
-                        var resultContent = await serviceResponse.Content.ReadAsStringAsync();
-                        orderFromService = JsonConvert.DeserializeObject<Order>(resultContent);
-                    }
-                }
-                catch
-                {
-                    orderFromService = null;
-                }
-            }
-
-            return orderFromService;
         }
     }
 }

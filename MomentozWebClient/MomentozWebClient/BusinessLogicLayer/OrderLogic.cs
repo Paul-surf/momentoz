@@ -15,33 +15,6 @@ namespace MomentozWebClient.BusinessLogicLayer
             _orderServiceAccess = new OrderService(inConfiguration);
             _flightService = new FlightService(inConfiguration);
         }
-        public async Task<List<Order>> GetAllOrders()
-        {
-            List<Order> foundOrders;
-            try
-            {
-                foundOrders = await _orderServiceAccess.GetAllOrders();
-            }
-            catch
-            {
-                foundOrders = null;
-            }
-            return foundOrders;
-        }
-
-        public async Task<Order> GetOrderByFlightID(int flightID)
-        {
-            Order foundOrder;
-            try
-            {
-                foundOrder = await _orderServiceAccess.getOrderByFlightId(flightID);
-            } 
-            catch
-            {
-                foundOrder = null;
-            }
-            return foundOrder;
-        }
         public async Task<Order> postNewOrder(Order newOrder)
         {
             Order createdOrder;

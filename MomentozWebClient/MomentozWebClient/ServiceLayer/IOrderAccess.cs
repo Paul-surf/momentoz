@@ -7,13 +7,11 @@ namespace MomentozWebClient.ServiceLayer
 
         Task<List<Order>>? GetAllOrders();
 
-        Task<Order> GetOrder(int id);
+        Task<Order> AddOrder(Order order);
 
-        Task<bool> AddOrder(Order order);
+        Task<Order> UpdateOrder(Order order);
 
-        Task<bool> UpdateOrder(Order order);
-
-        Task<bool> DeleteOrder(int id);
+        Task<Order> DeleteOrder(int id);
 
     }
 }

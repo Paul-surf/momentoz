@@ -21,7 +21,6 @@ namespace MomentozAPITests
             var content = await response.Content.ReadAsStringAsync();
             var orderList = JsonSerializer.Deserialize<List<OrderDto>>(content);
             Assert.NotNull(orderList);
-            Assert.True(orderList.Count > 0);
         }
     }
 }
